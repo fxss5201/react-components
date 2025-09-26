@@ -1,0 +1,1 @@
+import{c as i,j as s}from"./index-cC4DZzNp.js";function r(){const t=i.c(1);let e;return t[0]===Symbol.for("react.memo_cache_sentinel")?(e=s.jsx("div",{children:s.jsx("div",{className:"text-[24px]",children:"文件上传"})}),t[0]=e):e=t[0],e}export{r as default};
