@@ -1,27 +1,20 @@
+import { useState } from 'react'
 import zhCN from 'antd/es/locale/zh_CN'
 import 'dayjs/locale/zh-cn'
 import { StyleProvider } from '@ant-design/cssinjs'
-import { ConfigProvider, App as AntdApp, theme as antdTheme, Layout, Flex, Popover } from 'antd'
-import { GithubOutlined, SyncOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons'
+import { ConfigProvider, App as AntdApp, theme as antdTheme, Layout } from 'antd'
 import { useTheme } from './storeHooks/useTheme'
 import { Outlet } from 'react-router'
-import { type ThemeType } from './store/themeSlice'
+import { ScrollRestoration } from 'react-router'
+import cn from 'classnames'
+import LayoutHead from './layout/LayoutHead'
+import LayoutSider from './layout/LayoutSider'
 
 const { Header, Footer, Sider, Content } = Layout
 
 function App() {
-  const { theme, storeTheme, changeTheme } = useTheme()
-  
-  type ThemeOption = {
-    type: ThemeType
-    label: string
-    icon: React.ReactNode
-  }
-  const themeOptions: ThemeOption[] = [
-    { type: 'system', label: '跟随系统', icon: <SyncOutlined /> },
-    { type: 'light', label: '亮色模式', icon: <SunOutlined /> },
-    { type: 'dark', label: '暗黑模式', icon: <MoonOutlined /> },
-  ]
+  const { theme } = useTheme()
+  const [collapsed, setCollapsed] = useState(false)
 
   return (
     <StyleProvider layer>
@@ -32,43 +25,20 @@ function App() {
         }}
         >
         <AntdApp>
-          <Layout>
-            <Header className={`${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
-              <Flex justify='space-between'>
-                <div className='text-[24px]'>react-components</div>
-                <div className='flex items-center leading-[24px]'>
-                  <Popover content={
-                    themeOptions.map(item => (
-                      <div className={`cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm ${storeTheme === item.type ? 'text-blue-600' : ''}`} key={item.type} onClick={() => changeTheme(item.type)}>
-                        {item.icon}
-                        <span className='ml-2'>{item.label}</span>
-                      </div>
-                    ))
-                  } classNames={{
-                    body: 'p-2'
-                  }}>
-                    <div className='text-[24px] cursor-pointer'>
-                      {
-                        storeTheme === 'system' ? <SyncOutlined /> : storeTheme === 'dark' ? <MoonOutlined /> : <SunOutlined />
-                      }
-                    </div>
-                  </Popover>
-                  <a href='https://github.com/fxss5201/react-components' target='_blank' rel='noopener noreferrer'
-                    className='text-[24px] ml-8'>
-                    <GithubOutlined />
-                  </a>
-                </div>
-              </Flex>
+          <Layout className='h-screen'>
+            <Header className={cn('border-b border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+              <LayoutHead />
             </Header>
             <Layout>
-              <Sider className='bg-white' width="25%">
-                Sider
+              <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme={theme} className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+                <LayoutSider />
               </Sider>
-              <Layout>
-                <Content>
+              <Layout className='border-l border-gray-200 dark:border-gray-700'>
+                <Content className={cn('overflow-auto', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+                  <ScrollRestoration />
                   <Outlet />
                 </Content>
-                <Footer>Footer</Footer>
+                <Footer className={cn('border-t border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>Footer</Footer>
               </Layout>
             </Layout>
           </Layout>
