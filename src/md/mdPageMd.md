@@ -26,7 +26,7 @@
 
 ### 内部链接
 
-[多文件上传](/files-upload)
+[多文件上传](files-upload)
 
 ## 代码段
 

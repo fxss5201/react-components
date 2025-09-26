@@ -1,5 +1,6 @@
 import { Flex, Popover } from 'antd'
 import { GithubOutlined, SyncOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router'
 import { type ThemeType } from './../store/themeSlice'
 import { useTheme } from './../storeHooks/useTheme'
 import cn from 'classnames'
@@ -15,12 +16,15 @@ const themeOptions: ThemeOption[] = [
   { type: 'dark', label: '暗黑模式', icon: <MoonOutlined /> },
 ]
 
+const BASE_URL = import.meta.env.BASE_URL
+
 function LayoutHead() {
+  const navigate = useNavigate()
   const { storeTheme, changeTheme } = useTheme()
 
   return (
     <Flex justify='space-between'>
-      <div className='text-[24px]'>react-components</div>
+      <div className='text-[24px] cursor-pointer' onClick={() => navigate(BASE_URL)}>react-components</div>
       <div className='flex items-center leading-[24px]'>
         <Popover content={
           themeOptions.map(item => (

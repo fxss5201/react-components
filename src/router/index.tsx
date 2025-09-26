@@ -5,6 +5,8 @@ import { HomeOutlined, UploadOutlined, FileMarkdownOutlined } from '@ant-design/
 import App from '../App'
 import Home from '../pages/Home'
 
+const BASE_URL = import.meta.env.BASE_URL
+
 const FilesUpload = lazy(() => import('../pages/FilesUpload'))
 const MdPage = lazy(() => import('../pages/MdPage'))
 
@@ -28,7 +30,7 @@ export const routers = [
     }
   },
   {
-    path: '/md-page',
+    path: `${BASE_URL}md-page`,
     element: <MdPage />,
     meta: {
       key: 'md-page',
@@ -37,7 +39,7 @@ export const routers = [
     }
   },
   {
-    path: '/files-upload',
+    path: `${BASE_URL}files-upload`,
     element: <FilesUpload />,
     meta: {
       key: 'files-upload',
@@ -49,7 +51,7 @@ export const routers = [
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: BASE_URL,
     element: <App />,
     children: routers,
   }

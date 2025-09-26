@@ -5,6 +5,8 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from './../storeHooks/useTheme'
 import { useNavigate } from 'react-router'
 
+const BASE_URL = import.meta.env.BASE_URL
+
 function MdRender({markdown}: {markdown: string}) {
   const { theme } = useTheme()
   const navigate = useNavigate()
@@ -26,7 +28,7 @@ function MdRender({markdown}: {markdown: string}) {
                 onClick={(e) => {
                   if (!isExternal) {
                     e.preventDefault()
-                    navigate(href!)
+                    navigate(`${BASE_URL}${href!}`)
                   }
                 }}
                 target={isExternal ? '_blank' : undefined}

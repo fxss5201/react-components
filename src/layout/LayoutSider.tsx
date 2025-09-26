@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from 'react-router'
 import { useTheme } from './../storeHooks/useTheme'
 import { routers } from './../router'
 
+const BASE_URL = import.meta.env.BASE_URL
+
 function LayoutSider() {
   const { theme } = useTheme()
   const { pathname } = useLocation()
@@ -12,7 +14,7 @@ function LayoutSider() {
   const [selectedKey, setSelectedKey] = useState(pathname)
   const [title, setTitle] = useState('')
   useEffect(() => {
-    if (pathname === '/') {
+    if (pathname === BASE_URL) {
       setSelectedKey('home')
       setTitle('首页 | react-components')
     } else {
@@ -36,7 +38,7 @@ function LayoutSider() {
 
   function menuClickFn({ key }: { key: string }) {
     if (key === 'home') {
-      navigate('/')
+      navigate(BASE_URL)
     } else {
       navigate(key)
     }

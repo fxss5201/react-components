@@ -4,3 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @import './github-markdown.css';
+
+.ant-layout-sider-children {
+  overflow: auto;
+}
