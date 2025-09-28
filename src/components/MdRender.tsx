@@ -2,14 +2,12 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { useTheme } from './../storeHooks/useTheme'
-import { useNavigate } from 'react-router'
-
-const BASE_URL = import.meta.env.BASE_URL
+import { useTheme } from '../storeHooks/useTheme'
+import { useRouter } from '../Hooks/useRouter'
 
 function MdRender({markdown}: {markdown: string}) {
   const { theme } = useTheme()
-  const navigate = useNavigate()
+  const router = useRouter()
 
   return (
     <div className='markdown-body'>
@@ -28,7 +26,7 @@ function MdRender({markdown}: {markdown: string}) {
                 onClick={(e) => {
                   if (!isExternal) {
                     e.preventDefault()
-                    navigate(`${BASE_URL}${href!}`)
+                    router(href!)
                   }
                 }}
                 target={isExternal ? '_blank' : undefined}

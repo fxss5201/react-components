@@ -30,7 +30,7 @@ export const routers = [
     }
   },
   {
-    path: `${BASE_URL}md-page`,
+    path: 'md-page',
     element: <MdPage />,
     meta: {
       key: 'md-page',
@@ -39,7 +39,7 @@ export const routers = [
     }
   },
   {
-    path: `${BASE_URL}files-upload`,
+    path: 'files-upload',
     element: <FilesUpload />,
     meta: {
       key: 'files-upload',
@@ -49,11 +49,25 @@ export const routers = [
   },
 ] as RoutersType[]
 
+function createRouters(routers: RoutersType[]): RoutersType[] {
+  return routers.map(item => {
+    if (item.index) {
+      return item
+    } else {
+      return {
+        ...item,
+        path: `${BASE_URL}${item.path!}`,
+        ...(item.children ? { children: createRouters(item.children) } : {}),
+      }
+    }
+  })
+}
+
 const router = createBrowserRouter([
   {
     path: BASE_URL,
     element: <App />,
-    children: routers,
+    children: createRouters(routers),
   }
 ])
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Splitter, Input } from 'antd'
-import MdRender from './../components/MdRender'
-import mdPageMd from './../md/mdPageMd.md?raw'
+import MdRender from '../components/MdRender'
+import mdPageMd from '../md/mdPageMd.md?raw'
 
 const { TextArea } = Input
 

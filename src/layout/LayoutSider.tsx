@@ -1,30 +1,28 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Menu } from 'antd'
-import { useLocation, useNavigate } from 'react-router'
-import { useTheme } from './../storeHooks/useTheme'
-import { routers } from './../router'
-
-const BASE_URL = import.meta.env.BASE_URL
+import { useRouter, useRoute } from '../Hooks/useRouter'
+import { useTheme } from '../storeHooks/useTheme'
+import { routers } from '../router'
 
 function LayoutSider() {
   const { theme } = useTheme()
-  const { pathname } = useLocation()
-  const navigate = useNavigate()
+  const router = useRouter()
+  const route = useRoute()
 
-  const [selectedKey, setSelectedKey] = useState(pathname)
+  const [selectedKey, setSelectedKey] = useState(route)
   const [title, setTitle] = useState('')
   useEffect(() => {
-    if (pathname === BASE_URL) {
+    if (route === '') {
       setSelectedKey('home')
       setTitle('首页 | react-components')
     } else {
-      const location = routers.find(item => item.path === pathname)
+      const location = routers.find(item => item.path === route)
       if (location) {
         setSelectedKey(location.meta.key)
         setTitle(`${location.meta.label} | react-components`)
       }
     }
-  }, [pathname])
+  }, [route])
 
   const menuItems = useMemo(() => {
     return routers.map(item => {
@@ -37,10 +35,12 @@ function LayoutSider() {
   }, [])
 
   function menuClickFn({ key }: { key: string }) {
+    console.log(key)
     if (key === 'home') {
-      navigate(BASE_URL)
+      router('')
     } else {
-      navigate(key)
+      const location = routers.find(item => item.meta.key === key)
+      router(location?.path || '')
     }
   }
 
