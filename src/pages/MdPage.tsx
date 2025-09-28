@@ -1,12 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Splitter, Input } from 'antd'
 import MdRender from '../components/MdRender'
 import mdPageMd from '../md/mdPageMd.md?raw'
+import mdPageMdEn from '../md/en/mdPageMd.md?raw'
+import { useLocale } from '../Hooks/useLocale'
 
 const { TextArea } = Input
 
 function MdPage() {
-  const [markdown, setMarkdown] = useState(mdPageMd)
+  const locale = useLocale()
+  const [markdown, setMarkdown] = useState(locale === 'en' ? mdPageMdEn : mdPageMd)
+  useEffect(() => {
+    setMarkdown(locale === 'en' ? mdPageMdEn : mdPageMd)
+  }, [locale])
 
   return (
     <Splitter className='h-full'>
