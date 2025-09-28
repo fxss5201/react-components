@@ -1,0 +1,8 @@
+{
+  "Menu": {
+    "home": "Home",
+    "i18next-page": "i18next",
+    "md-page": "Markdown",
+    "files-upload": "Files Upload"
+  }
+}

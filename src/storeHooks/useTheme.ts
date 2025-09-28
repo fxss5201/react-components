@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeTheme } from '../store/themeSlice'
 import { type RootState, type AppDispatch } from '../store'
-import { type ThemeType } from '../store/themeSlice'
+import { type ThemeType } from '../config'
 import config from '../config'
 
 export const useTheme = () => {

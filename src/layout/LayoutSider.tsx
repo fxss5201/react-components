@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Menu } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { useRouter, useRoute } from '../Hooks/useRouter'
 import { useTheme } from '../storeHooks/useTheme'
 import { routers } from '../router'
@@ -8,6 +9,7 @@ function LayoutSider() {
   const { theme } = useTheme()
   const router = useRouter()
   const route = useRoute()
+  const { t } = useTranslation()
 
   const [selectedKey, setSelectedKey] = useState(route)
   const [title, setTitle] = useState('')
@@ -28,11 +30,11 @@ function LayoutSider() {
     return routers.map(item => {
       return {
         key: item.meta.key,
-        label: item.meta.label,
+        label: t(`Menu.${item.meta.key}`),
         icon: item.meta.icon,
       }
     })
-  }, [])
+  }, [t])
 
   function menuClickFn({ key }: { key: string }) {
     if (key === 'home') {

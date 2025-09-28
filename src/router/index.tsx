@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { lazy } from 'react'
-import { HomeOutlined, UploadOutlined, FileMarkdownOutlined } from '@ant-design/icons'
+import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined } from '@ant-design/icons'
+import { type LangResourcesType } from '../locales/index'
 import App from '../App'
 import Home from '../pages/Home'
 
@@ -9,10 +10,11 @@ const BASE_URL = import.meta.env.BASE_URL
 
 const FilesUpload = lazy(() => import('../pages/FilesUpload'))
 const MdPage = lazy(() => import('../pages/MdPage'))
+const I18nextPage = lazy(() => import('../pages/I18nextPage'))
 
 export type RoutersType = RouteObject & {
   meta: {
-    key: string
+    key: keyof LangResourcesType['translation']['Menu']
     label: string
     icon?: React.ReactNode
   },
@@ -27,6 +29,15 @@ export const routers = [
       key: 'home',
       label: '首页',
       icon: <HomeOutlined />,
+    }
+  },
+  {
+    path: 'i18next-page',
+    element: <I18nextPage />,
+    meta: {
+      key: 'i18next-page',
+      label: 'i18next 页面',
+      icon: <TranslationOutlined />,
     }
   },
   {
