@@ -35,7 +35,6 @@ function LayoutSider() {
   }, [])
 
   function menuClickFn({ key }: { key: string }) {
-    console.log(key)
     if (key === 'home') {
       router('')
     } else {

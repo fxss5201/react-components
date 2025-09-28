@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { changeTheme } from '../store/themeSlice'
 import { type RootState, type AppDispatch } from '../store'
 import { type ThemeType } from '../store/themeSlice'
+import config from '../config'
 
 export const useTheme = () => {
   const storeTheme = useSelector((state: RootState) => state.theme.value)
@@ -23,7 +24,9 @@ export const useTheme = () => {
     if (storeTheme === 'system') {
       const themeQuery = window.matchMedia('(prefers-color-scheme: dark)')
       function themeQueryFn(e: MediaQueryListEvent) {
-        setTheme(e.matches ? 'dark' : 'light')
+        if (config.autoChangeTheme) {
+          setTheme(e.matches ? 'dark' : 'light')
+        }
       }
       themeQuery.addEventListener('change', themeQueryFn)
       return () => {

@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import config from '../config'
 
 export type ThemeType = 'system' | 'light' | 'dark'
 
@@ -6,8 +7,16 @@ interface ThemeState {
   value: ThemeType
 }
 
+let initialTheme = config.defaultTheme
+if (config.theme) {
+  initialTheme = (localStorage.getItem('theme') as ThemeType) || config.defaultTheme
+  if (!config.autoChangeTheme && initialTheme === 'system') {
+    initialTheme = config.defaultTheme
+  }
+}
+
 const initialState: ThemeState = {
-  value: (localStorage.getItem('theme') as ThemeType) || 'light'
+  value: initialTheme
 }
 
 export const themeSlice = createSlice({
@@ -16,7 +25,7 @@ export const themeSlice = createSlice({
   reducers: {
     changeTheme: (state, action: PayloadAction<ThemeType>) => {
       state.value = action.payload
-      localStorage.setItem('theme', state.value)
+      localStorage.setItem(config.themeLocalStorageKey, state.value)
     }
   }
 })
