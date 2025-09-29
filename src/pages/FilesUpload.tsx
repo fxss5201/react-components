@@ -1,9 +1,7 @@
 import { useRef, useState } from 'react'
-import { useImmer } from 'use-immer'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
-import { Button, Dropdown, Space } from 'antd'
-import FileIcon from '../components/FileIcon'
+import { Button, Dropdown, Space, App } from 'antd'
 import FilesUploadDrawer from '../components/FilesUploadDrawer'
 
 const dropdownItems: MenuProps['items'] = [
@@ -21,31 +19,116 @@ const dropdownItems: MenuProps['items'] = [
   }
 ]
 
-export type UploadFileType = 'file' | 'folder'
-export type UploadFileItemType = {
-  type: UploadFileType,
-  file: File,
+export type FileType = 'file' | 'folder'
+export type FileItemType = {
+  type: FileType,
+  file?: File,
   name: string,
-  icon: React.ReactNode,
-  percent?: number,
-  filePath?: string,
-  folderPath?: string,
+  filePath: string,
+  folderPath: string,
+}
+export type FileItemTypeTree = {
+  type: FileType,
+  file?: File,
+  name: string,
+  filePath: string,
+  folderPath: string,
+  children?: FileItemTypeTree[]
+}
+
+async function getFileList(dirHandle: FileSystemDirectoryHandle, parentKey: string = '') {
+  const currentRankFiles: FileItemTypeTree[] = []
+  for await (const handelEle of dirHandle.values()) {
+    const fileKey = `${parentKey !== '' ? parentKey + '/' : ''}${handelEle.name}`
+    const curObj: FileItemTypeTree = {
+      type: handelEle.kind === 'file' ? 'file' : 'folder',
+      name: fileKey,
+      filePath: fileKey,
+      folderPath: parentKey,
+      ...(handelEle.kind === 'file' ? { file: await (handelEle as FileSystemFileHandle).getFile() } : {})
+    }
+    if (handelEle.kind === 'directory') {
+      curObj.children = await getFileList(handelEle as FileSystemDirectoryHandle, fileKey)
+    }
+    currentRankFiles.push(curObj)
+  }
+  return currentRankFiles
+}
+
+function flattenFileTree(fileTree: FileItemTypeTree[]): FileItemType[] {
+  const result: FileItemType[] = []
+  
+  function traverse(node: FileItemTypeTree) {
+    const { children, ...fileItem } = node
+    console.log(children)
+    result.push(fileItem)
+    
+    // 递归处理子节点
+    if (node.children && node.children.length > 0) {
+      node.children.forEach(traverse)
+    }
+  }
+  
+  fileTree.forEach(traverse)
+  return result
 }
 
 function FilesUpload() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [fileList, updateFileList] = useImmer<UploadFileItemType[]>([])
+  const [fileList, setFileList] = useState<FileItemType[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
+  const { message } = App.useApp()
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     const key = e.key
     if (key === 'upload-folder-include-root') {
-      console.log('上传文件夹（含根目录）')
+      selectDirectoryStoreFn('upload-folder-include-root')
     } else if (key === 'upload-folder-exclude-root') {
-      console.log('上传文件夹（不含根目录）')
+      selectDirectoryStoreFn('upload-folder-exclude-root')
     } else {
       if (inputRef.current) {
         inputRef.current.click()
+      }
+    }
+  }
+
+  async function selectDirectoryStoreFn(type: 'upload-folder-include-root' | 'upload-folder-exclude-root') {
+    if (!window.showDirectoryPicker) {
+      message.warning('当前浏览器不支持')
+      return
+    }
+    let dirHandle: FileSystemDirectoryHandle | null = null
+    try {
+      dirHandle = await window.showDirectoryPicker({
+        mode: 'read',
+        id: type,
+      })
+      if (!dirHandle) {
+        return
+      }
+      console.log(dirHandle)
+      
+      let rootFiles: FileItemTypeTree[] = []
+      if (type === 'upload-folder-include-root') {
+        rootFiles = [
+          {
+            type: 'folder',
+            name: dirHandle.name,
+            filePath: `${dirHandle.name}`,
+            folderPath: '',
+            children: await getFileList(dirHandle as FileSystemDirectoryHandle, `${dirHandle.name}`)
+          }
+        ]
+      } else {
+        rootFiles = await getFileList(dirHandle as FileSystemDirectoryHandle, '')
+      }
+      setFileList(flattenFileTree(rootFiles))
+      setDrawerOpen(true)
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('aborted')) {
+        message.warning('请选择文件夹')
+      } else {
+        console.log(error)
       }
     }
   }
@@ -54,13 +137,13 @@ function FilesUpload() {
     const files = e.target.files
     if (files) {
       const newFileList = Array.from(files).map((file) => ({
-        type: 'file' as UploadFileType,
+        type: 'file' as FileType,
         file,
         name: file.name,
-        icon: <FileIcon fileName={file.name} />,
-        percent: 0,
+        filePath: file.name,
+        folderPath: '',
       }))
-      updateFileList(() => newFileList)
+      setFileList(newFileList)
       setDrawerOpen(true)
     }
   }
@@ -85,7 +168,7 @@ function FilesUpload() {
 
       <FilesUploadDrawer
         open={drawerOpen}
-        fileList={fileList}
+        list={fileList}
         setOpen={setDrawerOpen}
       />
     </div>
