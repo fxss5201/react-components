@@ -3,6 +3,10 @@ import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, Space, App } from 'antd'
 import FilesUploadDrawer from '../components/FilesUploadDrawer'
+import MdRender from '../components/MdRender'
+import filesUploadMd from '../md/FilesUpload.md?raw'
+import filesUploadMdEn from '../md/en/FilesUpload.md?raw'
+import { useLocale } from '../Hooks/useLocale'
 
 const dropdownItems: MenuProps['items'] = [
   {
@@ -148,23 +152,29 @@ function FilesUpload() {
     }
   }
 
+  const locale = useLocale()
+
   return (
-    <div className='p-4'>
-      <Dropdown menu={{ items: dropdownItems, onClick: handleMenuClick }}>
-        <Button>
-          <Space>
-            上传文件/文件夹
-            <DownOutlined />
-          </Space>
-        </Button>
-      </Dropdown>
-      <input
-        ref={inputRef}
-        type='file'
-        multiple
-        style={{ display: 'none' }}
-        onChange={handleInputChange}
-      />
+    <div className='px-4 pt-2'>
+      <MdRender markdown={locale === 'zh' ? filesUploadMd : filesUploadMdEn} />
+      
+      <div className='mt-4'>
+        <Dropdown menu={{ items: dropdownItems, onClick: handleMenuClick }}>
+          <Button>
+            <Space>
+              上传文件/文件夹
+              <DownOutlined />
+            </Space>
+          </Button>
+        </Dropdown>
+        <input
+          ref={inputRef}
+          type='file'
+          multiple
+          style={{ display: 'none' }}
+          onChange={handleInputChange}
+        />
+      </div>
 
       <FilesUploadDrawer
         open={drawerOpen}

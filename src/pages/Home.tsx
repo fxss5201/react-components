@@ -16,7 +16,7 @@ function Home() {
   const locale = useLocale()
 
   return (
-    <div className='px-4 markdown-body'>
+    <div className='px-4 markdown-body pt-2'>
       <MdRender markdown={locale === 'zh' ? homeMd : homeMdEn} />
       <ul className='my-2!'>
         {functionItems.map((item) => (
