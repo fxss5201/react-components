@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { lazy } from 'react'
-import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined } from '@ant-design/icons'
+import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { type LangResourcesType } from '../locales/index'
 import App from '../App'
 import Home from '../pages/Home'
@@ -12,6 +12,8 @@ const FilesUpload = lazy(() => import('../pages/FilesUpload'))
 const MdPage = lazy(() => import('../pages/MdPage'))
 const I18nextPage = lazy(() => import('../pages/I18nextPage'))
 const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
+const ErrorPage = lazy(() => import('../pages/ErrorPage'))
+
 
 export type RoutersType = RouteObject & {
   meta: {
@@ -25,7 +27,7 @@ export type RoutersType = RouteObject & {
 export const routers = [
   {
     index: true,
-    Component: Home,
+    element: <Home />,
     meta: {
       key: 'home',
       label: '首页',
@@ -66,6 +68,15 @@ export const routers = [
       key: 'files-upload',
       label: '多文件上传',
       icon: <UploadOutlined />,
+    }
+  },
+  {
+    path: 'error-page',
+    element: <ErrorPage />,
+    meta: {
+      key: 'error-page',
+      label: '错误页面',
+      icon: <CloseCircleOutlined />,
     }
   },
 ] as RoutersType[]

@@ -39,7 +39,7 @@ function FilesUploadDrawer({
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
-          draft[index].percent = Math.min(intervalPercentMax, draft[index].percent + 10)
+          draft[index].percent = Math.min(intervalPercentMax, draft[index].percent + (draft[index].percent < 50 ? 10 : 5))
         }
       })
     }, 300)
@@ -72,7 +72,7 @@ function FilesUploadDrawer({
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
-          draft[index].percent = Math.min(intervalPercentMax, draft[index].percent + 10)
+          draft[index].percent = Math.min(intervalPercentMax, draft[index].percent + (draft[index].percent < 50 ? 10 : 5))
         }
       })
     }, 300)
