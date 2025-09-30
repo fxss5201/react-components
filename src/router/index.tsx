@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { lazy } from 'react'
-import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined } from '@ant-design/icons'
+import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined } from '@ant-design/icons'
 import { type LangResourcesType } from '../locales/index'
 import App from '../App'
 import Home from '../pages/Home'
@@ -11,6 +11,7 @@ const BASE_URL = import.meta.env.BASE_URL
 const FilesUpload = lazy(() => import('../pages/FilesUpload'))
 const MdPage = lazy(() => import('../pages/MdPage'))
 const I18nextPage = lazy(() => import('../pages/I18nextPage'))
+const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
 
 export type RoutersType = RouteObject & {
   meta: {
@@ -38,6 +39,15 @@ export const routers = [
       key: 'i18next-page',
       label: 'i18next 页面',
       icon: <TranslationOutlined />,
+    }
+  },
+  {
+    path: 'copy-to-clipboard-page',
+    element: <CopyToClipboardPage />,
+    meta: {
+      key: 'copy-to-clipboard-page',
+      label: '复制到剪贴板',
+      icon: <CopyOutlined />,
     }
   },
   {

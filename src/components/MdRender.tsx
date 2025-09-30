@@ -6,7 +6,7 @@ import { useTheme } from '../storeHooks/useTheme'
 import { useRouter } from '../Hooks/useRouter'
 import CopyToClipboard from './CopyToClipboard'
 
-function MdRender({markdown}: {markdown: string}) {
+function MdRender({md}: {md: string}) {
   const { theme } = useTheme()
   const router = useRouter()
 
@@ -14,7 +14,7 @@ function MdRender({markdown}: {markdown: string}) {
     <div className='markdown-body'>
       <Markdown
         remarkPlugins={[remarkGfm]}
-        children={markdown}
+        children={md}
         components={{
           a(props) {
             const { href, children } = props
@@ -42,7 +42,7 @@ function MdRender({markdown}: {markdown: string}) {
             const match = /language-(\w+)/.exec(className || '')
             return match ? (
               <div className='relative'>
-                <div className='absolute top-[-24px] right-[-16px]'>
+                <div className='absolute top-[-24px] right-[-16px] z-10'>
                   <CopyToClipboard text={children as string}></CopyToClipboard>
                 </div>
                 <SyntaxHighlighter

@@ -2,6 +2,7 @@
   "Menu": {
     "home": "Home",
     "i18next-page": "i18next",
+    "copy-to-clipboard-page": "Copy to Clipboard",
     "md-page": "Markdown",
     "files-upload": "Files Upload"
   }

@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <div className='px-4 markdown-body pt-2'>
-      <MdRender markdown={locale === 'zh' ? homeMd : homeMdEn} />
+      <MdRender md={locale === 'zh' ? homeMd : homeMdEn} />
       <ul className='my-2!'>
         {functionItems.map((item) => (
           <li key={item.meta.key}>

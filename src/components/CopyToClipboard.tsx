@@ -43,6 +43,7 @@ function CopyToClipboard({
 
     const copyText = getText ? getText() : text
     if (!copyText) {
+      console.error(new Error(currentLocale === 'zh' ? '文本为空' : 'text is empty'))
       onError?.(new Error(currentLocale === 'zh' ? '文本为空' : 'text is empty'))
       return
     }
@@ -60,6 +61,7 @@ function CopyToClipboard({
       }
     } else {
       setCopied(false)
+      console.error(new Error(currentLocale === 'zh' ? '复制失败' : 'copy failed'))
       onError?.(new Error(currentLocale === 'zh' ? '复制失败' : 'copy failed'))
     }
   }, [disabled, getText, text, timeout, onCopy, onError, currentLocale])

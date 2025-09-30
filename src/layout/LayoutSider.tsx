@@ -16,15 +16,15 @@ function LayoutSider() {
   useEffect(() => {
     if (route === '') {
       setSelectedKey('home')
-      setTitle('首页 | react-components')
+      setTitle(`${t('Menu.home')} | react-components`)
     } else {
       const location = routers.find(item => item.path === route)
       if (location) {
         setSelectedKey(location.meta.key)
-        setTitle(`${location.meta.label} | react-components`)
+        setTitle(`${t(`Menu.${location.meta.key}`)} | react-components`)
       }
     }
-  }, [route])
+  }, [route, t])
 
   const menuItems = useMemo(() => {
     return routers.map(item => {

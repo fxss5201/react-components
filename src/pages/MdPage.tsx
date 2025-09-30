@@ -26,7 +26,7 @@ function MdPage() {
         <div className='p-4'>
           <div className='text-lg font-bold mb-3'>Markdown 预览（边框内的内容）</div>
           <div className='border border-gray-300 dark:border-gray-700 rounded p-4'>
-            <MdRender markdown={markdown} />
+            <MdRender md={markdown} />
           </div>
         </div>
       </Splitter.Panel>
