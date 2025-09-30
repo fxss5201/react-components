@@ -45,3 +45,10 @@ for (var i = 1; i <= 5; i++) {
   })(i);
 }
 ```
+
+```tsx
+import { useState, useRef, useCallback, useEffect } from 'react'
+import copy from 'copy-to-clipboard'
+import { Button, Tooltip } from 'antd'
+import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
+```

@@ -12,6 +12,7 @@ import cn from 'classnames'
 import LayoutHead from './layout/LayoutHead'
 import LayoutSider from './layout/LayoutSider'
 import { useLocale } from './Hooks/useLocale'
+import LocaleContext from './context/LocaleContext'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -28,25 +29,27 @@ function App() {
           algorithm: theme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
         }}
         >
-        <AntdApp>
-          <Layout className='h-screen'>
-            <Header className={cn('border-b border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
-              <LayoutHead />
-            </Header>
-            <Layout>
-              <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme={theme} className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
-                <LayoutSider />
-              </Sider>
-              <Layout className='border-l border-gray-200 dark:border-gray-700'>
-                <Content className={cn('overflow-auto', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
-                  <ScrollRestoration />
-                  <Outlet />
-                </Content>
-                <Footer className={cn('border-t border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>Footer</Footer>
+        <LocaleContext value={locale}>
+          <AntdApp>
+            <Layout className='h-screen'>
+              <Header className={cn('border-b border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+                <LayoutHead />
+              </Header>
+              <Layout>
+                <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme={theme} className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+                  <LayoutSider />
+                </Sider>
+                <Layout className='border-l border-gray-200 dark:border-gray-700'>
+                  <Content className={cn('overflow-auto', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+                    <ScrollRestoration />
+                    <Outlet />
+                  </Content>
+                  <Footer className={cn('border-t border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>Footer</Footer>
+                </Layout>
               </Layout>
             </Layout>
-          </Layout>
-        </AntdApp>
+          </AntdApp>
+        </LocaleContext>
       </ConfigProvider>
     </StyleProvider>
   )

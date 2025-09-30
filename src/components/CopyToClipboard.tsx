@@ -1,0 +1,94 @@
+import { useState, useRef, useCallback, useEffect, useContext } from 'react'
+import copy from 'copy-to-clipboard'
+import { Button, Tooltip } from 'antd'
+import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
+import LocaleContext from '../context/LocaleContext'
+import { type LocaleType } from '../config'
+
+export type CopyToClipboardProps = {
+  text?: string,
+  getText?: () => string,
+  children?: React.ReactNode | ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
+  disabled?: boolean,
+  timeout?: number,
+  onCopy?: (text: string) => void,
+  onError?: (error: Error) => void,
+  locale?: LocaleType
+}
+
+function CopyToClipboard({
+  text,
+  getText,
+  children,
+  disabled = false,
+  timeout = 2000,
+  onCopy,
+  onError,
+  locale
+}: CopyToClipboardProps) {
+  const [copied, setCopied] = useState<boolean>(false)
+  const timeoutRef = useRef<number | null>(null)
+  const localeContext = useContext(LocaleContext)
+  const currentLocale = locale || localeContext
+
+  const clearPreviousTimeout = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+  }, [])
+
+  const copyToClipboard = useCallback(async () => {
+    if (disabled) return
+
+    const copyText = getText ? getText() : text
+    if (!copyText) {
+      onError?.(new Error(currentLocale === 'zh' ? '文本为空' : 'text is empty'))
+      return
+    }
+
+    const success = copy(copyText)
+    if (success) {
+      setCopied(true)
+      onCopy?.(copyText)
+
+      if (timeout > 0) {
+        timeoutRef.current = setTimeout(() => {
+          setCopied(false)
+          timeoutRef.current = null
+        }, timeout)
+      }
+    } else {
+      setCopied(false)
+      onError?.(new Error(currentLocale === 'zh' ? '复制失败' : 'copy failed'))
+    }
+  }, [disabled, getText, text, timeout, onCopy, onError, currentLocale])
+
+  useEffect(() => {
+    return () => {
+      clearPreviousTimeout()
+    }
+  }, [clearPreviousTimeout])
+
+  const renderContent = useCallback(() => {
+    if (typeof children === 'function') {
+      return children({ copied, copyToClipboard })
+    }
+    return children || (
+      copied ? (
+          <>
+            <Button type="text">{currentLocale === 'zh' ? '复制成功' : 'copy success'}</Button>
+            <Button type="text" icon={<CheckOutlined />} />
+          </>
+        ) : (
+          <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
+            <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
+          </Tooltip>
+        )
+    )
+  }, [children, copied, copyToClipboard, currentLocale])
+
+  return renderContent()
+}
+
+export default CopyToClipboard

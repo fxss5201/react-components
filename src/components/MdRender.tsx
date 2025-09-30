@@ -4,6 +4,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from '../storeHooks/useTheme'
 import { useRouter } from '../Hooks/useRouter'
+import CopyToClipboard from './CopyToClipboard'
 
 function MdRender({markdown}: {markdown: string}) {
   const { theme } = useTheme()
@@ -40,12 +41,19 @@ function MdRender({markdown}: {markdown: string}) {
             const {children, className, ...rest} = props
             const match = /language-(\w+)/.exec(className || '')
             return match ? (
-              <SyntaxHighlighter
-                PreTag="div"
-                children={String(children).replace(/\n$/, '')}
-                language={match[1]}
-                style={theme === 'dark' ? dark : undefined}
-              />
+              <div className='relative'>
+                <div className='absolute top-[-24px] right-[-16px]'>
+                  <CopyToClipboard text={children as string}></CopyToClipboard>
+                </div>
+                <SyntaxHighlighter
+                  PreTag="div"
+                  className="code-block"
+                  children={String(children).replace(/\n$/, '')}
+                  language={match[1]}
+                  showLineNumbers={true}
+                  style={theme === 'dark' ? dark : undefined}
+                />
+              </div>
             ) : (
               <code {...rest} className={className}>
                 {children}
