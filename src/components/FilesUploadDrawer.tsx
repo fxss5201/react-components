@@ -26,7 +26,7 @@ function FilesUploadDrawer({
   setOpen,
   list = []
 }: FilesUploadDrawerProps) {
-  const { message } = App.useApp()
+  const { message, modal } = App.useApp()
   const fileListRef = useRef<HTMLUListElement>(null)
 
   const intervalPercentMax = 80
@@ -162,11 +162,27 @@ function FilesUploadDrawer({
     })
   }, [updateFileList])
 
+  const doCloseFn = useCallback(() => {
+    modal.confirm({
+      title: '关闭提示',
+      content: '关闭后将停止继续上传文件，是否确认关闭吗？',
+      okType: 'danger',
+      closable: true,
+      onOk: () => {
+        setOpen(false)
+      },
+      onCancel: () => {
+        // 取消关闭
+      }
+    })
+}, [setOpen, modal])
+
   return (
     <Drawer
       title={title}
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={doCloseFn}
+      maskClosable={false}
       classNames={{
         body: 'pt-4 pb-0 px-0'
       }}
