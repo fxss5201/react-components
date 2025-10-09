@@ -120,6 +120,7 @@ function FilesUploadDrawer({
     }
   }, [open, list, updateFileList])
 
+  const [refreshDone, setRefreshDone] = useState<boolean>(true)
   useEffect(() => {
     if (!open) return
     if (uploading) return
@@ -132,7 +133,8 @@ function FilesUploadDrawer({
     
     const nextIndex = fileList.findIndex(item => item.percentStatus === 'active')
     if (nextIndex !== -1) {
-      fileListRef.current!.scrollTop = nextIndex * 62
+      const itemElement = fileListRef.current?.children[nextIndex] as HTMLElement
+      itemElement?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       const nextItem = fileList[nextIndex]
       if (nextItem) {
         const timer = setTimeout(() => {
@@ -149,7 +151,6 @@ function FilesUploadDrawer({
     }
   }, [open, fileList, uploadFile, uploadFolder, uploading, setOpen, message])
 
-  const [refreshDone, setRefreshDone] = useState<boolean>(true)
   const onRefreshUpload = useCallback(() => {
     setRefreshDone(false)
     updateFileList((draft) => {
@@ -200,7 +201,7 @@ function FilesUploadDrawer({
         </div>
         <ul className='flex-auto overflow-x-hidden overflow-y-auto px-6' ref={fileListRef}>
           {fileList.map((item, index) => (
-            <li key={item.name} className={cn('py-2', { 'border-t border-zinc-300': index > 0 })}>
+            <li key={item.filePath} className={cn('py-2', { 'border-t border-zinc-300': index > 0 })}>
               <div className='flex items-center overflow-hidden'>
                 <div className='flex-shrink-0 leading-[24px] h-[24px]'>{item.icon}</div>
                 <span className='ml-2 flex-auto overflow-hidden overflow-ellipsis whitespace-nowrap leading-[24px]' title={item.name}>{item.name}</span>
