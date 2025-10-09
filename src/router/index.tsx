@@ -74,14 +74,6 @@ export const routers = [
     }
   },
   {
-    path: 'error-page',
-    element: <ErrorPage />,
-    meta: {
-      label: '错误页面',
-      icon: <CloseCircleOutlined />,
-    }
-  },
-  {
     path: 'pro-components',
     meta: {
       label: '专业组件',
@@ -95,7 +87,15 @@ export const routers = [
         }
       }
     ]
-  }
+  },
+  {
+    path: 'error-page',
+    element: <ErrorPage />,
+    meta: {
+      label: '错误页面',
+      icon: <CloseCircleOutlined />,
+    }
+  },
 ] as RoutersType[]
 
 const router = createBrowserRouter([

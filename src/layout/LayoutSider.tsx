@@ -16,6 +16,7 @@ function LayoutSider() {
   const { t, i18n } = useTranslation()
 
   const [selectedKey, setSelectedKey] = useState(pathname)
+  const [openKeys, setOpenKeys] = useState<string[]>([])
   const [title, setTitle] = useState('')
   useEffect(() => {
     const location = routersList.find(item => item.path === pathname)
@@ -25,6 +26,21 @@ function LayoutSider() {
       setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | react-components`)
     }
   }, [pathname, t])
+
+  useEffect(() => {
+    const openKeyList = pathname.split('/').filter(item => item !== '')
+    const openKeyArray: string[] = []
+    openKeyList.forEach((_, index) => {
+      if (index < openKeyList.length) {
+        openKeyArray.push(`/${openKeyList.slice(0, index).join('/')}`)
+      }
+    })
+    setOpenKeys(openKeyArray)
+  }, [pathname])
+
+  function onOpenChange(keys: string[]) {
+    setOpenKeys(keys)
+  }
 
   function getMenuItems(routersTree: RoutersType[]): MenuItem[] {
     return routersTree.map(item => {
@@ -44,13 +60,11 @@ function LayoutSider() {
     })
   }
 
-
   const menuItems = useMemo(() => {
     return getMenuItems(routersTree)
   }, [i18n.language])
 
   function menuClickFn({ key }: { key: string }) {
-    console.log(key)
     const location = routersList.find(item => item.path === key)
     navigate(location!.path!)
   }
@@ -58,7 +72,7 @@ function LayoutSider() {
   return (
     <>
       <title>{title}</title>
-      <Menu theme={theme} items={menuItems} selectedKeys={[selectedKey]} onClick={menuClickFn} />
+      <Menu theme={theme} items={menuItems} selectedKeys={[selectedKey]} openKeys={openKeys} onClick={menuClickFn} onOpenChange={onOpenChange} mode='inline' />
     </>
   )
 }
