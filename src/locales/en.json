@@ -5,6 +5,7 @@
     "copy-to-clipboard-page": "Copy to Clipboard",
     "md-page": "Markdown",
     "files-upload": "Files Upload",
-    "error-page": "Error Page"
+    "error-page": "Error Page",
+    "skeleton": "Skeleton"
   }
 }

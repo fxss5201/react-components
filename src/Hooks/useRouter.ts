@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+import { type NavigateOptions, type To } from 'react-router'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -9,13 +10,21 @@ const BASE_URL = import.meta.env.BASE_URL
  */
 export function useRouter() {
   const navigate = useNavigate()
-  const navigateCallback = useCallback((path: string | number) => {
-    // 判断路径类型，如果是字符串则添加基础URL前缀
+  const navigateCallback = useCallback((path: To, options?: NavigateOptions) => {
     if (typeof path === 'string') {
-      navigate(`${BASE_URL}${path}`)
-    } else {
+      // 判断路径类型，如果是字符串则添加基础URL前缀
+      navigate(`${BASE_URL}${path.startsWith('/') ? path.slice(1) : path}`, options)
+    } else if (typeof path === 'number') {
       // 如果是数字则直接使用（通常用于导航到历史记录中的特定位置）
       navigate(path)
+    } else if (typeof path === 'object') {
+      // 如果是对象则直接使用（通常用于导航到特定位置）
+      navigate({
+        ...path,
+        pathname: `${BASE_URL}${path.pathname?.startsWith('/') ? path.pathname.slice(1) : path.pathname}`
+      }, options)
+    } else {
+      throw new Error('Invalid path type')
     }
   }, [navigate])
   return navigateCallback

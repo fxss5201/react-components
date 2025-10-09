@@ -5,6 +5,7 @@
     "copy-to-clipboard-page": "复制到剪贴板",
     "md-page": "Markdown",
     "files-upload": "多文件上传",
-    "error-page": "错误页面"
+    "error-page": "错误页面",
+    "skeleton": "骨架屏"
   }
 }
