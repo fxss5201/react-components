@@ -35,16 +35,16 @@ function App() {
           >
           <LocaleContext value={locale}>
             <AntdApp>
-              <Layout className='h-screen'>
-                <Header className={cn('border-b border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+              <Layout>
+                <Header className={cn('border-b border-gray-200 dark:border-gray-700 sticky top-0 z-1000', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
                   <LayoutHead />
                 </Header>
                 <Layout>
-                  <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme={theme} className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
+                  <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme={theme} className={cn('sticky top-[64px] z-999 h-[calc(100vh-64px)]', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>
                     <LayoutSider />
                   </Sider>
                   <Layout className='border-l border-gray-200 dark:border-gray-700'>
-                    <Content className={cn('overflow-auto', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')} ref={contentRef}>
+                    <Content className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')} ref={contentRef}>
                       <ScrollRestoration />
                       <ErrorBoundary key={location.pathname} FallbackComponent={ErrorFallback}>
                         <Outlet />
