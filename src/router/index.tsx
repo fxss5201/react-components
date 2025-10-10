@@ -102,7 +102,7 @@ const router = createBrowserRouter([
   {
     path: BASE_URL,
     element: <App />,
-    children: routers,
+    children: routers
   }
 ])
 

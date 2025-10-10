@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import zhCN from 'antd/es/locale/zh_CN'
 import enUS from 'antd/es/locale/en_US'
 import 'dayjs/locale/zh-cn'
@@ -14,6 +14,8 @@ import { useLocale } from './Hooks/useLocale'
 import LocaleContext from './context/LocaleContext'
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorFallback from './ErrorFallback'
+import { useRouteLoading } from './storeHooks/useRouteLoading'
+import NProgressUI from './components/NProgressUI'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -23,6 +25,11 @@ function App() {
   const locale = useLocale()
   const contentRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
+  const { isRouteLoading, changeRouteLoading } = useRouteLoading()
+
+  useEffect(() => {
+    changeRouteLoading(false)
+  }, [location.pathname])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -45,6 +52,7 @@ function App() {
                   </Sider>
                   <Layout className='border-l border-gray-200 dark:border-gray-700'>
                     <Content className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')} ref={contentRef}>
+                      <NProgressUI isAnimating={isRouteLoading} />
                       <ScrollRestoration />
                       <ErrorBoundary key={location.pathname} FallbackComponent={ErrorFallback}>
                         <Outlet />

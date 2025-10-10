@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+import { useNavigateFn } from '../Hooks/useRouter'
 import MdRender from '../components/MdRender'
 import homeMd from '../md/homeMd.md?raw'
 import homeMdEn from '../md/en/homeMd.md?raw'
@@ -10,7 +10,7 @@ import HomeMenuList from '../components/HomeMenuList'
 const noShowFunctionList = ['/react-components/']
 
 function Home() {
-  const navigate = useNavigate()
+  const navigate = useNavigateFn()
   const functionItems: RoutersType[] = routersTree.filter((item) => !noShowFunctionList.includes(item.path!))
   const locale = useLocale()
 

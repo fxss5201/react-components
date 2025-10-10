@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { type NavigateOptions, type To } from 'react-router'
+import { useRouteLoading } from '../storeHooks/useRouteLoading'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -10,7 +11,9 @@ const BASE_URL = import.meta.env.BASE_URL
  */
 export function useRouter() {
   const navigate = useNavigate()
+  const { changeRouteLoading } = useRouteLoading()
   const navigateCallback = useCallback((path: To, options?: NavigateOptions) => {
+    changeRouteLoading(true)
     if (typeof path === 'string') {
       // 判断路径类型，如果是字符串则添加基础URL前缀
       navigate(`${BASE_URL}${path.startsWith('/') ? path.slice(1) : path}`, options)
@@ -26,7 +29,7 @@ export function useRouter() {
     } else {
       throw new Error('Invalid path type')
     }
-  }, [navigate])
+  }, [navigate, changeRouteLoading])
   return navigateCallback
 }
 
@@ -36,4 +39,14 @@ export function useRouter() {
 export function useRoute() {
   const { pathname } = useLocation()
   return pathname.replace(BASE_URL, '')
+}
+
+export function useNavigateFn() {
+  const { changeRouteLoading } = useRouteLoading()
+  const navigate = useNavigate()
+  const navigateCallback = useCallback((path: To, options?: NavigateOptions) => {
+    changeRouteLoading(true)
+    navigate(path, options)
+  }, [navigate, changeRouteLoading])
+  return navigateCallback
 }

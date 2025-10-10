@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation } from 'react-router'
+import { useNavigateFn } from '../Hooks/useRouter'
 import { Menu } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../storeHooks/useTheme'
@@ -11,7 +12,7 @@ type MenuItem = Required<MenuProps>['items'][number]
 
 function LayoutSider() {
   const { theme } = useTheme()
-  const navigate = useNavigate()
+  const navigate = useNavigateFn()
   const { pathname } = useLocation()
   const { t, i18n } = useTranslation()
 
@@ -65,8 +66,10 @@ function LayoutSider() {
   }, [i18n.language])
 
   function menuClickFn({ key }: { key: string }) {
-    const location = routersList.find(item => item.path === key)
-    navigate(location!.path!)
+    if (key !== selectedKey) {
+      const location = routersList.find(item => item.path === key)
+      navigate(location!.path!)
+    }
   }
 
   return (
