@@ -5,7 +5,7 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from '../storeHooks/useTheme'
 import { useRouter, useRoute } from '../Hooks/useRouter'
 import CopyToClipboard from './CopyToClipboard'
-import { LinkOutlined } from '@ant-design/icons'
+import OutLinkIcon from './OutLinkIcon'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -48,7 +48,7 @@ function MdRender({md}: {md: string}) {
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
               >
-                {isExternal ? <LinkOutlined /> : null}{children}
+                {children}{isExternal ? <OutLinkIcon /> : null}
               </a>
             )
           },
