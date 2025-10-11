@@ -3,12 +3,17 @@ import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from '../storeHooks/useTheme'
-import { useRouter } from '../Hooks/useRouter'
+import { useRouter, useRoute } from '../Hooks/useRouter'
 import CopyToClipboard from './CopyToClipboard'
+import { LinkOutlined } from '@ant-design/icons'
 
+const BASE_URL = import.meta.env.BASE_URL
+
+// 内部链接支持 相对路径（相对于 location.pathname 去除 BASE_URL ）和绝对路径（ location.pathname ）
 function MdRender({md}: {md: string}) {
   const { theme } = useTheme()
   const router = useRouter()
+  const route = useRoute()
 
   return (
     <div className='markdown-body'>
@@ -20,20 +25,30 @@ function MdRender({md}: {md: string}) {
             const { href, children } = props
             // 判断是否为外部链接：以 http:// 或 https:// 开头
             const isExternal = /^https?:\/\//.test(href!)
+            // 统一处理链接，外部链接则不动，内部链接需要去掉 BASE_URL 前缀
+            const lastHref = isExternal
+              ? href
+              : href?.startsWith(BASE_URL)
+                ? href?.substring(BASE_URL.length)
+                : href?.startsWith(BASE_URL.substring(1))
+                  ? href?.substring(BASE_URL.substring(1).length)
+                  : href
 
             return (
               <a
-                href={href}
+                href={lastHref}
                 onClick={(e) => {
                   if (!isExternal) {
                     e.preventDefault()
-                    router(href!)
+                    if (route !== lastHref) {
+                      router(lastHref!)
+                    }
                   }
                 }}
                 target={isExternal ? '_blank' : undefined}
                 rel={isExternal ? 'noopener noreferrer' : undefined}
               >
-                {children}
+                {isExternal ? <LinkOutlined /> : null}{children}
               </a>
             )
           },
