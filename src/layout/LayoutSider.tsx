@@ -18,17 +18,13 @@ function LayoutSider() {
 
   const [selectedKey, setSelectedKey] = useState(pathname)
   const [openKeys, setOpenKeys] = useState<string[]>([])
-  const [title, setTitle] = useState('')
+
   useEffect(() => {
     const location = routersList.find(item => item.path === pathname)
     if (location) {
       setSelectedKey(location.path as string)
-      // @ts-ignore
-      setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | react-components`)
     }
-  }, [pathname, t])
 
-  useEffect(() => {
     const openKeyList = pathname.split('/').filter(item => item !== '')
     const openKeyArray: string[] = []
     openKeyList.forEach((_, index) => {
@@ -44,7 +40,7 @@ function LayoutSider() {
   }
 
   function getMenuItems(routersTree: RoutersType[]): MenuItem[] {
-    return routersTree.map(item => {
+    return routersTree.filter(item => item.meta?.hideInMenu !== true).map(item => {
       return {
         key: item.path || '',
         // @ts-ignore
@@ -73,10 +69,15 @@ function LayoutSider() {
   }
 
   return (
-    <>
-      <title>{title}</title>
-      <Menu theme={theme} items={menuItems} selectedKeys={[selectedKey]} openKeys={openKeys} onClick={menuClickFn} onOpenChange={onOpenChange} mode='inline' />
-    </>
+    <Menu
+      theme={theme}
+      items={menuItems}
+      selectedKeys={[selectedKey]}
+      openKeys={openKeys}
+      onClick={menuClickFn}
+      onOpenChange={onOpenChange}
+      mode='inline'
+    />
   )
 }
 

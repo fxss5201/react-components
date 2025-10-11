@@ -1,4 +1,7 @@
 {
+  "Expand Menu": "展开菜单",
+  "Collapse Menu": "收起菜单",
+
   "Menu": {
     "home": "首页",
     "i18next-page": "多语言",
