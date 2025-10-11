@@ -7,7 +7,7 @@ function ErrorPage() {
   const locale = useLocale()
   
   return (
-    <div className="px-4 pt-2">
+    <div className="px-4">
       <MdRender md={locale === 'en' ? errorPageMdEn : errorPageMd} />
       {/* <div>{aaa}</div> */}
     </div>

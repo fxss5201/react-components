@@ -10,6 +10,8 @@ import ErrorFallback from '../ErrorFallback'
 import { useLayoutState } from '../storeHooks/useLayoutState'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import LayoutBreadcrumb from '../layout/LayoutBreadcrumb'
+import config from '../config'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -17,7 +19,7 @@ function App() {
   const { theme } = useTheme()
   const contentRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
-  const { headShow, menuShow, menuCollapsed, footerShow, changeMenuCollapsed } = useLayoutState()
+  const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, changeMenuCollapsed } = useLayoutState()
   const { t } = useTranslation()
 
   return (
@@ -39,6 +41,7 @@ function App() {
           </Sider>}
           <Layout className='border-l border-gray-200 dark:border-gray-700'>
             <Content className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')} ref={contentRef}>
+              { config.breadcrumb && breadcrumbShow && <LayoutBreadcrumb />}
               <ErrorBoundary key={location.pathname} FallbackComponent={ErrorFallback}>
                 <Outlet />
               </ErrorBoundary>

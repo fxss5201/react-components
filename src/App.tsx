@@ -16,13 +16,14 @@ import NProgressUI from './components/NProgressUI'
 import { useLayoutState } from './storeHooks/useLayoutState'
 import { useTranslation } from 'react-i18next'
 import { routersList } from './router'
+import config from './config'
 
 function App() {
   const { theme } = useTheme()
   const locale = useLocale()
   const { pathname } = useLocation()
   const { isRouteLoading, changeRouteLoading } = useRouteLoading()
-  const { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow } = useLayoutState()
+  const { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow } = useLayoutState()
   const { t } = useTranslation()
   const [title, setTitle] = useState('')
 
@@ -58,6 +59,14 @@ function App() {
           changeFooterShow(false)
         } else {
           changeFooterShow(true)
+        }
+
+        if (config.breadcrumb) {
+          if (location.meta?.hideBreadcrumb) {
+            changeBreadcrumbShow(false)
+          } else {
+            changeBreadcrumbShow(true)
+          }
         }
       }
     }, [pathname, t])

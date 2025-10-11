@@ -155,7 +155,7 @@ function FilesUpload() {
   const locale = useLocale()
 
   return (
-    <div className='px-4 pt-2'>
+    <div className='px-4'>
       <MdRender md={locale === 'zh' ? filesUploadMd : filesUploadMdEn} />
       
       <div className='mt-4'>

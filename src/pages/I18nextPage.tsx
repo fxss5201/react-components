@@ -7,7 +7,7 @@ function I18nextPage() {
   const changeLocale = useChangeLocale()
 
   return (
-    <div className='p-4'>
+    <div className='px-4'>
       <p>当前语言: {i18n.language}</p>
       <Button type="primary" onClick={() => changeLocale(i18n.language === 'en' ? 'zh' : 'en')}>切换语言</Button>
       <div className='mt-4'>菜单：</div>

@@ -20,6 +20,9 @@ const config = {
 
   // 顶部导航栏github链接
   githubLink: 'https://github.com/fxss5201/react-components',
+
+  // 是否显示面包屑导航
+  breadcrumb: true,
 }
 
 export default config
