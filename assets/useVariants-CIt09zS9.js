@@ -1,0 +1,1 @@
+import{r as s,n as f,aX as C,aY as V}from"./index-H8g460DX.js";const x=(r,i,l=void 0)=>{var t,e;const{variant:d,[r]:a}=s.useContext(f),o=s.useContext(C),u=a?.variant;let n;typeof i<"u"?n=i:l===!1?n="borderless":n=(e=(t=o??u)!==null&&t!==void 0?t:d)!==null&&e!==void 0?e:"outlined";const c=V.includes(n);return[n,c]};export{x as u};
