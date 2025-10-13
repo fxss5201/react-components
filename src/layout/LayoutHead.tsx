@@ -78,7 +78,7 @@ function LayoutHead({ className }: { className?: string }) {
         )}
         {config.githubLink && (
           <a href={config.githubLink} target='_blank' rel='noopener noreferrer'
-            className='text-[24px] ml-8 text-inherit hover:text-[#1677ff]'>
+            className='text-[24px] ml-8 text-[#000000e0]! dark:text-[#ffffffd9]! hover:text-[#1677ff]!'>
             <GithubOutlined />
           </a>
         )}
