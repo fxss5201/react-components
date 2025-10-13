@@ -7,10 +7,11 @@ import { useTheme } from '../storeHooks/useTheme'
 import { routersTree, routersList } from '../router'
 import type { RoutersType } from '../router'
 import type { MenuProps } from 'antd'
+import cn from 'classnames'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
-function LayoutSider() {
+function LayoutSider({ className }: { className?: string }) {
   const { theme } = useTheme()
   const navigate = useNavigateFn()
   const { pathname } = useLocation()
@@ -77,6 +78,7 @@ function LayoutSider() {
       onClick={menuClickFn}
       onOpenChange={onOpenChange}
       mode='inline'
+      className={cn(className)}
     />
   )
 }

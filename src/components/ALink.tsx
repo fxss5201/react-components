@@ -1,13 +1,15 @@
 import { useRouter, useRoute } from '../Hooks/useRouter'
 import OutLinkIcon from './OutLinkIcon'
+import cn from 'classnames'
 
 const BASE_URL = import.meta.env.BASE_URL
 
 function ALink({
-  href, children,
+  href, children, className,
 }: {
   href: string
   children: React.ReactNode
+  className?: string
 }) {
   const router = useRouter()
   const route = useRoute()
@@ -34,7 +36,7 @@ function ALink({
       }}
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noopener noreferrer' : undefined}
-      className='text-inherit hover:text-blue-600 mr-4'>
+      className={cn(className)}>
       {children}{isExternal ? <OutLinkIcon /> : ''}
     </a>
   )

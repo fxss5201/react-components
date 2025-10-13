@@ -5,12 +5,13 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { useTheme } from '../storeHooks/useTheme'
 import CopyToClipboard from './CopyToClipboard'
 import ALink from './ALink'
+import cn from 'classnames'
 
-function MdRender({md}: {md: string}) {
+function MdRender({md, className}: {md: string; className?: string}) {
   const { theme } = useTheme()
 
   return (
-    <div className='markdown-body'>
+    <div className={cn('markdown-body', className)}>
       <Markdown
         remarkPlugins={[remarkGfm]}
         children={md}

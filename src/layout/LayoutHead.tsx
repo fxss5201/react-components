@@ -8,7 +8,6 @@ import { useLocale } from '../Hooks/useLocale'
 import { useChangeLocale } from '../Hooks/useChangeLocale'
 import IconFont from '../components/IconFont'
 
-
 type ThemeOption = {
   type: ThemeType
   label: string
@@ -29,14 +28,14 @@ const localeOptions: LocaleOption[] = [
   { type: 'en', label: 'English', icon: <IconFont type='icon-en' /> },
 ]
 
-function LayoutHead() {
+function LayoutHead({ className }: { className?: string }) {
   const router = useRouter()
   const { storeTheme, changeTheme } = useTheme()
   const locale = useLocale()
   const changeLocale = useChangeLocale()
 
   return (
-    <Flex justify='space-between'>
+    <Flex justify='space-between' className={cn(className)}>
       <div className='text-[24px] cursor-pointer' onClick={() => router('')}>react-components</div>
       <div className='flex items-center leading-[24px]'>
         {config.theme && (
