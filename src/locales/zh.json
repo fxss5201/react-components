@@ -14,6 +14,19 @@
     "files-upload": "多文件上传",
     "error-page": "错误页面",
     "pro-components": "Pro Components",
-    "skeleton": "骨架屏"
+    "skeleton": "骨架屏",
+    "activitys": "状态保存",
+    "activity-index": "组件状态",
+    "activity-route": "路由状态",
+    "add-activity": "路由保状态（非受控）",
+    "add-activity1": "路由保状态（受控）",
+    "no-activity": "路由不保状态（非受控）",
+    "no-activity1": "路由不保状态（受控）"
+  },
+  "ActivityIndex": {
+    "no-activity": "不保存状态",
+    "uncontrolled": "非受控",
+    "controlled": "受控",
+    "add-activity": "保存状态"
   }
 }

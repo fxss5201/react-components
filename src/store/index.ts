@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import themeReducer from './themeSlice'
 import routeLoadingReducer from './routeLoadingSlice'
 import layoutStateReducer from './layoutStateSlice'
+import activitysReducer from './activitysSlice'
 
 const store =  configureStore({
   reducer: {
     theme: themeReducer,
     routeLoading: routeLoadingReducer,
     layoutState: layoutStateReducer,
+    activitys: activitysReducer,
   }
 })
 

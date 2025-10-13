@@ -17,6 +17,7 @@ import { useLayoutState } from './storeHooks/useLayoutState'
 import { useTranslation } from 'react-i18next'
 import { routersList } from './router'
 import config from './config'
+import { useActivitys } from './storeHooks/useActivitys'
 
 function App() {
   const { theme } = useTheme()
@@ -26,6 +27,7 @@ function App() {
   const { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow } = useLayoutState()
   const { t } = useTranslation()
   const [title, setTitle] = useState('')
+  const { addActivitys } = useActivitys()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -36,6 +38,10 @@ function App() {
       if (location) {
         // @ts-ignore
         setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | react-components`)
+
+        if (location.meta?.activity) {
+          addActivitys(location.path!)
+        }
 
         if (location.meta?.hideHead) {
           changeHeadShow(false)

@@ -13,15 +13,18 @@ import { useTranslation } from 'react-i18next'
 import LayoutBreadcrumb from '../layout/LayoutBreadcrumb'
 import config from '../config'
 import LayoutFooter from '../layout/LayoutFooter'
+import { useActivitys } from '../storeHooks/useActivitys'
+import { routersList } from '../router'
 
 const { Header, Footer, Sider, Content } = Layout
 
-function App() {
+function PageLayout() {
   const { theme } = useTheme()
   const contentRef = useRef<HTMLDivElement>(null)
-  const location = useLocation()
+  const { pathname } = useLocation()
   const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, changeMenuCollapsed } = useLayoutState()
   const { t } = useTranslation()
+  const { activitys } = useActivitys()
 
   const bgClassName = theme === 'dark' ? 'bg-[#002140]' : 'bg-white'
 
@@ -53,9 +56,16 @@ function App() {
                   <LayoutBreadcrumb className={cn('flex-shrink-0 sticky z-999', bgClassName, headShow ? 'top-[64px]' : 'top-0')} />
                 </Activity>
                 <div className='flex-auto'>
-                  <ErrorBoundary key={location.pathname} FallbackComponent={ErrorFallback}>
+                  {!activitys.includes(pathname) && <ErrorBoundary key={pathname} FallbackComponent={ErrorFallback}>
                     <Outlet />
-                  </ErrorBoundary>
+                  </ErrorBoundary>}
+                  {activitys.map(item => (
+                    <Activity key={item} mode={item === pathname ? 'visible' : 'hidden'}>
+                      <ErrorBoundary key={item} FallbackComponent={ErrorFallback}>
+                        {routersList.find(router => router.path === item)?.element}
+                      </ErrorBoundary>
+                    </Activity>
+                  ))}
                 </div>
               </div>
               <FloatButton.BackTop target={() => contentRef.current!} />
@@ -72,4 +82,4 @@ function App() {
   )
 }
 
-export default App
+export default PageLayout

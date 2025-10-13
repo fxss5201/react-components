@@ -1,16 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Splitter, Input } from 'antd'
 import MdRender from '../components/MdRender'
 import mdPageMd from '../md/mdPageMd.md?raw'
 import mdPageMdEn from '../md/en/mdPageMd.md?raw'
 import { useLocale } from '../Hooks/useLocale'
+import { useUpdateEffect } from 'ahooks'
 
 const { TextArea } = Input
 
 function MdPage() {
   const locale = useLocale()
   const [markdown, setMarkdown] = useState(locale === 'en' ? mdPageMdEn : mdPageMd)
-  useEffect(() => {
+  useUpdateEffect(() => {
+    console.log(locale)
     setMarkdown(locale === 'en' ? mdPageMdEn : mdPageMd)
   }, [locale])
 

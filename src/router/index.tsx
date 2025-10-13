@@ -14,8 +14,14 @@ const I18nextPage = lazy(() => import('../pages/I18nextPage'))
 const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const SkeletonPage = lazy(() => import('../pages/pro-components/SkeletonPage'))
+const ActivityIndex = lazy(() => import('../pages/activitys/ActivityIndex'))
+const AddActivity = lazy(() => import('../pages/activitys/AddActivity'))
+const AddActivity1 = lazy(() => import('../pages/activitys/AddActivity1'))
+const NoActivity = lazy(() => import('../pages/activitys/NoActivity'))
+const NoActivity1 = lazy(() => import('../pages/activitys/NoActivity1'))
 
-export type RoutersType = RouteObject & {
+export type RoutersType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
+  element?: React.ReactNode
   meta: {
     // index 为 true 的时候，需要指定 key，否则会报错
     key?: string
@@ -23,6 +29,8 @@ export type RoutersType = RouteObject & {
     label: string
     // 菜单图表
     icon?: React.ReactNode
+    // 当前路由是否需要使用 Activity 组件保存路由状态，默认 false
+    activity?: boolean
     // 是否隐藏在菜单中，父路由为 true 时，子路由也会被隐藏
     hideInMenu?: boolean
     // 进入该路由时是否隐藏头部，默认 false
@@ -39,11 +47,13 @@ export type RoutersType = RouteObject & {
   children?: RoutersType[]
 }
 
-export type RoutersListType = RouteObject & {
+export type RoutersListType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
+  element?: React.ReactNode
   meta: {
     key: string
     label: string
     icon?: React.ReactNode
+    activity?: boolean
     hideInMenu?: boolean
     hideHead?: boolean
     hideMenu?: boolean
@@ -53,6 +63,7 @@ export type RoutersListType = RouteObject & {
   }
 }
 
+// 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
   {
     index: true,
@@ -85,6 +96,7 @@ export const routers = [
     meta: {
       label: 'Markdown 页面',
       icon: <FileMarkdownOutlined />,
+      activity: true,
     }
   },
   {
@@ -94,6 +106,59 @@ export const routers = [
       label: '多文件上传',
       icon: <UploadOutlined />,
     }
+  },
+  {
+    path: 'activitys',
+    meta: {
+      label: '状态保存',
+    },
+    children: [
+      {
+        path: 'activity-index',
+        element: <ActivityIndex />,
+        meta: {
+          label: '组件状态',
+        }
+      },
+      {
+        path: 'activity-route',
+        meta: {
+          label: '路由状态',
+        },
+        children: [
+          {
+            path: 'add-activity',
+            element: <AddActivity />,
+            meta: {
+              label: '路由保状态（非受控）',
+              activity: true,
+            }
+          },
+          {
+            path: 'add-activity1',
+            element: <AddActivity1 />,
+            meta: {
+              label: '路由保状态（受控）',
+              activity: true,
+            }
+          },
+          {
+            path: 'no-activity',
+            element: <NoActivity />,
+            meta: {
+              label: '路由不保状态（非受控）'
+            }
+          },
+          {
+            path: 'no-activity1',
+            element: <NoActivity1 />,
+            meta: {
+              label: '路由不保状态（受控）'
+            }
+          },
+        ]
+      }
+    ]
   },
   {
     path: 'pro-components',
@@ -135,7 +200,7 @@ const router = createBrowserRouter([
       {
         path: BASE_URL,
         element: <PageLayout />,
-        children: routers
+        children: routers as RouteObject[]
       } 
     ]
   }

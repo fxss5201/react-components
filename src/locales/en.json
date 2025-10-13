@@ -14,6 +14,19 @@
     "files-upload": "Files Upload",
     "error-page": "Error Page",
     "pro-components": "Pro Components",
-    "skeleton": "Skeleton"
+    "skeleton": "Skeleton",
+    "activitys": "Activitys",
+    "activity-index": "Component Activitys",
+    "activity-route": "Route Activitys",
+    "add-activity": "Route Activity (Uncontrolled)",
+    "add-activity1": "Route Activity (Controlled)",
+    "no-activity": "No Route Activity (Uncontrolled)",
+    "no-activity1": "No Route Activity (Controlled)"
+  },
+  "ActivityIndex": {
+    "no-activity": "No Activity",
+    "uncontrolled": "Uncontrolled",
+    "controlled": "Controlled",
+    "add-activity": "Activity"
   }
 }

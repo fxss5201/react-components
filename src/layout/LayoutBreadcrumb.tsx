@@ -23,10 +23,10 @@ function LayoutBreadcrumb({ className }: { className?: string }) {
         title: (
           <a href={location!.path!} onClick={(e) => {
             e.preventDefault()
-            if ((location!.element || location!.Component) && !isLastItem) {
+            if (location!.element && !isLastItem) {
               navigate(location!.path!)
             }
-          }} className={cn('py-1 px-2 h-[24px] inline', { 'cursor-text hover:bg-transparent': !(location!.element || location!.Component) || isLastItem, 'text-inherit': isLastItem })}>
+          }} className={cn('py-1 px-2 h-[24px] inline', { 'cursor-text hover:bg-transparent': !location!.element || isLastItem, 'text-inherit': isLastItem })}>
             {location!.meta?.icon && <span className='mr-1'>{ location!.meta?.icon }</span>}
             {/* @ts-ignore */}
             { t(`Menu.${location!.meta?.key}`, { defaultValue: location.meta?.label }) }
