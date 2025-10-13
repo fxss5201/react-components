@@ -1,9 +1,14 @@
 {
+  "Home": "首页",
   "Expand Menu": "展开菜单",
   "Collapse Menu": "收起菜单",
   "footer": {
     "blog": "个人博客",
     "author": "作者 Github"
+  },
+  "NotFoundPage": {
+    "title": "404 页面不存在",
+    "subTitle": "很抱歉，您访问的页面不存在。"
   },
 
   "Menu": {

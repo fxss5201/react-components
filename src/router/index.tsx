@@ -4,6 +4,7 @@ import { lazy } from 'react'
 import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import App from '../App'
 import PageLayout from '../pages/PageLayout'
+import NotFoundPage from '../pages/NotFoundPage'
 import Home from '../pages/Home'
 
 const BASE_URL = import.meta.env.BASE_URL
@@ -203,8 +204,15 @@ const router = createBrowserRouter([
         children: routers as RouteObject[]
       } 
     ]
+  },
+  {
+    path: `${BASE_URL}*`,
+    element: <NotFoundPage />,
+    meta: {
+      label: '404 页面',
+    }
   }
-])
+] as RouteObject[])
 
 export default router
 

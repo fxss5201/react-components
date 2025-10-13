@@ -1,9 +1,14 @@
 {
+  "Home": "Home",
   "Expand Menu": "Expand Menu",
   "Collapse Menu": "Collapse Menu",
   "footer": {
     "blog": "Author Blog",
     "author": "Author Github"
+  },
+  "NotFoundPage": {
+    "title": "404 Not Found",
+    "subTitle": "Sorry, the page you visited does not exist."
   },
 
   "Menu": {

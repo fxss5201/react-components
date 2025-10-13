@@ -41,7 +41,7 @@ function LayoutHead({ className }: { className?: string }) {
         {config.theme && (
           <Popover content={
             themeOptions.map(item => (
-              <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm', { 'text-blue-600': storeTheme === item.type })}
+              <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm', { 'text-[#1677ff]': storeTheme === item.type })}
                 key={item.type} onClick={() => changeTheme(item.type)}>
                 {item.icon}
                 <span className='ml-2'>{item.label}</span>
@@ -50,7 +50,7 @@ function LayoutHead({ className }: { className?: string }) {
           } classNames={{
             body: 'p-2'
           }}>
-            <div className='text-[24px] cursor-pointer hover:text-blue-600'>
+            <div className='text-[24px] cursor-pointer hover:text-[#1677ff]'>
               {
                 storeTheme === 'dark' ? <MoonOutlined /> : storeTheme === 'light' ? <SunOutlined /> : <SyncOutlined />
               }
@@ -60,7 +60,7 @@ function LayoutHead({ className }: { className?: string }) {
         {config.locales && (
           <Popover content={
             localeOptions.map(item => (
-              <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm', { 'text-blue-600': item.type === locale })}
+              <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm', { 'text-[#1677ff]': item.type === locale })}
                 key={item.type} onClick={() => changeLocale(item.type)}>
                 {item.icon}
                 <span className='ml-2'>{item.label}</span>
@@ -69,7 +69,7 @@ function LayoutHead({ className }: { className?: string }) {
           } classNames={{
             body: 'p-2'
           }}>
-            <div className='text-[24px] ml-8 cursor-pointer hover:text-blue-600'>
+            <div className='text-[24px] ml-8 cursor-pointer hover:text-[#1677ff]'>
               {
                 locale === 'zh' ? <IconFont type='icon-zh' /> : <IconFont type='icon-en' />
               }
@@ -78,7 +78,7 @@ function LayoutHead({ className }: { className?: string }) {
         )}
         {config.githubLink && (
           <a href={config.githubLink} target='_blank' rel='noopener noreferrer'
-            className='text-[24px] ml-8 text-inherit hover:text-blue-600'>
+            className='text-[24px] ml-8 text-inherit hover:text-[#1677ff]'>
             <GithubOutlined />
           </a>
         )}

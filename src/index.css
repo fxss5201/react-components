@@ -17,3 +17,12 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  a {
+    color: #000000e0;
+  }
+  a:hover {
+    color: #1677ff;
+  }
+}
