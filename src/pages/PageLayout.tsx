@@ -41,10 +41,14 @@ function App() {
           </Sider>}
           <Layout className='border-l border-gray-200 dark:border-gray-700'>
             <Content className={cn(theme === 'dark' ? 'bg-[#002140]' : 'bg-white')} ref={contentRef}>
-              { config.breadcrumb && breadcrumbShow && <LayoutBreadcrumb />}
-              <ErrorBoundary key={location.pathname} FallbackComponent={ErrorFallback}>
-                <Outlet />
-              </ErrorBoundary>
+              <div className='flex flex-col items-stretch h-full'>
+                { config.breadcrumb && breadcrumbShow && <LayoutBreadcrumb className='flex-shrink-0' />}
+                <div className='flex-auto'>
+                  <ErrorBoundary key={location.pathname} FallbackComponent={ErrorFallback}>
+                    <Outlet />
+                  </ErrorBoundary>
+                </div>
+              </div>
               <FloatButton.BackTop target={() => contentRef.current!} />
             </Content>
             {footerShow && <Footer className={cn('border-t border-gray-200 dark:border-gray-700', theme === 'dark' ? 'bg-[#002140]' : 'bg-white')}>Footer</Footer>}

@@ -22,7 +22,7 @@ function Home() {
   }
 
   return (
-    <div className='px-4 markdown-body'>
+    <div className='px-4 pb-4 markdown-body'>
       <MdRender md={locale === 'zh' ? homeMd : homeMdEn} />
       <HomeMenuList items={functionItems} linkClick={handleLinkClick}></HomeMenuList>
     </div>

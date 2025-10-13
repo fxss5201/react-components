@@ -8,7 +8,7 @@ import cn from 'classnames'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-function LayoutBreadcrumb() {
+function LayoutBreadcrumb({ className }: { className?: string }) {
   const { t, i18n } = useTranslation()
   const matches = useMatches()
   const navigate = useNavigateFn()
@@ -42,7 +42,7 @@ function LayoutBreadcrumb() {
   }, [i18n.language, routes])
 
   return (
-    <Breadcrumb items={breadcrumbItems} className='p-4'></Breadcrumb>
+    <Breadcrumb items={breadcrumbItems} className={cn('p-4', className)}></Breadcrumb>
   )
 }
 

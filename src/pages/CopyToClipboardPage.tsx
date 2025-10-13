@@ -14,7 +14,7 @@ function CopyToClipboardPage() {
   const [content, setContent] = useState('Copy to Clipboard')
   
   return (
-    <div className='px-4 markdown-body'>
+    <div className='px-4 pb-4 markdown-body'>
       <MdRender md={md} />
       <div className='mt-4'>
         <div className='relative'>
