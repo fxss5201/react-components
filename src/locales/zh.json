@@ -1,6 +1,10 @@
 {
   "Expand Menu": "展开菜单",
   "Collapse Menu": "收起菜单",
+  "footer": {
+    "blog": "个人博客",
+    "author": "作者 Github"
+  },
 
   "Menu": {
     "home": "首页",

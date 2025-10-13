@@ -23,6 +23,35 @@ const config = {
 
   // 是否显示面包屑导航
   breadcrumb: true,
+
+  // 页脚配置
+  footer: {
+    // links 数组中每个对象的 key 用于唯一标识，防止重复，并且作为多语言配置的 key，label 用于多语言的默认显示或标题，link 用于链接跳转，支持站内和外部链接区分
+    links: [
+      {
+        key: 'footer.blog',
+        label: '个人博客',
+        link: 'https://blog.fxss.work/'
+      },
+      {
+        key: 'footer.author',
+        label: '作者github',
+        link: 'https://github.com/fxss5201'
+      },
+      {
+        key: 'footer.md',
+        label: 'Markdown',
+        link: 'md-page'
+      }
+    ],
+    // recordInfo 备案信息配置
+    recordInfo: {
+      // 备案号
+      recordNumber: '备案号',
+      // 备案链接
+      recordLink: 'https://beian.miit.gov.cn/'
+    }
+  }
 }
 
 export default config
