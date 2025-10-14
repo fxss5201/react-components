@@ -12,6 +12,8 @@ type LayoutState = {
     footerShow: boolean
     // 是否显示面包屑导航
     breadcrumbShow: boolean
+    // 是否显示标签页
+    tabsShow: boolean
   }
 }
 
@@ -22,6 +24,7 @@ const initialState: LayoutState = {
     menuCollapsed: false,
     footerShow: true,
     breadcrumbShow: true,
+    tabsShow: true,
   }
 }
 
@@ -43,10 +46,13 @@ export const layoutStateSlice = createSlice({
     },
     changeBreadcrumbShow: (state, action: PayloadAction<boolean>) => {
       state.value.breadcrumbShow = action.payload
-    }
+    },
+    changeTabsShow: (state, action: PayloadAction<boolean>) => {
+      state.value.tabsShow = action.payload
+    },
   }
 })
 
-export const { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow } = layoutStateSlice.actions
+export const { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow } = layoutStateSlice.actions
 
 export default layoutStateSlice.reducer

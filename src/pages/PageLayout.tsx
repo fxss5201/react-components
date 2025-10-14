@@ -15,6 +15,7 @@ import config from '../config'
 import LayoutFooter from '../layout/LayoutFooter'
 import { useActivitys } from '../storeHooks/useActivitys'
 import { routersList } from '../router'
+import LayoutTabs from '../layout/LayoutTabs'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -22,7 +23,7 @@ function PageLayout() {
   const { theme } = useTheme()
   const contentRef = useRef<HTMLDivElement>(null)
   const { pathname } = useLocation()
-  const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, changeMenuCollapsed } = useLayoutState()
+  const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, tabsShow, changeMenuCollapsed } = useLayoutState()
   const { t } = useTranslation()
   const { activitys } = useActivitys()
 
@@ -52,8 +53,12 @@ function PageLayout() {
           <Layout className='border-l border-gray-200 dark:border-gray-700'>
             <Content className={cn(bgClassName)} ref={contentRef}>
               <div className='flex flex-col items-stretch h-full'>
+                <Activity mode={config.layoutTabs && tabsShow ? 'visible' : 'hidden'}>
+                  <LayoutTabs className={cn('flex-shrink-0 sticky z-999', bgClassName, headShow ? 'top-[64px]' : 'top-0')} />
+                </Activity>
                 <Activity mode={config.breadcrumb && breadcrumbShow ? 'visible' : 'hidden'}>
-                  <LayoutBreadcrumb className={cn('flex-shrink-0 sticky z-999', bgClassName, headShow ? 'top-[64px]' : 'top-0')} />
+                  <LayoutBreadcrumb className={cn('flex-shrink-0 sticky z-999', bgClassName,
+                    headShow ? (config.layoutTabs && tabsShow ? 'top-[104px]' : 'top-[64px]') : (config.layoutTabs && tabsShow ? 'top-[40px]' : 'top-0'))} />
                 </Activity>
                 <div className='flex-auto'>
                   {!activitys.includes(pathname) && <ErrorBoundary key={pathname} FallbackComponent={ErrorFallback}>

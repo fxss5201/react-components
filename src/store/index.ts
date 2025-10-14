@@ -3,6 +3,7 @@ import themeReducer from './themeSlice'
 import routeLoadingReducer from './routeLoadingSlice'
 import layoutStateReducer from './layoutStateSlice'
 import activitysReducer from './activitysSlice'
+import layoutTabsReducer from './layoutTabsSlice'
 
 const store =  configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store =  configureStore({
     routeLoading: routeLoadingReducer,
     layoutState: layoutStateReducer,
     activitys: activitysReducer,
+    layoutTabs: layoutTabsReducer,
   }
 })
 

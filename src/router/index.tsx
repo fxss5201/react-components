@@ -44,6 +44,8 @@ export type RoutersType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & 
     hideFooter?: boolean
     // 进入该路由时是否隐藏面包屑导航，默认 false
     hideBreadcrumb?: boolean
+    // 进入该路由时是否隐藏标签页，默认 false
+    hideTabs?: boolean
   },
   children?: RoutersType[]
 }
@@ -61,6 +63,7 @@ export type RoutersListType = Omit<RouteObject, 'meta' | 'Component' | 'element'
     collapseMenu?: boolean
     hideFooter?: boolean
     hideBreadcrumb?: boolean
+    hideTabs?: boolean
   }
 }
 
@@ -189,6 +192,7 @@ export const routers = [
       // hideHead: true,
       // hideFooter: true,
       // hideBreadcrumb: true,
+      // hideTabs: true,
     }
   },
 ] as RoutersType[]

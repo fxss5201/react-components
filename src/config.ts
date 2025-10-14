@@ -21,8 +21,11 @@ const config = {
   // 顶部导航栏github链接
   githubLink: 'https://github.com/fxss5201/react-components',
 
-  // 是否显示面包屑导航
+  // 是否开启面包屑导航
   breadcrumb: true,
+
+  // 是否开启 tabs
+  layoutTabs: true,
 
   // 页脚配置
   footer: {
