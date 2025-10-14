@@ -21,3 +21,26 @@
 .layout-tabs .ant-tabs-nav {
   margin: 0 !important;
 }
+
+:root {
+  --contexify-menu-bgColor: #ffffff;
+  --contexify-separator-color: rgba(0,0,0,.2);
+  --contexify-item-color: #000000;
+  --contexify-activeItem-color: #000000;
+  --contexify-activeItem-bgColor: #1677ff;
+  --contexify-rightSlot-color: #000000;
+  --contexify-activeRightSlot-color: #000000;
+  --contexify-arrow-color: #000000;
+  --contexify-activeArrow-color: #000000;
+}
+.dark {
+  --contexify-menu-bgColor: #000000;
+  --contexify-separator-color: rgba(255,255,255,.2);
+  --contexify-item-color: #ffffff;
+  --contexify-activeItem-color: #ffffff;
+  --contexify-activeItem-bgColor: #1677ff;
+  --contexify-rightSlot-color: #ffffff;
+  --contexify-activeRightSlot-color: #ffffff;
+  --contexify-arrow-color: #ffffff;
+  --contexify-activeArrow-color: #ffffff;
+}

@@ -10,6 +10,12 @@
     "title": "404 页面不存在",
     "subTitle": "很抱歉，您访问的页面不存在。"
   },
+  "LayoutTabs": {
+    "Close": "关闭标签页",
+    "CloseLeft": "关闭左侧标签页",
+    "CloseRight": "关闭右侧标签页",
+    "CloseOther": "关闭其他标签页"
+  },
 
   "Menu": {
     "home": "首页",

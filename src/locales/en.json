@@ -10,6 +10,12 @@
     "title": "404 Not Found",
     "subTitle": "Sorry, the page you visited does not exist."
   },
+  "LayoutTabs": {
+    "Close": "Close Tab",
+    "CloseLeft": "Close Left Tabs",
+    "CloseRight": "Close Right Tabs",
+    "CloseOther": "Close Other Tabs"
+  },
 
   "Menu": {
     "home": "Home",

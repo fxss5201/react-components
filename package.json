@@ -26,6 +26,7 @@
     "i18next": "^25.5.2",
     "lodash.clonedeep": "^4.5.0",
     "react": "^19.2.0",
+    "react-contexify": "^6.0.0",
     "react-dom": "^19.2.0",
     "react-error-boundary": "^6.0.0",
     "react-i18next": "^16.0.0",

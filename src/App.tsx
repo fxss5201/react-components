@@ -102,7 +102,7 @@ function App() {
           <LocaleContext value={locale}>
             <AntdApp>
               <NProgressUI isAnimating={isRouteLoading} />
-              <ScrollRestoration />
+              <ScrollRestoration getKey={location => location.pathname} />
               <Outlet />
             </AntdApp>
           </LocaleContext>
