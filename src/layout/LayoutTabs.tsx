@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import React, { useMemo, useState } from 'react'
+import { useLocation } from 'react-router'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { closestCenter, DndContext, PointerSensor, useSensor } from '@dnd-kit/core'
 import {
@@ -85,8 +86,14 @@ function LayoutTabs({ className }: { className?: string }) {
     }
   }
 
+  const { pathname } = useLocation()
+  function goToPath(path: string) {
+    if (path !== pathname) {
+      navigate(path)
+    }
+  }
   function onTabClick(key: string) {
-    navigate(key)
+    goToPath(key)
   }
 
   function onEdit(targetKey: TargetKey, action: 'add' | 'remove') {
@@ -100,12 +107,12 @@ function LayoutTabs({ className }: { className?: string }) {
     if (newPanes.length && targetKey === layoutActiveTab) {
       const { key } = newPanes[targetIndex === newPanes.length ? targetIndex - 1 : targetIndex]
       removeLayoutTabs({ value: targetKey, activeTab: key })
-      navigate(key)
+      goToPath(key)
     } else if (newPanes.length) {
       removeLayoutTabs(targetKey)
     } else {
       clearLayoutTabs()
-      navigate(BASE_URL)
+      goToPath(BASE_URL)
     }
   }
 
@@ -151,7 +158,7 @@ function LayoutTabs({ className }: { className?: string }) {
       const activeTabIndex = layoutTabs.indexOf(layoutActiveTab)
       setLayoutTabs(layoutTabs.slice(tabIndex))
       if (activeTabIndex !== -1 && activeTabIndex < tabIndex) {
-        navigate(key)
+        goToPath(key)
       }
     }
   }
@@ -161,14 +168,14 @@ function LayoutTabs({ className }: { className?: string }) {
       const activeTabIndex = layoutTabs.indexOf(layoutActiveTab)
       setLayoutTabs(layoutTabs.slice(0, tabIndex + 1))
       if (activeTabIndex !== -1 && activeTabIndex > tabIndex) {
-        navigate(key)
+        goToPath(key)
       }
     }
   }
   function closeOtherFn(key: string) {
     setLayoutTabs([key])
     if (key !== layoutActiveTab) {
-      navigate(key)
+      goToPath(key)
     }
   }
 
