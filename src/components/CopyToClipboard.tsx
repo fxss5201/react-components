@@ -79,7 +79,7 @@ function CopyToClipboard({
     return children || (
       copied ? (
           <>
-            <Button type="text">{currentLocale === 'zh' ? '复制成功' : 'copy success'}</Button>
+            <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
             <Button type="text" icon={<CheckOutlined />} />
           </>
         ) : (
