@@ -27,6 +27,7 @@ function MdRender({md, className}: {md: string; className?: string}) {
             const match = /language-(\w+)/.exec(className || '')
             return match ? (
               <div className='relative'>
+                <div className='absolute top-[-24px] left-[0] leading-6 z-10 text-gray-400 dark:text-gray-500'>{match[1]}</div>
                 <div className='absolute top-[-24px] right-[-16px] z-10'>
                   <CopyToClipboard text={children as string}></CopyToClipboard>
                 </div>
