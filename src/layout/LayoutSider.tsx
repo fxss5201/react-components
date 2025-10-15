@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router'
-import { useNavigateFn } from '../Hooks/useRouter'
+import { useNavigateFn } from '../Hooks/useNavigateFn'
 import { Menu } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '../storeHooks/useTheme'

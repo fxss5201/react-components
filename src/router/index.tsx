@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { lazy } from 'react'
-import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import App from '../App'
 import PageLayout from '../pages/PageLayout'
 import NotFoundPage from '../pages/NotFoundPage'
@@ -20,6 +20,7 @@ const AddActivity = lazy(() => import('../pages/activitys/AddActivity'))
 const AddActivity1 = lazy(() => import('../pages/activitys/AddActivity1'))
 const NoActivity = lazy(() => import('../pages/activitys/NoActivity'))
 const NoActivity1 = lazy(() => import('../pages/activitys/NoActivity1'))
+const SearchParamsPage = lazy(() => import('../pages/SearchParamsPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -63,6 +64,14 @@ export const routers = [
     meta: {
       label: '多文件上传',
       icon: <UploadOutlined />,
+    }
+  },
+  {
+    path: 'search-params-page',
+    element: <SearchParamsPage />,
+    meta: {
+      label: '搜索参数页面',
+      icon: <QuestionCircleOutlined />,
     }
   },
   {
@@ -153,32 +162,34 @@ export const routers = [
 
 const router = createBrowserRouter([
   {
-    path: BASE_URL,
+    path: '/',
     element: <App />,
     children: [
       {
-        path: BASE_URL,
+        path: '/',
         element: <PageLayout />,
         children: routers as RoutersBaseType[]
       } 
     ]
   },
   {
-    path: `${BASE_URL}*`,
+    path: `/*`,
     element: <NotFoundPage />,
     meta: {
       label: '404 页面',
     }
   }
-] as RouteObject[])
+] as RouteObject[], {
+  basename: BASE_URL,
+})
 
 export default router
 
 // routersTree 是 routers 的树结构，每个节点都有 path 属性（path是所有的唯一标识，如果是 index 为 true 的节点，则 path 为父路径，否则为父路径 + 路径），children 是子节点的数组，此时的key仅作为多语言的key使用
-export const routersTree = createRoutersTree(routers, BASE_URL)
+export const routersTree = createRoutersTree(routers, '/')
 // routersList 是 routers 的列表结构，每个节点都有 path 属性（path是所有的唯一标识，如果是 index 为 true 的节点，则 path 为父路径，否则为父路径 + 路径），meta 是节点的元数据，此时的key作为多语言的key使用
 // 之所以需要 reverse 是因为按照正常的 find、findIndex、indexOf 等方法，是从前往后查找的，我们在生成 routersList 时，先保存父路由，当子路由为 index true 时，会和父路由的 path 相同
-export const routersList = createRoutersList(routers, BASE_URL, []).reverse() as RoutersType[]
+export const routersList = createRoutersList(routers, '/', []).reverse() as RoutersType[]
 
 // RoutersBaseType 是路由配置的基础类型，用于规范 routers 配置
 export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {

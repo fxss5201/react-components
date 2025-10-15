@@ -1,12 +1,12 @@
 import { type FallbackProps } from 'react-error-boundary'
 import { Button, Result } from 'antd'
-import { useRouter } from './Hooks/useRouter'
+import { useNavigateFn } from './Hooks/useNavigateFn'
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
-  const router = useRouter()
+  const navigate = useNavigateFn()
   const goHome = () => {
     resetErrorBoundary()
-    router('')
+    navigate('/')
   }
   return (
     <Result

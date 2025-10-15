@@ -1,4 +1,4 @@
-import { useNavigateFn } from '../Hooks/useRouter'
+import { useNavigateFn } from '../Hooks/useNavigateFn'
 import MdRender from '../components/MdRender'
 import homeMd from '../md/homeMd.md?raw'
 import homeMdEn from '../md/en/homeMd.md?raw'

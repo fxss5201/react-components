@@ -1,6 +1,6 @@
 import { Flex, Popover } from 'antd'
 import { GithubOutlined, SyncOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons'
-import { useRouter } from '../Hooks/useRouter'
+import { useNavigateFn } from '../Hooks/useNavigateFn'
 import { useTheme } from '../storeHooks/useTheme'
 import cn from 'classnames'
 import config, { type ThemeType, type LocaleType } from '../config'
@@ -29,14 +29,14 @@ const localeOptions: LocaleOption[] = [
 ]
 
 function LayoutHead({ className }: { className?: string }) {
-  const router = useRouter()
+  const navigate = useNavigateFn()
   const { storeTheme, changeTheme } = useTheme()
   const locale = useLocale()
   const changeLocale = useChangeLocale()
 
   return (
     <Flex justify='space-between' className={cn(className)}>
-      <div className='text-[24px] cursor-pointer' onClick={() => router('')}>react-components</div>
+      <div className='text-[24px] cursor-pointer' onClick={() => navigate('/')}>react-components</div>
       <div className='flex items-center leading-[24px]'>
         {config.theme && (
           <Popover content={

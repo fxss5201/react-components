@@ -14,14 +14,13 @@ import { Tabs } from 'antd'
 import { useLayoutTabs } from '../storeHooks/useLayoutTabs'
 import { routersList } from '../router'
 import { useTranslation } from 'react-i18next'
-import { useNavigateFn } from '../Hooks/useRouter'
+import { useNavigateFn } from '../Hooks/useNavigateFn'
 import { Menu, Item, useContextMenu } from 'react-contexify'
 import { type ItemParams } from 'react-contexify'
 import 'react-contexify/dist/ReactContexify.css'
 import { useTheme } from '../storeHooks/useTheme'
 import { CloseOutlined, LeftSquareOutlined, RightSquareOutlined, CloseSquareOutlined } from '@ant-design/icons'
 
-const BASE_URL = import.meta.env.BASE_URL
 const MENU_ID = 'layout-tabs-context-menu'
 
 interface DraggableTabPaneProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -67,7 +66,7 @@ function LayoutTabs({ className }: { className?: string }) {
         key: item,
         label: t(`Menu.${router!.meta?.key || router!.path}`, { defaultValue: router!.meta?.label }) || router!.path || '',
         icon: router!.meta?.icon,
-        closable: item !== BASE_URL
+        closable: item !== '/',
       }
     })
   }
@@ -112,7 +111,7 @@ function LayoutTabs({ className }: { className?: string }) {
       removeLayoutTabs(targetKey)
     } else {
       clearLayoutTabs()
-      goToPath(BASE_URL)
+      goToPath('/')
     }
   }
 
@@ -208,9 +207,9 @@ function LayoutTabs({ className }: { className?: string }) {
           </DndContext>
         )}
       />
-      {menuShow &&(menuKey !== BASE_URL || layoutTabs.length > 1) && (
+      {menuShow &&(menuKey !== '/' || layoutTabs.length > 1) && (
         <Menu id={MENU_ID} theme={theme} style={{ zIndex: 1000 }}>
-          {menuKey !== BASE_URL && (
+          {menuKey !== '/' && (
             <Item id='close' onClick={handleItemClick}>
               <CloseOutlined className='mr-2' />
               {t('LayoutTabs.Close', { defaultValue: '关闭标签页' })}

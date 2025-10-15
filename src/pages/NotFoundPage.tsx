@@ -1,13 +1,13 @@
 import { Button, Result } from 'antd'
-import { useRouter } from '../Hooks/useRouter'
+import { useNavigateFn } from '../Hooks/useNavigateFn'
 import { useTranslation } from 'react-i18next'
 
 function NotFoundPage() {
   const { t } = useTranslation()
 
-  const router = useRouter()
+  const navigate = useNavigateFn()
     const goHome = () => {
-      router('')
+      navigate('/')
     }
 
   return (
