@@ -32,7 +32,8 @@
     "add-activity": "Route Activity (Uncontrolled)",
     "add-activity1": "Route Activity (Controlled)",
     "no-activity": "No Route Activity (Uncontrolled)",
-    "no-activity1": "No Route Activity (Controlled)"
+    "no-activity1": "No Route Activity (Controlled)",
+    "search-params-page": "SearchParams"
   },
   "ActivityIndex": {
     "no-activity": "No Activity",

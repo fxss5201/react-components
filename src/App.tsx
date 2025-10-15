@@ -6,7 +6,7 @@ import 'dayjs/locale/en'
 import { StyleProvider } from '@ant-design/cssinjs'
 import { ConfigProvider, App as AntdApp, theme as antdTheme } from 'antd'
 import { useTheme } from './storeHooks/useTheme'
-import { Outlet, ScrollRestoration, useLocation } from 'react-router'
+import { Outlet, ScrollRestoration, useLocation, useSearchParams } from 'react-router'
 import { useLocale } from './Hooks/useLocale'
 import LocaleContext from './context/LocaleContext'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -31,6 +31,7 @@ function App() {
   const [title, setTitle] = useState('')
   const { addActivitys } = useActivitys()
   const { addLayoutTabs } = useLayoutTabs()
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -45,32 +46,32 @@ function App() {
           addActivitys(location.path!)
         }
 
-        if (location.meta?.hideHead) {
+        if (location.meta?.hideHead || !!searchParams.get('hideHead')) {
           changeHeadShow(false)
         } else {
           changeHeadShow(true)
         }
   
-        if (location.meta?.hideMenu) {
+        if (location.meta?.hideMenu || !!searchParams.get('hideMenu')) {
           changeMenuShow(false)
         } else {
           changeMenuShow(true)
         }
   
-        if (location.meta?.collapseMenu) {
+        if (location.meta?.collapseMenu || !!searchParams.get('collapseMenu')) {
           changeMenuCollapsed(true)
         } else {
           changeMenuCollapsed(false)
         }
   
-        if (location.meta?.hideFooter) {
+        if (location.meta?.hideFooter || !!searchParams.get('hideFooter')) {
           changeFooterShow(false)
         } else {
           changeFooterShow(true)
         }
 
         if (config.breadcrumb) {
-          if (location.meta?.hideBreadcrumb) {
+          if (location.meta?.hideBreadcrumb || !!searchParams.get('hideBreadcrumb')) {
             changeBreadcrumbShow(false)
           } else {
             changeBreadcrumbShow(true)
@@ -79,7 +80,7 @@ function App() {
 
         if (config.layoutTabs) {
           addLayoutTabs({ value: location.path!, activeTab: location.path! })
-          if (location.meta?.hideTabs) {
+          if (location.meta?.hideTabs || !!searchParams.get('hideTabs')) {
             changeTabsShow(false)
           } else {
             changeTabsShow(true)

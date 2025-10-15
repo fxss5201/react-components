@@ -70,7 +70,7 @@ export const routers = [
     path: 'search-params-page',
     element: <SearchParamsPage />,
     meta: {
-      label: '搜索参数页面',
+      label: '路由搜索参数',
       icon: <QuestionCircleOutlined />,
     }
   },
