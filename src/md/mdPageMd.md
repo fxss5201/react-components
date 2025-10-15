@@ -26,11 +26,35 @@
 
 ### 内部链接
 
+```md
 [Markdown](md-page)
+
+[Markdown](/md-page)
+
+[Markdown](/react-components/md-page)
+
+[Markdown](react-components/md-page)
 
 [多文件上传](files-upload)
 
 [复制到剪贴板](/copy-to-clipboard-page)
+
+[复制到剪贴板](/react-components/copy-to-clipboard-page)
+```
+
+[Markdown](md-page)
+
+[Markdown](/md-page)
+
+[Markdown](/react-components/md-page)
+
+[Markdown](react-components/md-page)
+
+[多文件上传](files-upload)
+
+[复制到剪贴板](/copy-to-clipboard-page)
+
+[复制到剪贴板](/react-components/copy-to-clipboard-page)
 
 ## 代码段
 
