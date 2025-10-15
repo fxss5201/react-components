@@ -44,7 +44,6 @@ function LayoutSider({ className }: { className?: string }) {
     return routersTree.filter(item => item.meta?.hideInMenu !== true).map(item => {
       return {
         key: item.path || '',
-        // @ts-ignore
         label: t(`Menu.${item.meta?.key || item.path}`, { defaultValue: item.meta?.label }) || item.path || '',
         icon: item.meta?.icon,
         ...(

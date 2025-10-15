@@ -21,52 +21,6 @@ const AddActivity1 = lazy(() => import('../pages/activitys/AddActivity1'))
 const NoActivity = lazy(() => import('../pages/activitys/NoActivity'))
 const NoActivity1 = lazy(() => import('../pages/activitys/NoActivity1'))
 
-export type RoutersType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
-  element?: React.ReactNode
-  meta: {
-    // index 为 true 的时候，需要指定 key，否则会报错
-    key?: string
-    // 菜单label，如果是多语言，根据 path （index 为 true 时，则根据 key ） 去配置
-    label: string
-    // 菜单图表
-    icon?: React.ReactNode
-    // 当前路由是否需要使用 Activity 组件保存路由状态，默认 false
-    activity?: boolean
-    // 是否隐藏在菜单中，父路由为 true 时，子路由也会被隐藏
-    hideInMenu?: boolean
-    // 进入该路由时是否隐藏头部，默认 false
-    hideHead?: boolean
-    // 进入该路由时是否隐藏菜单，默认 false
-    hideMenu?: boolean
-    // 进入该路由时是否收起菜单，默认 false
-    collapseMenu?: boolean,
-    // 进入该路由时是否隐藏底部，默认 false
-    hideFooter?: boolean
-    // 进入该路由时是否隐藏面包屑导航，默认 false
-    hideBreadcrumb?: boolean
-    // 进入该路由时是否隐藏标签页，默认 false
-    hideTabs?: boolean
-  },
-  children?: RoutersType[]
-}
-
-export type RoutersListType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
-  element?: React.ReactNode
-  meta: {
-    key: string
-    label: string
-    icon?: React.ReactNode
-    activity?: boolean
-    hideInMenu?: boolean
-    hideHead?: boolean
-    hideMenu?: boolean
-    collapseMenu?: boolean
-    hideFooter?: boolean
-    hideBreadcrumb?: boolean
-    hideTabs?: boolean
-  }
-}
-
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
   {
@@ -195,7 +149,7 @@ export const routers = [
       // hideTabs: true,
     }
   },
-] as RoutersType[]
+] as RoutersBaseType[]
 
 const router = createBrowserRouter([
   {
@@ -205,7 +159,7 @@ const router = createBrowserRouter([
       {
         path: BASE_URL,
         element: <PageLayout />,
-        children: routers as RouteObject[]
+        children: routers as RoutersBaseType[]
       } 
     ]
   },
@@ -224,9 +178,47 @@ export default router
 export const routersTree = createRoutersTree(routers, BASE_URL)
 // routersList 是 routers 的列表结构，每个节点都有 path 属性（path是所有的唯一标识，如果是 index 为 true 的节点，则 path 为父路径，否则为父路径 + 路径），meta 是节点的元数据，此时的key作为多语言的key使用
 // 之所以需要 reverse 是因为按照正常的 find、findIndex、indexOf 等方法，是从前往后查找的，我们在生成 routersList 时，先保存父路由，当子路由为 index true 时，会和父路由的 path 相同
-export const routersList = createRoutersList(routers, BASE_URL, []).reverse() as RoutersListType[]
+export const routersList = createRoutersList(routers, BASE_URL, []).reverse() as RoutersType[]
 
-function createRoutersTree(routers: RoutersType[], parentPath: string = '',): RoutersType[] {
+// RoutersBaseType 是路由配置的基础类型，用于规范 routers 配置
+export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
+  element?: React.ReactNode
+  meta: {
+    // index 为 true 的时候，需要指定 key，否则会报错
+    key?: string
+    // 菜单label，如果是多语言，根据 path （index 为 true 时，则根据 key ） 去配置
+    label: string
+    // 菜单图表
+    icon?: React.ReactNode
+    // 当前路由是否需要使用 Activity 组件保存路由状态，默认 false （仅在 element 存在时生效）
+    activity?: boolean
+    // 是否隐藏在菜单中，父路由为 true 时，子路由也会被隐藏
+    hideInMenu?: boolean
+    // 进入该路由时是否隐藏头部，默认 false
+    hideHead?: boolean
+    // 进入该路由时是否隐藏菜单，默认 false
+    hideMenu?: boolean
+    // 进入该路由时是否收起菜单，默认 false
+    collapseMenu?: boolean,
+    // 进入该路由时是否隐藏底部，默认 false
+    hideFooter?: boolean
+    // 进入该路由时是否隐藏面包屑导航，默认 false
+    hideBreadcrumb?: boolean
+    // 进入该路由时是否隐藏标签页，默认 false
+    hideTabs?: boolean
+  },
+  children?: RoutersBaseType[]
+}
+
+// RoutersType 是生成的 routersTree 或 routersList 的类型，主要是保证每个节点都有 key 属性
+export type RoutersType = Omit<RoutersBaseType, 'meta' | 'children'> & {
+  meta: Omit<RoutersBaseType['meta'], 'key'> & {
+    key: string
+  },
+  children?: RoutersType[]
+}
+
+function createRoutersTree(routers: RoutersBaseType[] | RoutersType[], parentPath: string = '',): RoutersType[] {
   return routers.map(item => {
     return {
       ...item,
@@ -244,7 +236,7 @@ function createRoutersTree(routers: RoutersType[], parentPath: string = '',): Ro
   })
 }
 
-function createRoutersList(routers: RoutersType[], parentPath: string = '', list: RoutersListType[] = []): RoutersListType[] {
+function createRoutersList(routers: RoutersBaseType[] | RoutersType[], parentPath: string = '', list: RoutersType[] = []): RoutersType[] {
   routers.forEach((item) => {
     list.push({
       ...item,
@@ -253,7 +245,7 @@ function createRoutersList(routers: RoutersType[], parentPath: string = '', list
         ...item.meta,
         key: item.meta.key || item.path!
       }
-    })
+    } as RoutersType)
     if (item.children) {
       list.push(...createRoutersList(item.children, `${parentPath.endsWith('/') ? parentPath : parentPath + '/'}${item.path!}`))
     }

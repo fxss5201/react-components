@@ -39,10 +39,9 @@ function App() {
   useEffect(() => {
       const location = routersList.find(item => item.path === pathname)
       if (location) {
-        // @ts-ignore
         setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | react-components`)
 
-        if (location.meta?.activity) {
+        if (location.meta?.activity && location.element) {
           addActivitys(location.path!)
         }
 
