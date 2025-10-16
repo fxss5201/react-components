@@ -1,11 +1,13 @@
-export type ThemeType = 'system' | 'light' | 'dark'
-export type LocaleType = 'zh' | 'en'
-
+// 自定义配置
 const config = {
+} as ConfigType
+
+// 默认配置，可以用自定义配置覆盖（仅浅层覆盖）
+const defaultonfig = {
   // 是否开启主题切换功能，默认开启
   theme: true,
   // 默认主题，如果未开启主题切换功能，则直接显示该主题
-  defaultTheme: 'dark' as ThemeType,
+  defaultTheme: 'dark',
   // 系统主题切换时，是否自动切换主题
   autoChangeTheme: true,
   // 主题保存在 localStorage 中的 key，防止被其他覆盖
@@ -14,7 +16,7 @@ const config = {
   // 是否开启多语言功能，默认开启
   locales: true,
   // 默认语言
-  defaultLocale: 'zh' as LocaleType,
+  defaultLocale: 'zh',
   // 语言保存在 localStorage 中的 key，防止被其他覆盖
   localeLocalStorageKey: 'locale',
 
@@ -55,6 +57,36 @@ const config = {
       recordLink: 'https://beian.miit.gov.cn/'
     }
   }
-}
+} as DefaultConfigType
 
-export default config
+export type ThemeType = 'system' | 'light' | 'dark'
+export type LocaleType = 'zh' | 'en'
+export type DefaultConfigType = {
+  theme: boolean
+  defaultTheme: ThemeType
+  autoChangeTheme: boolean
+  themeLocalStorageKey: string
+  locales: boolean
+  defaultLocale: LocaleType
+  localeLocalStorageKey: string
+  githubLink: string
+  breadcrumb: boolean
+  layoutTabs: boolean
+  footer: null | {
+    links: Array<{
+      key?: string
+      label: string
+      link: string
+    }>
+    recordInfo: {
+      recordNumber: string
+      recordLink: string
+    }
+  }
+}
+export type ConfigType = Partial<DefaultConfigType>
+
+export default {
+  ...defaultonfig,
+  ...config
+}

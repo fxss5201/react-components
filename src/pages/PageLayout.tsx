@@ -75,9 +75,9 @@ function PageLayout() {
               </div>
               <FloatButton.BackTop target={() => contentRef.current!} />
             </Content>
-            <Activity mode={footerShow ? 'visible' : 'hidden'}>
+            <Activity mode={config.footer && footerShow ? 'visible' : 'hidden'}>
               <Footer className={cn('border-t border-gray-200 dark:border-gray-700 p-4', bgClassName)}>
-                {config.footer && <LayoutFooter />}
+                <LayoutFooter />
               </Footer>
             </Activity>
           </Layout>
