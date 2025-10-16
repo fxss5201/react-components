@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router'
 import { useNavigateFn } from '../Hooks/useNavigateFn'
 import OutLinkIcon from './OutLinkIcon'
 import cn from 'classnames'
@@ -13,7 +12,6 @@ function ALink({
   className?: string
 }) {
   const navigate = useNavigateFn()
-  const { pathname } = useLocation()
   
   const isExternal = /^https?:\/\//.test(href)
   const lastHref = isExternal
@@ -40,9 +38,7 @@ function ALink({
       onClick={(e) => {
         if (!isExternal) {
           e.preventDefault()
-          if (pathname !== lastHref) {
-            navigate(lastHref)
-          }
+          navigate(lastHref)
         }
       }}
       target={isExternal ? '_blank' : undefined}

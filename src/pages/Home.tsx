@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router'
 import { useNavigateFn } from '../Hooks/useNavigateFn'
 import MdRender from '../components/MdRender'
 import homeMd from '../md/homeMd.md?raw'
@@ -14,15 +13,12 @@ function Home() {
   const navigate = useNavigateFn()
   const functionItems: RoutersType[] = routersTree.filter((item) => !noShowFunctionList.includes(item.path!))
   const locale = useLocale()
-  const { pathname } = useLocation()
 
   function handleLinkClick(item: RoutersType) {
     if (item.children) {
       return
     }
-    if (pathname !== item.path) {
-      navigate(item.path!)
-    }
+    navigate(item.path!)
   }
 
   return (

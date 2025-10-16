@@ -4,6 +4,10 @@ const config = {
 
 // 默认配置，可以用自定义配置覆盖（仅浅层覆盖）
 const defaultonfig = {
+  // logoText 配置，在 logoText 和 logoImg 都配置时，页头左侧 logoImg 优先级更高
+  logoText: 'react-components',
+  // logoImg 配置
+  logoImg: '',
   // 是否开启主题切换功能，默认开启
   theme: true,
   // 默认主题，如果未开启主题切换功能，则直接显示该主题
@@ -62,6 +66,8 @@ const defaultonfig = {
 export type ThemeType = 'system' | 'light' | 'dark'
 export type LocaleType = 'zh' | 'en'
 export type DefaultConfigType = {
+  logoText: string
+  logoImg: string
   theme: boolean
   defaultTheme: ThemeType
   autoChangeTheme: boolean

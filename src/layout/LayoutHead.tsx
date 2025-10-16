@@ -35,8 +35,10 @@ function LayoutHead({ className }: { className?: string }) {
   const changeLocale = useChangeLocale()
 
   return (
-    <Flex justify='space-between' className={cn(className)}>
-      <div className='text-[24px] cursor-pointer' onClick={() => navigate('/')}>react-components</div>
+    <Flex justify='space-between' align='center' className={cn(className, 'h-full')}>
+      <div className='text-[24px] cursor-pointer' onClick={() => navigate('/')}>{
+        config.logoImg ? <img src={config.logoImg} alt={config.logoText} title={config.logoText} className='w-6 h-6' /> : config.logoText
+      }</div>
       <div className='flex items-center leading-[24px]'>
         {config.theme && (
           <Popover content={

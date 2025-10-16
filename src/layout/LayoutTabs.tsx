@@ -1,6 +1,5 @@
 import cn from 'classnames'
 import React, { useMemo, useState } from 'react'
-import { useLocation } from 'react-router'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { closestCenter, DndContext, PointerSensor, useSensor } from '@dnd-kit/core'
 import {
@@ -85,11 +84,8 @@ function LayoutTabs({ className }: { className?: string }) {
     }
   }
 
-  const { pathname } = useLocation()
   function goToPath(path: string) {
-    if (path !== pathname) {
-      navigate(path)
-    }
+    navigate(path)
   }
   function onTabClick(key: string) {
     goToPath(key)
