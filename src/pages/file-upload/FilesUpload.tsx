@@ -2,11 +2,11 @@ import { useRef, useState } from 'react'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, Space, App } from 'antd'
-import FilesUploadDrawer from '../components/FilesUploadDrawer'
-import MdRender from '../components/MdRender'
-import filesUploadMd from '../md/FilesUpload.md?raw'
-import filesUploadMdEn from '../md/en/FilesUpload.md?raw'
-import { useLocale } from '../Hooks/useLocale'
+import FilesUploadDrawer from '../../components/FilesUploadDrawer'
+import MdRender from '../../components/MdRender'
+import filesUploadMd from '../../md/FilesUpload.md?raw'
+import filesUploadMdEn from '../../md/en/FilesUpload.md?raw'
+import { useLocale } from '../../Hooks/useLocale'
 
 const dropdownItems: MenuProps['items'] = [
   {

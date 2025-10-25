@@ -33,7 +33,9 @@
     "add-activity1": "Route Activity (Controlled)",
     "no-activity": "No Route Activity (Uncontrolled)",
     "no-activity1": "No Route Activity (Controlled)",
-    "search-params-page": "SearchParams"
+    "search-params-page": "SearchParams",
+    "file-upload": "File Upload",
+    "drop-upload": "Drop Upload"
   },
   "ActivityIndex": {
     "no-activity": "No Activity",

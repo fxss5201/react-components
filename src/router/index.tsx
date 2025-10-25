@@ -9,7 +9,8 @@ import Home from '../pages/Home'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-const FilesUpload = lazy(() => import('../pages/FilesUpload'))
+const FilesUpload = lazy(() => import('../pages/file-upload/FilesUpload'))
+const DropUpload = lazy(() => import('../pages/file-upload/DropUpload'))
 const MdPage = lazy(() => import('../pages/MdPage'))
 const I18nextPage = lazy(() => import('../pages/I18nextPage'))
 const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
@@ -59,12 +60,27 @@ export const routers = [
     }
   },
   {
-    path: 'files-upload',
-    element: <FilesUpload />,
+    path: 'file-upload',
     meta: {
-      label: '多文件上传',
+      label: '文件上传',
       icon: <UploadOutlined />,
-    }
+    },
+    children: [
+      {
+        path: 'files-upload',
+        element: <FilesUpload />,
+        meta: {
+          label: '多文件上传',
+        }
+      },
+      {
+        path: 'drop-upload',
+        element: <DropUpload />,
+        meta: {
+          label: '拖拽上传',
+        }
+      },
+    ]
   },
   {
     path: 'search-params-page',
