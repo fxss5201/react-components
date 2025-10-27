@@ -2,11 +2,20 @@ import { useRef, useState } from 'react'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, Space, App } from 'antd'
-import FilesUploadDrawer from '../../components/FilesUploadDrawer'
+import FilesUploadDrawer, { type FileType, type FileItemType } from '../../components/FilesUploadDrawer'
 import MdRender from '../../components/MdRender'
 import filesUploadMd from '../../md/FilesUpload.md?raw'
 import filesUploadMdEn from '../../md/en/FilesUpload.md?raw'
 import { useLocale } from '../../Hooks/useLocale'
+
+export type FileItemTypeTree = {
+  type: FileType,
+  file?: File,
+  name: string,
+  filePath: string,
+  folderPath: string,
+  children?: FileItemTypeTree[]
+}
 
 const dropdownItems: MenuProps['items'] = [
   {
@@ -23,22 +32,6 @@ const dropdownItems: MenuProps['items'] = [
   }
 ]
 
-export type FileType = 'file' | 'folder'
-export type FileItemType = {
-  type: FileType,
-  file?: File,
-  name: string,
-  filePath: string,
-  folderPath: string,
-}
-export type FileItemTypeTree = {
-  type: FileType,
-  file?: File,
-  name: string,
-  filePath: string,
-  folderPath: string,
-  children?: FileItemTypeTree[]
-}
 
 async function getFileList(dirHandle: FileSystemDirectoryHandle, parentKey: string = '') {
   const currentRankFiles: FileItemTypeTree[] = []

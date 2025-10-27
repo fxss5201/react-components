@@ -3,9 +3,17 @@ import { useImmer } from 'use-immer'
 import { Drawer, Progress, Button, App } from 'antd'
 import { type ProgressProps } from 'antd'
 import cn from 'classnames'
-import { type FileItemType } from '../pages/file-upload/FilesUpload'
 import FileIcon from './FileIcon'
 import fileUploadMock from '../common/fileUploadMock'
+
+export type FileType = 'file' | 'folder'
+export type FileItemType = {
+  type: FileType,
+  file?: File,
+  name: string,
+  filePath: string,
+  folderPath: string,
+}
 
 type UploadFileItemType = FileItemType & {
   icon: React.ReactNode,

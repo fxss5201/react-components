@@ -2,7 +2,7 @@ import { Image } from 'antd'
 import { getIconForFile, getIconForFolder } from 'vscode-icons-js'
 import cn from 'classnames'
 
-type FileType = 'file' | 'folder'
+export type FileType = 'file' | 'folder'
 const BASE_URL = import.meta.env.BASE_URL
 
 function FileIcon({ fileName = '', type = 'file', size = 24, className }: { fileName?: string; type?: FileType; size?: number; className?: string }) {
