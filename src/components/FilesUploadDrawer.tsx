@@ -128,6 +128,7 @@ function FilesUploadDrawer({
     if (fileList.length > 0 && fileList.every((item) => item.percentStatus === 'success')) {
       setOpen(false)
       message.success('所有文件上传成功')
+      console.log('success', fileList)
       return
     }
     
@@ -163,6 +164,12 @@ function FilesUploadDrawer({
     })
   }, [updateFileList])
 
+  const onIgnoreError = () => {
+    setOpen(false)
+    const IgnoreErrorList = fileList.filter((item) => item.percentStatus !== 'exception')
+    console.log('success', IgnoreErrorList)
+  }
+
   const doCloseFn = useCallback(() => {
     modal.confirm({
       title: '关闭提示',
@@ -189,7 +196,10 @@ function FilesUploadDrawer({
       }}
       extra={
         fileList.filter((item) => item.percentStatus === 'exception').length > 0 && refreshDone && (
-          <Button size="small" onClick={onRefreshUpload}>失败重传</Button>
+          <>
+            <Button size="small" onClick={onRefreshUpload}>失败重传</Button>
+            <Button size="small" onClick={onIgnoreError} className='ml-2'>忽略错误</Button>
+          </>
         )
       }
     >
@@ -206,6 +216,7 @@ function FilesUploadDrawer({
                 <div className='flex-shrink-0 leading-[24px] h-[24px]'>{item.icon}</div>
                 <span className='ml-2 flex-auto overflow-hidden overflow-ellipsis whitespace-nowrap leading-[24px]' title={item.name}>{item.name}</span>
               </div>
+              <div className='overflow-hidden overflow-ellipsis whitespace-nowrap leading-[18px] text-[12px]' title={item.folderPath}>{item.folderPath}</div>
               <Progress className='w-full' percent={item.percent} status={item.percentStatus} />
             </li>
           ))}

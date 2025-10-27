@@ -43,10 +43,10 @@ export type FileItemTypeTree = {
 async function getFileList(dirHandle: FileSystemDirectoryHandle, parentKey: string = '') {
   const currentRankFiles: FileItemTypeTree[] = []
   for await (const handelEle of dirHandle.values()) {
-    const fileKey = `${parentKey !== '' ? parentKey + '/' : ''}${handelEle.name}`
+    const fileKey = `${parentKey.endsWith('/') ? parentKey : parentKey + '/'}${handelEle.name}`
     const curObj: FileItemTypeTree = {
       type: handelEle.kind === 'file' ? 'file' : 'folder',
-      name: fileKey,
+      name: handelEle.name,
       filePath: fileKey,
       folderPath: parentKey,
       ...(handelEle.kind === 'file' ? { file: await (handelEle as FileSystemFileHandle).getFile() } : {})
@@ -64,7 +64,7 @@ function flattenFileTree(fileTree: FileItemTypeTree[]): FileItemType[] {
   
   function traverse(node: FileItemTypeTree) {
     const { children, ...fileItem } = node
-    console.log(children)
+    // console.log(children)
     result.push(fileItem)
     
     // 递归处理子节点
@@ -110,7 +110,7 @@ function FilesUpload() {
       if (!dirHandle) {
         return
       }
-      console.log(dirHandle)
+      // console.log(dirHandle)
       
       let rootFiles: FileItemTypeTree[] = []
       if (type === 'upload-folder-include-root') {
@@ -119,15 +119,19 @@ function FilesUpload() {
             type: 'folder',
             name: dirHandle.name,
             filePath: `${dirHandle.name}`,
-            folderPath: '',
-            children: await getFileList(dirHandle as FileSystemDirectoryHandle, `${dirHandle.name}`)
+            folderPath: '/',
+            children: await getFileList(dirHandle as FileSystemDirectoryHandle, `/${dirHandle.name}`)
           }
         ]
       } else {
-        rootFiles = await getFileList(dirHandle as FileSystemDirectoryHandle, '')
+        rootFiles = await getFileList(dirHandle as FileSystemDirectoryHandle, '/')
       }
-      setFileList(flattenFileTree(rootFiles))
-      setDrawerOpen(true)
+      const roorFileList = flattenFileTree(rootFiles)
+      if (roorFileList.length > 0) {
+        setFileList(roorFileList)
+        console.log(roorFileList.length)
+        setDrawerOpen(true)
+      }
     } catch (error) {
       if (error instanceof Error && error.message.includes('aborted')) {
         message.warning('请选择文件夹')
@@ -145,10 +149,13 @@ function FilesUpload() {
         file,
         name: file.name,
         filePath: file.name,
-        folderPath: '',
+        folderPath: '/',
       }))
-      setFileList(newFileList)
-      setDrawerOpen(true)
+      if (newFileList.length > 0) {
+        setFileList(newFileList)
+        console.log(newFileList.length)
+        setDrawerOpen(true)
+      }
     }
   }
 
