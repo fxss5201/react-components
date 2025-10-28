@@ -35,7 +35,7 @@
 
 [Markdown](react-components/md-page)
 
-[多文件上传](files-upload)
+[多文件上传](file-upload/files-upload)
 
 [复制到剪贴板](/copy-to-clipboard-page)
 
@@ -50,7 +50,7 @@
 
 [Markdown](react-components/md-page)
 
-[多文件上传](files-upload)
+[多文件上传](file-upload/files-upload)
 
 [复制到剪贴板](/copy-to-clipboard-page)
 

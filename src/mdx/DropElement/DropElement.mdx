@@ -1,0 +1,15 @@
+import React from 'react'
+import FileTree from './FileTree'
+import FileTreeRaw from './FileTree.tsx?raw'
+import Playground from '../../components/Playground'
+
+# DropElement
+
+拖拽组件，支持拖拽多个文件/文件夹，可以指定回调函数的参数类型是 文件树 还是 文件列表。
+
+## 文件树
+
+<Playground code={FileTreeRaw} title='文件树' description='拖拽文件/文件夹到此处，使用文件树查看文件结构。'>
+  <FileTree />
+</Playground>
+
