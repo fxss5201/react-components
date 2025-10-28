@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
 
 const ReactCompilerConfig = { /* ... */ }
 
@@ -21,7 +22,7 @@ export default defineConfig({
     }),
     mdx({
       include: /\.mdx$/,
-      remarkPlugins: [remarkFrontmatter],
+      remarkPlugins: [remarkFrontmatter, remarkGfm],
       rehypePlugins: [rehypeSlug],
       providerImportSource: '@mdx-js/react'
     }),

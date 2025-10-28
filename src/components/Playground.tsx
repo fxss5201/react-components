@@ -19,7 +19,7 @@ function Playground({ code, type = 'tsx', title, description, children }: Playgr
 
   return (
     <div className='w-full border border-gray-300 dark:border-gray-600 rounded-md'>
-      <div className='p-4'>
+      <div className='px-4 pt-4'>
         {children}
       </div>
       {title && <Divider orientation='left'>{title}</Divider>}
