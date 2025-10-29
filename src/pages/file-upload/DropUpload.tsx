@@ -21,8 +21,8 @@ function DropUpload() {
     setTreeData(fileTrees)
   }
 
-  function onDropList(fileList: FileTreeItem[]) {
-    setListData(changeFileTreeItemToFileItemType(fileList as FileTreeFileItem[]))
+  function onDropList(fileList: FileTreeFileItem[]) {
+    setListData(changeFileTreeItemToFileItemType(fileList))
     setDrawerOpen(true)
   }
   function changeFileTreeItemToFileItemType(fileList: FileTreeFileItem[]): FileItemType[] {
@@ -39,7 +39,7 @@ function DropUpload() {
     <div className='px-4 pb-4'>
       <MdRender md={locale === 'zh' ? DropElementMd : DropElementMdEn} />
       <h2 className='text-2xl font-bold mt-4'>{locale === 'zh' ? '文件树' : 'File Tree'}</h2>
-      <DropElement onDrop={onDropTree} className='mt-4 h-30!'></DropElement>
+      <DropElement type='tree' onDrop={onDropTree} className='mt-4 h-30!'></DropElement>
       {treeData.length > 0 && (
         <Tree
           fieldNames={{

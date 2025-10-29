@@ -20,17 +20,17 @@ export type FileTreeFolderItem = {
 }
 export type FileTreeItem = FileTreeFileItem | FileTreeFolderItem
 
-export type DropElementProps = {
+export type DropElementProps<T extends DropElementType> = {
   className?: string
-  type?: DropElementType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
-  onDrop: (fileTrees: FileTreeItem[]) => void
+  type: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
 }
 
-function DropElement({
+function DropElement<T extends DropElementType>({
   className = '',
-  type = 'tree',
+  type = 'tree' as T,
   onDrop
-}: DropElementProps) {
+}: DropElementProps<T>) {
   const dropAreaRef = useRef<HTMLDivElement>(null)
   useEventListener(
     ['dragover', 'dragenter', 'dragleave', 'drop'],
@@ -96,7 +96,7 @@ function DropElement({
         }
       }
       // console.log('fileTrees', fileTrees)
-      onDrop(fileTrees)
+      onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
     }
   }
 
@@ -199,7 +199,7 @@ function DropElement({
         type: 'file'
       }))
       // console.log('fileTrees', fileTrees)
-      onDrop(fileTrees)
+      onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
     }
   }
 
