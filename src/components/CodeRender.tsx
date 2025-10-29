@@ -27,14 +27,9 @@ function CodeRender({ children, className, theme = 'light', boxClassName, ...res
       />
     </div>
   ) : (
-    <div className={cn('relative', boxClassName)}>
-      <div className='absolute top-[-24px] right-[-16px] z-10'>
-        <CopyToClipboard text={String(children)}></CopyToClipboard>
-      </div>
-      <code {...rest} className={cn('code-block', className)}>
-        {children}
-      </code>
-    </div>
+    <code {...rest} className={cn(className, boxClassName)}>
+      {children}
+    </code>
   )
 }
 
