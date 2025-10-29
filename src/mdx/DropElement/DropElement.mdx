@@ -1,6 +1,8 @@
 import React from 'react'
 import FileTree from './FileTree'
 import FileTreeRaw from './FileTree.tsx?raw'
+import FileList from './FileList'
+import FileListRaw from './FileList.tsx?raw'
 import Playground from '../../components/Playground'
 
 # DropElement
@@ -11,4 +13,10 @@ import Playground from '../../components/Playground'
 
 <Playground code={FileTreeRaw} title='文件树' description='拖拽文件/文件夹到此处，使用文件树查看文件结构。'>
   <FileTree />
+</Playground>
+
+## 文件列表
+
+<Playground code={FileListRaw} title='文件列表' description='拖拽文件/文件夹到此处，使用文件列表直接上传。'>
+  <FileList />
 </Playground>
