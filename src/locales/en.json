@@ -19,7 +19,6 @@
 
   "Menu": {
     "home": "Home",
-    "i18next-page": "i18next",
     "copy-to-clipboard-page": "Copy to Clipboard",
     "md-page": "Markdown",
     "files-upload": "Files Upload",
@@ -35,7 +34,8 @@
     "no-activity1": "No Route Activity (Controlled)",
     "search-params-page": "SearchParams",
     "file-upload": "File Upload",
-    "drop-upload": "Drop Upload"
+    "drop-upload": "Drop Upload",
+    "drop-upload-mdx": "Drop Upload (MDX)"
   },
   "ActivityIndex": {
     "no-activity": "No Activity",

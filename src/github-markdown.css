@@ -880,6 +880,11 @@
   border-radius: 6px;
 }
 
+.markdown-body.pre-no-border-radius .highlight pre,
+.markdown-body.pre-no-border-radius pre {
+  border-radius: 0;
+}
+
 .markdown-body .highlight pre .code-block,
 .markdown-body pre .code-block {
   padding: 0 !important;

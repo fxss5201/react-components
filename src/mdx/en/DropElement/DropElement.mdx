@@ -1,0 +1,22 @@
+import React from 'react'
+import FileTree from './FileTree'
+import FileTreeRaw from './FileTree.tsx?raw'
+import FileList from './FileList'
+import FileListRaw from './FileList.tsx?raw'
+import Playground from '../../../components/Playground'
+
+# DropElement
+
+Drag and drop component, supports dragging multiple files/folders, and can specify whether the parameter type of the callback function is a file tree or a file list.
+
+## File Tree
+
+<Playground code={FileTreeRaw} title='File Tree' description='Drag and drop files/folders to view the file structure.'>
+  <FileTree />
+</Playground>
+
+## File List
+
+<Playground code={FileListRaw} title='File List' description='Drag and drop files/folders to upload directly.'>
+  <FileList />
+</Playground>

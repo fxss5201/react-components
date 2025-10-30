@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { lazy } from 'react'
-import { HomeOutlined, TranslationOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import { HomeOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import App from '../App'
 import PageLayout from '../pages/PageLayout'
 import NotFoundPage from '../pages/NotFoundPage'
@@ -13,7 +13,6 @@ const FilesUpload = lazy(() => import('../pages/file-upload/FilesUpload'))
 const DropUpload = lazy(() => import('../pages/file-upload/DropUpload'))
 const DropUploadMdx = lazy(() => import('../pages/file-upload/DropUploadMdx'))
 const MdPage = lazy(() => import('../pages/MdPage'))
-const I18nextPage = lazy(() => import('../pages/I18nextPage'))
 const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const SkeletonPage = lazy(() => import('../pages/pro-components/SkeletonPage'))
@@ -33,14 +32,6 @@ export const routers = [
       key: 'home', // index 为 true 的时候，需要指定 key，否则会报错
       label: '首页',
       icon: <HomeOutlined />,
-    }
-  },
-  {
-    path: 'i18next-page',
-    element: <I18nextPage />,
-    meta: {
-      label: 'i18next 页面',
-      icon: <TranslationOutlined />,
     }
   },
   {

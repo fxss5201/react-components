@@ -1,6 +1,8 @@
-import { useRef } from 'react'
+import { useRef, useContext } from 'react'
 import { useEventListener } from 'ahooks'
 import cn from 'classnames'
+import LocaleContext from '../context/LocaleContext'
+import { type LocaleType } from '../config'
 
 export type DropElementType = 'tree' | 'list'
 export type FileTreeFileItem = {
@@ -22,15 +24,20 @@ export type FileTreeItem = FileTreeFileItem | FileTreeFolderItem
 
 export type DropElementProps<T extends DropElementType> = {
   className?: string
+  locale?: LocaleType
   type: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
   onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
 }
 
 function DropElement<T extends DropElementType>({
   className = '',
+  locale,
   type = 'tree' as T,
   onDrop
 }: DropElementProps<T>) {
+  const localeContext = useContext(LocaleContext)
+  const currentLocale = locale || localeContext
+
   const dropAreaRef = useRef<HTMLDivElement>(null)
   useEventListener(
     ['dragover', 'dragenter', 'dragleave', 'drop'],
@@ -208,7 +215,7 @@ function DropElement<T extends DropElementType>({
       className={
         cn('border-2 border-dashed border-gray-300 rounded-md p-4 text-gray-400 text-2xl h-50 flex items-center justify-center', className)
       }
-    >请拖放文件或文件夹到这里</div>
+    >{currentLocale === 'zh' ? '请拖放文件或文件夹到这里' : 'Please drag and drop files or folders here'}</div>
   )
 }
 

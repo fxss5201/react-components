@@ -15,14 +15,14 @@ const defaultonfig = {
   // 系统主题切换时，是否自动切换主题
   autoChangeTheme: true,
   // 主题保存在 localStorage 中的 key，防止被其他覆盖
-  themeLocalStorageKey: 'theme',
+  themeLocalStorageKey: 'react-components-theme',
 
   // 是否开启多语言功能，默认开启
   locales: true,
   // 默认语言
   defaultLocale: 'zh',
   // 语言保存在 localStorage 中的 key，防止被其他覆盖
-  localeLocalStorageKey: 'locale',
+  localeLocalStorageKey: 'react-components-locale',
 
   // 顶部导航栏github链接
   githubLink: 'https://github.com/fxss5201/react-components',
