@@ -5,6 +5,7 @@ import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
+import remarkToc from 'remark-toc'
 
 const ReactCompilerConfig = { /* ... */ }
 
@@ -22,7 +23,7 @@ export default defineConfig({
     }),
     mdx({
       include: /\.mdx$/,
-      remarkPlugins: [remarkFrontmatter, remarkGfm],
+      remarkPlugins: [remarkFrontmatter, remarkGfm, [remarkToc, { heading: 'TOC|目录' }]],
       rehypePlugins: [rehypeSlug],
       providerImportSource: '@mdx-js/react'
     }),

@@ -1,5 +1,8 @@
 import Markdown from 'react-markdown'
+import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
+import remarkToc from 'remark-toc'
+import rehypeSlug from 'rehype-slug'
 import { useTheme } from '../storeHooks/useTheme'
 import ALink from './ALink'
 import cn from 'classnames'
@@ -11,7 +14,8 @@ function MdRender({md, className}: {md: string; className?: string}) {
   return (
     <div className={cn('markdown-body', className)}>
       <Markdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkFrontmatter, remarkGfm, [remarkToc, { heading: 'TOC|目录' }]]}
+        rehypePlugins={[rehypeSlug]}
         children={md}
         components={{
           a(props) {
