@@ -3,7 +3,7 @@ import FilesUploadDrawer from '../../../components/FilesUploadDrawer'
 import FilesSelect from '../../../components/FilesSelect'
 import type { FileItemType } from '../../../types/files'
 
-function fileListUpload() {
+function FilesListUpload() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileItemType[]>([])
 
@@ -25,4 +25,4 @@ function fileListUpload() {
   )
 }
 
-export default fileListUpload
+export default FilesListUpload

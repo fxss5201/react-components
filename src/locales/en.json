@@ -33,6 +33,7 @@
     "no-activity": "No Route Activity (Uncontrolled)",
     "no-activity1": "No Route Activity (Controlled)",
     "search-params-page": "SearchParams",
+    "files-select": "Files Select",
     "file-upload": "File Upload",
     "drop-upload": "Drop Upload"
   },

@@ -1,12 +1,101 @@
 import React from 'react'
+import Playground from '../../../components/Playground'
 import FilesListUpload from './FilesListUpload'
 import FilesListUploadRaw from './FilesListUpload.tsx?raw'
-import Playground from '../../../components/Playground'
+import FileSelectList from './FileSelectList'
+import FileSelectListRaw from './FileSelectList.tsx?raw'
+import FileSelectTree from './FileSelectTree'
+import FileSelectTreeRaw from './FileSelectTree.tsx?raw'
+import FileSelectListIgnoreFolder from './FileSelectListIgnoreFolder'
+import FileSelectListIgnoreFolderRaw from './FileSelectListIgnoreFolder.tsx?raw'
 
 # FilesSelect
 
-FilesSelect 组件用于选择文件列表，支持选择文件、选择文件夹（含根目录）、选择文件夹（不含根目录）。
+The FileSelect component is used to select a list of files, supporting file selection, folder selection (including root directory), and folder selection (excluding root directory).
 
-<Playground code={FilesListUploadRaw} title='上传文件/文件夹' description='选择之后直接上传文件/文件夹。'>
+## TOC
+
+## API
+
+### Parameters Props
+
+``` ts
+export type FileType = 'file' | 'folder'
+export type FileItemType = {
+  type: FileType
+  file?: File
+  name: string
+  size?: number
+  filePath: string
+  folderPath: string
+}
+
+export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
+  type: 'file'
+}
+
+export type FolderItemType = {
+  type: 'folder'
+  name: string
+  filePath: string
+  folderPath: string
+  children: FileTreeItem[]
+}
+export type FileTreeItem = FileTreeFileItem | FolderItemType
+
+export type TargetType = 'tree' | 'list'
+```
+
+``` ts
+import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '../types/files'
+
+export type FileTreeItem = FileItemType & {
+  children?: FileTreeItem[]
+}
+
+export type FilesSelectProps<T extends TargetType> = {
+  targetType: T,
+  onSelect: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+  isUpload?: boolean
+  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  locale?: LocaleType
+  className?: string
+  children?: React.ReactNode
+}
+```
+
+| Parameter | Description | Type | Default |
+| --- | --- | --- | --- |
+| `targetType` | Execution parameter type of onSelect, tree for file tree, list for file list | `'tree' \| 'list'` | `'tree'` |
+| `onSelect` | Callback function after file/folder selection | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+| `isUpload` | Whether to upload files/folders, only used to change the text of the select/upload button | `boolean` | `false` |
+| `isIgnoreFolder` | Whether to ignore folders when targetType is 'list', for example, when uploading files, only files need to be uploaded, not folders | `boolean` | `false` |
+| `locale` | Locale type | `'zh' \| 'en'` | `'zh'` |
+| `className` | Custom class name | `string` | - |
+| `children` | Child elements | `React.ReactNode` | - |
+
+## Demos
+
+### File List
+
+<Playground code={FileSelectListRaw} title='File List' description='Select file list.'>
+  <FileSelectList />
+</Playground>
+
+### Ignore Folders in File List
+
+<Playground code={FileSelectListIgnoreFolderRaw} title='Ignore Folders in File List' description='Select file list, ignore folders.'>
+  <FileSelectListIgnoreFolder />
+</Playground>
+
+### File Tree
+
+<Playground code={FileSelectTreeRaw} title='File Tree' description='Select file tree.'>
+  <FileSelectTree />
+</Playground>
+
+### Upload Files/Folders
+
+<Playground code={FilesListUploadRaw} title='Upload Files/Folders' description='Select files/folders, then upload them directly.'>
   <FilesListUpload />
 </Playground>

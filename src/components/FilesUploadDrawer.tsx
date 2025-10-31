@@ -196,6 +196,7 @@ function FilesUploadDrawer({
     <Drawer
       title={title}
       open={open}
+      size='large'
       onClose={doCloseFn}
       maskClosable={false}
       classNames={{

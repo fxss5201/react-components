@@ -16,27 +16,39 @@ DropElement is a drag and drop component, which supports dragging multiple files
 ### Parameters Props
 
 ``` ts
-export type DropElementType = 'tree' | 'list'
-export type FileTreeFileItem = {
-  file: File
+export type FileType = 'file' | 'folder'
+export type FileItemType = {
+  type: FileType
+  file?: File
+  name: string
+  size?: number
   filePath: string
   folderPath: string
-  name: string
-  size: number
+}
+
+export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
   type: 'file'
 }
-export type FileTreeFolderItem = {
+
+export type FolderItemType = {
+  type: 'folder'
+  name: string
   filePath: string
   folderPath: string
-  name: string
-  type: 'folder'
   children: FileTreeItem[]
 }
-export type FileTreeItem = FileTreeFileItem | FileTreeFolderItem
-export type DropElementProps<T extends DropElementType> = {
+export type FileTreeItem = FileTreeFileItem | FolderItemType
+
+export type TargetType = 'tree' | 'list'
+```
+
+``` ts
+import type { TargetType, FileTreeFileItem, FileTreeItem } from '../types/files'
+
+export type DropElementProps<T extends TargetType> = {
   className?: string
   locale?: LocaleType
-  type: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  targetType: T // Target type, tree for file tree, list for file list
   onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
 }
 ```

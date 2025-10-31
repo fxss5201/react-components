@@ -9,8 +9,8 @@ import Home from '../pages/Home'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-// const FilesUpload = lazy(() => import('../pages/file-upload/FilesUpload'))
-const FilesUploadMdx = lazy(() => import('../pages/file-upload/FilesUploadMdx'))
+const FilesUpload = lazy(() => import('../pages/file-upload/FilesUpload'))
+const FilesSelect = lazy(() => import('../pages/file-upload/FilesSelect'))
 // const DropUpload = lazy(() => import('../pages/file-upload/DropUpload'))
 const DropUploadMdx = lazy(() => import('../pages/file-upload/DropUploadMdx'))
 const MdPage = lazy(() => import('../pages/MdPage'))
@@ -60,8 +60,15 @@ export const routers = [
     },
     children: [
       {
+        path: 'files-select',
+        element: <FilesSelect />,
+        meta: {
+          label: '文件选择',
+        }
+      },
+      {
         path: 'files-upload',
-        element: <FilesUploadMdx />,
+        element: <FilesUpload />,
         meta: {
           label: '多文件上传',
         }
