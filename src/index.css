@@ -44,3 +44,35 @@
   --contexify-arrow-color: #ffffff;
   --contexify-activeArrow-color: #ffffff;
 }
+
+.markdown-body [id='TOC'],
+.markdown-body [id='toc'],
+.markdown-body [id='目录'] {
+  position: fixed;
+  top: 180px;
+  right: 16px;
+  width: 200px;
+  margin: 0 !important;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.8);
+  opacity: 0.2;
+}
+.markdown-body [id='TOC'] + ul,
+.markdown-body [id='toc'] + ul,
+.markdown-body [id='目录'] + ul {
+  position: fixed;
+  top: 214px;
+  right: 16px;
+  width: 200px;
+  max-height: calc(100vh - 428px);
+  padding-top: 8px;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.8);
+  opacity: 0.2;
+  overflow: auto;
+}
+.markdown-body [id='TOC'] + ul:hover,
+.markdown-body [id='toc'] + ul:hover,
+.markdown-body [id='目录'] + ul:hover {
+  opacity: 1;
+}
