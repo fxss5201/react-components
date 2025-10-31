@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tree } from 'antd'
 import DropElement from '../../../components/DropElement'
-import { type FileTreeItem } from '../../../components/DropElement'
+import type { FileTreeItem } from '../../../types/files'
 import FileIcon from '../../../components/FileIcon'
 
 function DropUpload() {
@@ -14,7 +14,7 @@ function DropUpload() {
 
   return (
     <>
-      <DropElement type='tree' onDrop={onDropTree} className='h-30!'></DropElement>
+      <DropElement targetType='tree' onDrop={onDropTree} className='h-30!'></DropElement>
       {treeData.length > 0 && (
         <Tree
           fieldNames={{

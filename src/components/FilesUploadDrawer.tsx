@@ -1,19 +1,13 @@
-import { useEffect, useCallback, useState, useRef } from 'react'
+import { useEffect, useCallback, useState, useRef, useContext } from 'react'
+import type { FileItemType } from '../types/files'
 import { useImmer } from 'use-immer'
 import { Drawer, Progress, Button, App } from 'antd'
 import { type ProgressProps } from 'antd'
 import cn from 'classnames'
 import FileIcon from './FileIcon'
 import fileUploadMock from '../common/fileUploadMock'
-
-export type FileType = 'file' | 'folder'
-export type FileItemType = {
-  type: FileType,
-  file?: File,
-  name: string,
-  filePath: string,
-  folderPath: string,
-}
+import { type LocaleType } from '../config'
+import LocaleContext from '../context/LocaleContext'
 
 type UploadFileItemType = FileItemType & {
   icon: React.ReactNode,
@@ -21,19 +15,24 @@ type UploadFileItemType = FileItemType & {
   percentStatus: ProgressProps['status'],
 }
 
-type FilesUploadDrawerProps = {
+export type FilesUploadDrawerProps = {
   title?: string,
   open: boolean,
   setOpen: (open: boolean) => void,
   list?: FileItemType[],
+  locale?: LocaleType
 }
 
 function FilesUploadDrawer({
   title = '上传文件/文件夹',
   open = false,
   setOpen,
-  list = []
+  list = [],
+  locale
 }: FilesUploadDrawerProps) {
+  const localeContext = useContext(LocaleContext)
+  const currentLocale = locale || localeContext || 'zh'
+
   const { message, modal } = App.useApp()
   const fileListRef = useRef<HTMLUListElement>(null)
 
@@ -52,7 +51,7 @@ function FilesUploadDrawer({
       })
     }, 300)
     return fileUploadMock().then(() => {
-      console.log('上传成功', item)
+      console.log(currentLocale === 'zh' ? '上传成功' : 'Upload Success', item)
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
@@ -61,7 +60,7 @@ function FilesUploadDrawer({
         }
       })
     }).catch(() => {
-      console.log('上传失败', item)
+      console.log(currentLocale === 'zh' ? '上传失败' : 'Upload Failed', item)
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
@@ -85,7 +84,7 @@ function FilesUploadDrawer({
       })
     }, 300)
     return fileUploadMock().then(() => {
-      console.log('上传成功', item)
+      console.log(currentLocale === 'zh' ? '上传成功' : 'Upload Success', item)
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
@@ -94,7 +93,7 @@ function FilesUploadDrawer({
         }
       })
     }).catch(() => {
-      console.log('上传失败', item)
+      console.log(currentLocale === 'zh' ? '上传失败' : 'Upload Failed', item)
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
@@ -135,7 +134,7 @@ function FilesUploadDrawer({
     
     if (fileList.length > 0 && fileList.every((item) => item.percentStatus === 'success')) {
       setOpen(false)
-      message.success('所有文件上传成功')
+      message.success(currentLocale === 'zh' ? '所有文件上传成功' : 'All files uploaded successfully')
       console.log('success', fileList)
       return
     }
@@ -180,8 +179,8 @@ function FilesUploadDrawer({
 
   const doCloseFn = useCallback(() => {
     modal.confirm({
-      title: '关闭提示',
-      content: '关闭后将停止继续上传文件，是否确认关闭吗？',
+      title: currentLocale === 'zh' ? '关闭提示' : 'Close Prompt',
+      content: currentLocale === 'zh' ? '关闭后将停止继续上传文件，是否确认关闭吗？' : 'Are you sure you want to close? Uploading files will be stopped.',
       okType: 'danger',
       closable: true,
       onOk: () => {
@@ -205,17 +204,17 @@ function FilesUploadDrawer({
       extra={
         fileList.filter((item) => item.percentStatus === 'exception').length > 0 && refreshDone && (
           <>
-            <Button size="small" onClick={onRefreshUpload}>失败重传</Button>
-            <Button size="small" onClick={onIgnoreError} className='ml-2'>忽略错误</Button>
+            <Button size="small" onClick={onRefreshUpload}>{currentLocale === 'zh' ? '失败重传' : 'Retry Failed'}</Button>
+            <Button size="small" onClick={onIgnoreError} className='ml-2'>{currentLocale === 'zh' ? '忽略错误' : 'Ignore Errors'}</Button>
           </>
         )
       }
     >
       <div className='w-full h-full flex flex-col'>
         <div className='flex-shrink-0 flex justify-between text-[16px] mb-2 px-6'>
-          <div>总数：{fileList.length}</div>
-          <div>成功：{fileList.filter((item) => item.percentStatus === 'success').length}</div>
-          <div className='text-red-500'>失败：{fileList.filter((item) => item.percentStatus === 'exception').length}</div>
+          <div>{currentLocale === 'zh' ? '总数：' : 'Total: '}{fileList.length}</div>
+          <div>{currentLocale === 'zh' ? '成功：' : 'Success: '}{fileList.filter((item) => item.percentStatus === 'success').length}</div>
+          <div className='text-red-500'>{currentLocale === 'zh' ? '失败：' : 'Failed: '}{fileList.filter((item) => item.percentStatus === 'exception').length}</div>
         </div>
         <ul className='flex-auto overflow-x-hidden overflow-y-auto px-6' ref={fileListRef}>
           {fileList.map((item, index) => (

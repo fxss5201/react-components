@@ -1,17 +1,12 @@
 import { useState } from 'react'
 import FilesUploadDrawer from '../../components/FilesUploadDrawer'
-import MdRender from '../../components/MdRender'
-import filesUploadMd from '../../md/FilesUpload.md?raw'
-import filesUploadMdEn from '../../md/en/FilesUpload.md?raw'
-import { useLocale } from '../../Hooks/useLocale'
 import FilesSelect from '../../components/FilesSelect'
 import type { FileItemType } from '../../types/files'
 
-function FilesUpload() {
+function FilesListUpload() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileItemType[]>([])
 
-  const locale = useLocale()
   const onSelectFn = (files: FileItemType[]) => {
     setFileList(files)
     setDrawerOpen(true)
@@ -19,11 +14,7 @@ function FilesUpload() {
 
   return (
     <div className='px-4 pb-4'>
-      <MdRender>{locale === 'zh' ? filesUploadMd : filesUploadMdEn}</MdRender>
-      
-      <div className='mt-4'>
-        <FilesSelect targetType='list' onSelect={onSelectFn} />
-      </div>
+      <FilesSelect targetType='list' isUpload={true} onSelect={onSelectFn} />
 
       <FilesUploadDrawer
         open={drawerOpen}
@@ -34,4 +25,4 @@ function FilesUpload() {
   )
 }
 
-export default FilesUpload
+export default FilesListUpload

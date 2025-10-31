@@ -3,36 +3,19 @@ import { useEventListener } from 'ahooks'
 import cn from 'classnames'
 import LocaleContext from '../context/LocaleContext'
 import { type LocaleType } from '../config'
+import type { TargetType, FileTreeFileItem, FileTreeItem } from '../types/files'
 
-export type DropElementType = 'tree' | 'list'
-export type FileTreeFileItem = {
-  file: File
-  filePath: string
-  folderPath: string
-  name: string
-  size: number
-  type: 'file'
-}
-export type FileTreeFolderItem = {
-  filePath: string
-  folderPath: string
-  name: string
-  type: 'folder'
-  children: FileTreeItem[]
-}
-export type FileTreeItem = FileTreeFileItem | FileTreeFolderItem
-
-export type DropElementProps<T extends DropElementType> = {
+export type DropElementProps<T extends TargetType> = {
   className?: string
   locale?: LocaleType
-  type: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  targetType: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
   onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
 }
 
-function DropElement<T extends DropElementType>({
+function DropElement<T extends TargetType>({
   className = '',
   locale,
-  type = 'tree' as T,
+  targetType = 'tree' as T,
   onDrop
 }: DropElementProps<T>) {
   const localeContext = useContext(LocaleContext)
@@ -95,7 +78,7 @@ function DropElement<T extends DropElementType>({
       // 第二次循环，递归读取文件树
       for (let i = 0; i < entryList.length; i++) {
         const entry = entryList[i]
-        if (type === 'tree') {
+        if (targetType === 'tree') {
           await readerFileTree(entry, fileTrees)
         } else {
           const entryFiles = await readerFileList(entry)

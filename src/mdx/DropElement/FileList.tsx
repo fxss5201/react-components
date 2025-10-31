@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import DropElement from '../../components/DropElement'
-import { type FileTreeFileItem } from '../../components/DropElement'
-import FilesUploadDrawer, { type FileItemType } from '../../components/FilesUploadDrawer'
+import type { FileTreeFileItem, FileItemType } from '../../types/files'
+import FilesUploadDrawer from '../../components/FilesUploadDrawer'
 import JsonView from '../../components/JsonView'
 
 function FileList() {
@@ -24,7 +24,7 @@ function FileList() {
 
   return (
     <>
-      <DropElement type='list' onDrop={onDropList} className='mt-4'></DropElement>
+      <DropElement targetType='list' onDrop={onDropList} className='mt-4'></DropElement>
       <JsonView className='mt-4! max-h-100 overflow-auto'>
         {listData}
       </JsonView>

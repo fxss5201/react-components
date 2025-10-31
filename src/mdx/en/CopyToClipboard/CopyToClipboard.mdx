@@ -30,7 +30,7 @@ export type CopyToClipboardProps = {
 |---|---|---|---|
 | `text` | Text content to be copied | `string` | - |
 | `getText` | Function to get text content to be copied, higher priority than `text` | `() => string` | - |
-| `children` | Child elements, used to customize the appearance of the copy button | `React.ReactNode \| ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)`, [children description](#children-description) | [children default value](#children-default-value) |
+| `children` | Child elements, used to customize the appearance of the copy button, [children description](#children-description) | `React.ReactNode \| ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)` | [children default value](#children-default-value) |
 | `disabled` | Whether to disable the copy function | `boolean` | `false` |
 | `timeout` | Prompt display time after successful copy (milliseconds) | `number` | `2000` |
 | `onCopy` | Callback function after successful copy | `(text: string) => void` | - |
