@@ -29,7 +29,7 @@ function CopyToClipboard({
   const [copied, setCopied] = useState<boolean>(false)
   const timeoutRef = useRef<number | null>(null)
   const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext
+  const currentLocale = locale || localeContext || 'zh'
 
   const clearPreviousTimeout = useCallback(() => {
     if (timeoutRef.current) {

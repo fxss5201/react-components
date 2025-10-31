@@ -16,7 +16,7 @@ export type PlaygroundProps = {
 
 function Playground({ code, type = 'tsx', title, description, children, locale }: PlaygroundProps) {
   const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext
+  const currentLocale = locale || localeContext || 'zh'
   const displayCode = currentLocale === 'zh' ? '显示代码' : 'Show Code'
   const collapseCode = currentLocale === 'zh' ? '收起代码' : 'Collapse Code'
   

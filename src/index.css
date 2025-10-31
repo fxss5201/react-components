@@ -60,6 +60,7 @@
 .markdown-body [id='TOC'] + ul,
 .markdown-body [id='toc'] + ul,
 .markdown-body [id='目录'] + ul {
+  font-size: 14px;
   position: fixed;
   top: 214px;
   right: 16px;

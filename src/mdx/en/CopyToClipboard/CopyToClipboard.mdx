@@ -5,9 +5,60 @@ import Playground from '../../../components/Playground'
 
 # Copy to Clipboard
 
+Project uses `"react": "^19.2.0"` version, and originally used [react-copy-to-clipboard](https://github.com/nkbt/react-copy-to-clipboard) library, but that library does not support React 19 version, so it is encapsulated by itself.
+
 ## TOC
 
-## Demo
+## API
+
+### Parameters Props
+
+``` ts
+export type CopyToClipboardProps = {
+  text?: string,
+  getText?: () => string,
+  children?: React.ReactNode | ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
+  disabled?: boolean,
+  timeout?: number,
+  onCopy?: (text: string) => void,
+  onError?: (error: Error) => void,
+  locale?: 'zh' | 'en'
+}
+```
+
+| Parameter | Description | Type | Default |
+|---|---|---|---|
+| `text` | Text content to be copied | `string` | - |
+| `getText` | Function to get text content to be copied, higher priority than `text` | `() => string` | - |
+| `children` | Child elements, used to customize the appearance of the copy button | `React.ReactNode \| ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)`, [children description](#children-description) | [children default value](#children-default-value) |
+| `disabled` | Whether to disable the copy function | `boolean` | `false` |
+| `timeout` | Prompt display time after successful copy (milliseconds) | `number` | `2000` |
+| `onCopy` | Callback function after successful copy | `(text: string) => void` | - |
+| `onError` | Callback function after copy failure | `(error: Error) => void` | - |
+| `locale` | Language | `'zh' \| 'en'` | `'zh'` |
+
+#### children description
+
+- When `children` is a function, it will receive an object as a parameter, containing `copied` and `copyToClipboard` two properties.
+- `copied` is a boolean value, indicating whether the copy is successful.
+- `copyToClipboard` is a function, used to trigger the copy operation.
+
+#### children default value
+
+``` tsx
+copied ? (
+  <>
+    <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
+    <Button type="text" icon={<CheckOutlined />} />
+  </>
+) : (
+  <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
+    <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
+  </Tooltip>
+)
+```
+
+## Demos
 
 Copy to clipboard is used to copy text, code, or other content to the clipboard for use in other applications or documents.
 

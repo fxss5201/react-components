@@ -36,7 +36,7 @@ function DropElement<T extends DropElementType>({
   onDrop
 }: DropElementProps<T>) {
   const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext
+  const currentLocale = locale || localeContext || 'zh'
 
   const dropAreaRef = useRef<HTMLDivElement>(null)
   useEventListener(

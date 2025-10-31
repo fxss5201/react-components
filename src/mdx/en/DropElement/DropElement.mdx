@@ -7,17 +7,56 @@ import Playground from '../../../components/Playground'
 
 # DropElement
 
+DropElement is a drag and drop component, which supports dragging multiple files/folders, and can specify whether the parameter type of the callback function is a file tree or a file list.
+
 ## TOC
 
-Drag and drop component, supports dragging multiple files/folders, and can specify whether the parameter type of the callback function is a file tree or a file list.
+## API
 
-## File Tree
+### Parameters Props
+
+``` ts
+export type DropElementType = 'tree' | 'list'
+export type FileTreeFileItem = {
+  file: File
+  filePath: string
+  folderPath: string
+  name: string
+  size: number
+  type: 'file'
+}
+export type FileTreeFolderItem = {
+  filePath: string
+  folderPath: string
+  name: string
+  type: 'folder'
+  children: FileTreeItem[]
+}
+export type FileTreeItem = FileTreeFileItem | FileTreeFolderItem
+export type DropElementProps<T extends DropElementType> = {
+  className?: string
+  locale?: LocaleType
+  type: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+}
+```
+
+| Parameter | Description | Type | Default |
+| --------- | ----------- | ---- | ------- |
+| className | Custom class name | `string` | - |
+| locale | Locale type | `'zh' \| 'en'` | `zh` |
+| type | Execution parameter type of onDrop, tree for file tree, list for file list | `'tree' \| 'list'` | `tree` |
+| onDrop | Callback function when files/folders are dropped | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+
+## Demos
+
+### File Tree
 
 <Playground code={FileTreeRaw} title='File Tree' description='Drag and drop files/folders to view the file structure.'>
   <FileTree />
 </Playground>
 
-## File List
+### File List
 
 <Playground code={FileListRaw} title='File List' description='Drag and drop files/folders to upload directly.'>
   <FileList />

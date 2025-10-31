@@ -34,8 +34,7 @@
     "no-activity1": "No Route Activity (Controlled)",
     "search-params-page": "SearchParams",
     "file-upload": "File Upload",
-    "drop-upload": "Drop Upload",
-    "drop-upload-mdx": "Drop Upload (MDX)"
+    "drop-upload": "Drop Upload"
   },
   "ActivityIndex": {
     "no-activity": "No Activity",

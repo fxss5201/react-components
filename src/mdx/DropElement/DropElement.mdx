@@ -7,17 +7,56 @@ import Playground from '../../components/Playground'
 
 # DropElement
 
-## 目录
-
 拖拽组件，支持拖拽多个文件/文件夹，可以指定回调函数的参数类型是 文件树 还是 文件列表。
 
-## 文件树
+## 目录
+
+## API
+
+### 参数 Props
+
+``` ts
+export type DropElementType = 'tree' | 'list'
+export type FileTreeFileItem = {
+  file: File
+  filePath: string
+  folderPath: string
+  name: string
+  size: number
+  type: 'file'
+}
+export type FileTreeFolderItem = {
+  filePath: string
+  folderPath: string
+  name: string
+  type: 'folder'
+  children: FileTreeItem[]
+}
+export type FileTreeItem = FileTreeFileItem | FileTreeFolderItem
+export type DropElementProps<T extends DropElementType> = {
+  className?: string
+  locale?: LocaleType
+  type: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+}
+```
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| `className` | 自定义class类名 | `string` | - |
+| `locale` | 语言 | `'zh' \| 'en'` | `'zh'` |
+| `type` | 回调函数参数类型 | `'tree' \| 'list'` | `'tree'` |
+| `onDrop` | 拖拽结束后的回调函数 | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+
+## 演示示例
+
+### 文件树
 
 <Playground code={FileTreeRaw} title='文件树' description='拖拽文件/文件夹到此处，使用文件树查看文件结构。'>
   <FileTree />
 </Playground>
 
-## 文件列表
+### 文件列表
 
 <Playground code={FileListRaw} title='文件列表' description='拖拽文件/文件夹到此处，使用文件列表直接上传。'>
   <FileList />

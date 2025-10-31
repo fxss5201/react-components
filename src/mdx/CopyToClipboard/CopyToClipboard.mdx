@@ -5,7 +5,58 @@ import Playground from '../../components/Playground'
 
 # 复制到剪贴板
 
+项目使用的是 `"react": "^19.2.0"` 版本，本来使用 [react-copy-to-clipboard](https://github.com/nkbt/react-copy-to-clipboard) 库，但是该库不支持 React 19 版本，所以自行封装了。
+
 ## 目录
+
+## API
+
+### 参数 Props
+
+``` ts
+export type CopyToClipboardProps = {
+  text?: string,
+  getText?: () => string,
+  children?: React.ReactNode | ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
+  disabled?: boolean,
+  timeout?: number,
+  onCopy?: (text: string) => void,
+  onError?: (error: Error) => void,
+  locale?: 'zh' | 'en'
+}
+```
+
+| 属性 | 说明 | 类型 | 默认值 |
+|---|---|---|---|
+| `text` | 要复制的文本内容 | `string` | - |
+| `getText` | 获取要复制的文本内容的函数，优先级高于 `text` | `() => string` | - |
+| `children` | 子元素，用于自定义复制按钮的外观 | `React.ReactNode \| ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)`，[children 说明](#children-说明) | [children 默认值](#children-默认值) |
+| `disabled` | 是否禁用复制功能 | `boolean` | `false` |
+| `timeout` | 复制成功后的提示显示时间（毫秒） | `number` | `2000` |
+| `onCopy` | 复制成功后的回调函数 | `(text: string) => void` | - |
+| `onError` | 复制失败后的回调函数 | `(error: Error) => void` | - |
+| `locale` | 语言 | `'zh' \| 'en'` | `'zh'` |
+
+#### children 说明
+
+- 当 `children` 为函数时，会接收一个对象作为参数，包含 `copied` 和 `copyToClipboard` 两个属性。
+- `copied` 表示是否复制成功，为 `boolean` 类型。
+- `copyToClipboard` 表示复制到剪贴板的函数，为 `() => void` 类型。
+
+#### children 默认值
+
+``` tsx
+copied ? (
+  <>
+    <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
+    <Button type="text" icon={<CheckOutlined />} />
+  </>
+) : (
+  <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
+    <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
+  </Tooltip>
+)
+```
 
 ## 演示示例
 
