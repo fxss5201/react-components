@@ -1,0 +1,77 @@
+import React from 'react'
+import Playground from '../../../components/Playground'
+import FilesListUpload from './FilesListUpload'
+import FilesListUploadRaw from './FilesListUpload.tsx?raw'
+
+# FilesUploadDrawer
+
+The FilesUploadDrawer component is used to display drawers for uploading multiple files/folders. As it involves the operation of uploading files/folders, when using this component, it is necessary to manually handle the function logic of uploading files and folders (if folders are not needed, they need to be manually filtered or set 'isIgnoreFolder' to 'true' using the 'FilesSelect' component).
+
+When the parent folder fails to upload, the internal child files/folders fail to upload directly.
+
+## TOC
+
+## API
+
+### Parameters Props
+
+``` ts
+export type FileType = 'file' | 'folder'
+export type FileItemType = {
+  type: FileType
+  file?: File
+  name: string
+  size?: number
+  filePath: string
+  folderPath: string
+}
+
+export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
+  type: 'file'
+}
+
+export type FolderItemType = {
+  type: 'folder'
+  name: string
+  filePath: string
+  folderPath: string
+  children: FileTreeItem[]
+}
+export type FileTreeItem = FileTreeFileItem | FolderItemType
+
+export type TargetType = 'tree' | 'list'
+```
+
+``` ts
+type UploadFileItemType = FileItemType & {
+  icon: React.ReactNode,
+  percent: number,
+  percentStatus: ProgressProps['status'],
+}
+
+export type FilesUploadDrawerProps = {
+  title?: string,
+  open: boolean,
+  setOpen: (open: boolean) => void,
+  list?: FileItemType[],
+  locale?: LocaleType,
+  onSuccess?: (item: UploadFileItemType[]) => void,
+}
+```
+
+| Parameter | Description | Type | Default |
+| --- | --- | --- | --- |
+| title | Drawer title | `string` | '上传文件/文件夹' |
+| open | Whether the drawer is open | `boolean` | `false` |
+| setOpen | Callback function to open/close the drawer | `(open: boolean) => void` | - |
+| list | List of files/folders to upload | `FileItemType[]` | [] |
+| locale | Language | `'zh' \| 'en'` | `'zh'` |
+| onSuccess | Callback function when upload succeeds | `(item: UploadFileItemType[]) => void` | - |
+
+## Demos
+
+### Upload Files/Folders
+
+<Playground code={FilesListUploadRaw} title='Upload Files/Folders' description='After selecting, the files/folders will be uploaded directly.'>
+  <FilesListUpload />
+</Playground>

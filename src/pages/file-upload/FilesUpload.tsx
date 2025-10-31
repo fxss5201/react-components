@@ -1,35 +1,16 @@
-import { useState } from 'react'
-import FilesUploadDrawer from '../../components/FilesUploadDrawer'
-import MdRender from '../../components/MdRender'
-import filesUploadMd from '../../md/FilesUpload.md?raw'
-import filesUploadMdEn from '../../md/en/FilesUpload.md?raw'
+import MDXRender from '../../components/MDXRender'
+import FilesUploadDrawerMdx from '../../mdx/FilesUploadDrawer/FilesUploadDrawer.mdx'
+import FilesUploadDrawerMdxEn from '../../mdx/en/FilesUploadDrawer/FilesUploadDrawer.mdx'
 import { useLocale } from '../../Hooks/useLocale'
-import FilesSelect from '../../components/FilesSelect'
-import type { FileItemType } from '../../types/files'
 
 function FilesUpload() {
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const [fileList, setFileList] = useState<FileItemType[]>([])
-
   const locale = useLocale()
-  const onSelectFn = (files: FileItemType[]) => {
-    setFileList(files)
-    setDrawerOpen(true)
-  }
 
   return (
     <div className='px-4 pb-4'>
-      <MdRender>{locale === 'zh' ? filesUploadMd : filesUploadMdEn}</MdRender>
-      
-      <div className='mt-4'>
-        <FilesSelect targetType='list' onSelect={onSelectFn} />
-      </div>
-
-      <FilesUploadDrawer
-        open={drawerOpen}
-        list={fileList}
-        setOpen={setDrawerOpen}
-      />
+      <MDXRender>
+        {locale === 'zh' ? <FilesUploadDrawerMdx /> : <FilesUploadDrawerMdxEn />}
+      </MDXRender>
     </div>
   )
 }

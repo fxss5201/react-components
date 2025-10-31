@@ -20,7 +20,8 @@ export type FilesUploadDrawerProps = {
   open: boolean,
   setOpen: (open: boolean) => void,
   list?: FileItemType[],
-  locale?: LocaleType
+  locale?: LocaleType,
+  onSuccess?: (item: UploadFileItemType[]) => void,
 }
 
 function FilesUploadDrawer({
@@ -28,7 +29,8 @@ function FilesUploadDrawer({
   open = false,
   setOpen,
   list = [],
-  locale
+  locale,
+  onSuccess
 }: FilesUploadDrawerProps) {
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
@@ -135,7 +137,8 @@ function FilesUploadDrawer({
     if (fileList.length > 0 && fileList.every((item) => item.percentStatus === 'success')) {
       setOpen(false)
       message.success(currentLocale === 'zh' ? '所有文件上传成功' : 'All files uploaded successfully')
-      console.log('success', fileList)
+      // console.log('success', fileList)
+      onSuccess?.(fileList)
       return
     }
     
@@ -174,7 +177,8 @@ function FilesUploadDrawer({
   const onIgnoreError = () => {
     setOpen(false)
     const IgnoreErrorList = fileList.filter((item) => item.percentStatus !== 'exception')
-    console.log('success', IgnoreErrorList)
+    // console.log('success', IgnoreErrorList)
+    onSuccess?.(IgnoreErrorList)
   }
 
   const doCloseFn = useCallback(() => {
