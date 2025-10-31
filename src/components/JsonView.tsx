@@ -8,7 +8,7 @@ export type JsonViewProps = {
 function JsonView({ children, className }: JsonViewProps) {
   const jsonData = JSON.stringify(children, null, 2)
   return (
-    <MdRender md={`\`\`\`json\n${jsonData}\n\`\`\``} className={className}></MdRender>
+    <MdRender className={className}>{`\`\`\`json\n${jsonData}\n\`\`\``}</MdRender>
   )
 }
 

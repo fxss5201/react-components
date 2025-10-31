@@ -156,7 +156,7 @@ function FilesUpload() {
 
   return (
     <div className='px-4 pb-4'>
-      <MdRender md={locale === 'zh' ? filesUploadMd : filesUploadMdEn} />
+      <MdRender>{locale === 'zh' ? filesUploadMd : filesUploadMdEn}</MdRender>
       
       <div className='mt-4'>
         <Dropdown menu={{ items: dropdownItems, onClick: handleMenuClick }}>

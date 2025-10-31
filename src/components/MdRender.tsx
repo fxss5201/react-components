@@ -8,7 +8,11 @@ import ALink from './ALink'
 import cn from 'classnames'
 import CodeRender from './CodeRender'
 
-function MdRender({md, className}: {md: string; className?: string}) {
+export type MdRenderProps = {
+  children: string
+  className?: string
+}
+function MdRender({children, className}: MdRenderProps) {
   const { theme } = useTheme()
 
   return (
@@ -16,7 +20,7 @@ function MdRender({md, className}: {md: string; className?: string}) {
       <Markdown
         remarkPlugins={[remarkFrontmatter, remarkGfm, [remarkToc, { heading: 'TOC|目录' }]]}
         rehypePlugins={[rehypeSlug]}
-        children={md}
+        children={children}
         components={{
           a(props) {
             const { href, children } = props

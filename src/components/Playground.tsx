@@ -38,7 +38,9 @@ function Playground({ code, type = 'tsx', title, description, children, locale }
         </Button>
       </div>
       <Activity mode={codeShow ? 'visible' : 'hidden'}>
-        <MdRender md={`\`\`\` ${type}\n${code}\n\`\`\``} className='border-t border-gray-300 dark:border-gray-600 pre-no-border-radius' />
+        <MdRender className='border-t border-gray-300 dark:border-gray-600 pre-no-border-radius'>
+          {`\`\`\` ${type}\n${code}\n\`\`\``}
+        </MdRender>
         <div className='h-10 flex items-center justify-center border-t border-gray-300 dark:border-gray-600 sticky left-0 right-0 bottom-0 z-10 bg-white dark:bg-gray-800 rounded-b-md'>
           <Button type='text' onClick={toggleCodeShow} icon={<UpOutlined />}>
             {codeShow ? collapseCode : displayCode}

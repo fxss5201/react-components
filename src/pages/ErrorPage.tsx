@@ -8,7 +8,7 @@ function ErrorPage() {
   
   return (
     <div className="px-4 pb-4">
-      <MdRender md={locale === 'en' ? errorPageMdEn : errorPageMd} />
+      <MdRender>{locale === 'en' ? errorPageMdEn : errorPageMd}</MdRender>
       {/* <div>{aaa}</div> */}
     </div>
   )

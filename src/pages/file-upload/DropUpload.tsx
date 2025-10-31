@@ -37,7 +37,7 @@ function DropUpload() {
 
   return (
     <div className='px-4 pb-4'>
-      <MdRender md={locale === 'zh' ? DropElementMd : DropElementMdEn} />
+      <MdRender>{locale === 'zh' ? DropElementMd : DropElementMdEn}</MdRender>
       <h2 className='text-2xl font-bold mt-4'>{locale === 'zh' ? '文件树' : 'File Tree'}</h2>
       <DropElement type='tree' onDrop={onDropTree} className='mt-4 h-30!'></DropElement>
       {treeData.length > 0 && (
