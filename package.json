@@ -17,6 +17,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
+    "@microlink/react-json-view": "^1.27.0",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",
     "@tanem/react-nprogress": "^5.0.55",
