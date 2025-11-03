@@ -5,7 +5,9 @@ import { HomeOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, Close
 import App from '../App'
 import PageLayout from '../pages/PageLayout'
 import NotFoundPage from '../pages/NotFoundPage'
+import Login from '../pages/Login'
 import Home from '../pages/Home'
+import { authLoader } from './loader/authLoader'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -174,18 +176,27 @@ export const routers = [
       // hideTabs: true,
     }
   },
+  {
+    path: 'login',
+    element: <Login />,
+    meta: {
+      label: '登录',
+    }
+  },
 ] as RoutersBaseType[]
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    loader: authLoader,
     children: [
       {
         path: '/',
         element: <PageLayout />,
-        children: routers as RoutersBaseType[]
-      } 
+        children: routers.filter(item => item.path !== 'login') as RoutersBaseType[]
+      },
+      ...routers.filter(item => item.path === 'login') as RoutersBaseType[]
     ]
   },
   {
@@ -197,15 +208,23 @@ const router = createBrowserRouter([
   }
 ] as RouteObject[], {
   basename: BASE_URL,
+  future: {
+    unstable_middleware: true,
+  },
 })
 
 export default router
 
 // routersTree 是 routers 的树结构，每个节点都有 path 属性（path是所有的唯一标识，如果是 index 为 true 的节点，则 path 为父路径，否则为父路径 + 路径），children 是子节点的数组，此时的key仅作为多语言的key使用
-export const routersTree = createRoutersTree(routers, '/')
+const routersTree = createRoutersTree(routers, '/')
 // routersList 是 routers 的列表结构，每个节点都有 path 属性（path是所有的唯一标识，如果是 index 为 true 的节点，则 path 为父路径，否则为父路径 + 路径），meta 是节点的元数据，此时的key作为多语言的key使用
 // 之所以需要 reverse 是因为按照正常的 find、findIndex、indexOf 等方法，是从前往后查找的，我们在生成 routersList 时，先保存父路由，当子路由为 index true 时，会和父路由的 path 相同
-export const routersList = createRoutersList(routers, '/', []).reverse() as RoutersType[]
+const routersList = createRoutersList(routers, '/', []).reverse() as RoutersType[]
+
+export {
+  routersTree,
+  routersList
+}
 
 // RoutersBaseType 是路由配置的基础类型，用于规范 routers 配置
 export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {

@@ -20,7 +20,6 @@ import config from './config'
 import { useActivitys } from './storeHooks/useActivitys'
 import { useLayoutTabs } from './storeHooks/useLayoutTabs'
 
-
 function App() {
   const { theme } = useTheme()
   const locale = useLocale()
@@ -38,56 +37,56 @@ function App() {
   }, [pathname])
 
   useEffect(() => {
-      const location = routersList.find(item => item.path === pathname)
-      if (location) {
-        setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | ${config.logoText}`)
+    const location = routersList.find(item => item.path === pathname)
+    if (location) {
+      setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | ${config.logoText}`)
 
-        if (location.meta?.activity && location.element) {
-          addActivitys(location.path!)
-        }
+      if (location.meta?.activity && location.element) {
+        addActivitys(location.path!)
+      }
 
-        if (location.meta?.hideHead || !!searchParams.get('hideHead')) {
-          changeHeadShow(false)
-        } else {
-          changeHeadShow(true)
-        }
-  
-        if (location.meta?.hideMenu || !!searchParams.get('hideMenu')) {
-          changeMenuShow(false)
-        } else {
-          changeMenuShow(true)
-        }
-  
-        if (location.meta?.collapseMenu || !!searchParams.get('collapseMenu')) {
-          changeMenuCollapsed(true)
-        } else {
-          changeMenuCollapsed(false)
-        }
-  
-        if (location.meta?.hideFooter || !!searchParams.get('hideFooter')) {
-          changeFooterShow(false)
-        } else {
-          changeFooterShow(true)
-        }
+      if (location.meta?.hideHead || !!searchParams.get('hideHead')) {
+        changeHeadShow(false)
+      } else {
+        changeHeadShow(true)
+      }
 
-        if (config.breadcrumb) {
-          if (location.meta?.hideBreadcrumb || !!searchParams.get('hideBreadcrumb')) {
-            changeBreadcrumbShow(false)
-          } else {
-            changeBreadcrumbShow(true)
-          }
-        }
+      if (location.meta?.hideMenu || !!searchParams.get('hideMenu')) {
+        changeMenuShow(false)
+      } else {
+        changeMenuShow(true)
+      }
 
-        if (config.layoutTabs) {
-          addLayoutTabs({ value: location.path!, activeTab: location.path! })
-          if (location.meta?.hideTabs || !!searchParams.get('hideTabs')) {
-            changeTabsShow(false)
-          } else {
-            changeTabsShow(true)
-          }
+      if (location.meta?.collapseMenu || !!searchParams.get('collapseMenu')) {
+        changeMenuCollapsed(true)
+      } else {
+        changeMenuCollapsed(false)
+      }
+
+      if (location.meta?.hideFooter || !!searchParams.get('hideFooter')) {
+        changeFooterShow(false)
+      } else {
+        changeFooterShow(true)
+      }
+
+      if (config.breadcrumb) {
+        if (location.meta?.hideBreadcrumb || !!searchParams.get('hideBreadcrumb')) {
+          changeBreadcrumbShow(false)
+        } else {
+          changeBreadcrumbShow(true)
         }
       }
-    }, [pathname, t])
+
+      if (config.layoutTabs) {
+        addLayoutTabs({ value: location.path!, activeTab: location.path! })
+        if (location.meta?.hideTabs || !!searchParams.get('hideTabs')) {
+          changeTabsShow(false)
+        } else {
+          changeTabsShow(true)
+        }
+      }
+    }
+  }, [pathname, t])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
