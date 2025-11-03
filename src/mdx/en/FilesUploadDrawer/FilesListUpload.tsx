@@ -1,15 +1,21 @@
 import { useState } from 'react'
-import FilesUploadDrawer from '../../../components/FilesUploadDrawer'
+import FilesUploadDrawer, { type UploadFileItemType } from '../../../components/FilesUploadDrawer'
 import FilesSelect from '../../../components/FilesSelect'
 import type { FileItemType } from '../../../types/files'
+import JsonView from '../../../components/JsonView'
 
 function FilesListUpload() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileItemType[]>([])
+  const [listData, setListData] = useState<UploadFileItemType[]>([])
 
   const onSelectFn = (files: FileItemType[]) => {
     setFileList(files)
     setDrawerOpen(true)
+  }
+  const onSuccessFn = (list: UploadFileItemType[]) => {
+    console.log('success', list)
+    setListData(list)
   }
 
   return (
@@ -17,12 +23,16 @@ function FilesListUpload() {
       <FilesSelect targetType='list' isUpload={true} onSelect={onSelectFn} />
 
       <FilesUploadDrawer
-        title='Upload Files/Folders'
+        targetType='list'
         open={drawerOpen}
         list={fileList}
         setOpen={setDrawerOpen}
-        onSuccess={(list) => console.log('success', list)}
+        onSuccess={onSuccessFn}
       />
+
+      <JsonView className='mt-4! max-h-100 overflow-auto'>
+        {listData}
+      </JsonView>
     </div>
   )
 }

@@ -2,6 +2,8 @@ import React from 'react'
 import Playground from '../../../components/Playground'
 import FilesListUpload from './FilesListUpload'
 import FilesListUploadRaw from './FilesListUpload.tsx?raw'
+import FilesListUploadTree from './FilesListUploadTree'
+import FilesListUploadTreeRaw from './FilesListUploadTree.tsx?raw'
 
 # FilesUploadDrawer
 
@@ -43,24 +45,32 @@ export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-type UploadFileItemType = FileItemType & {
+export type UploadFileItemType = FileItemType & {
   icon: React.ReactNode,
   percent: number,
   percentStatus: ProgressProps['status'],
 }
 
-export type FilesUploadDrawerProps = {
+export type UploadResultFIleItemType = Omit<FileItemType, 'filePath' | 'folderPath'>
+
+export type UploadResultFileTreeItemType = UploadResultFIleItemType & {
+  children?: UploadResultFileTreeItemType[]
+}
+
+export type FilesUploadDrawerProps<T extends TargetType> = {
+  targetType: T,
   title?: string,
   open: boolean,
   setOpen: (open: boolean) => void,
   list?: FileItemType[],
   locale?: LocaleType,
-  onSuccess?: (item: UploadFileItemType[]) => void,
+  onSuccess?: (fileTrees: T extends 'list' ? UploadFileItemType[] : UploadResultFileTreeItemType[]) => void,
 }
 ```
 
 | Parameter | Description | Type | Default |
 | --- | --- | --- | --- |
+| targetType | The parameter type of the callback function for successful upload | `'tree' \| 'list'` | - |
 | title | Drawer title | `string` | '上传文件/文件夹' |
 | open | Whether the drawer is open | `boolean` | `false` |
 | setOpen | Callback function to open/close the drawer | `(open: boolean) => void` | - |
@@ -72,6 +82,12 @@ export type FilesUploadDrawerProps = {
 
 ### Upload Files/Folders
 
-<Playground code={FilesListUploadRaw} title='Upload Files/Folders' description='After selecting, the files/folders will be uploaded directly.'>
+<Playground code={FilesListUploadRaw} title='Upload Files/Folders' description='After selection, directly upload the file/folder. After successful upload, return the list structure of the file/folder.'>
   <FilesListUpload />
+</Playground>
+
+### Upload Files/Folders Tree
+
+<Playground code={FilesListUploadTreeRaw} title='Upload Files/Folders Tree' description='After selection, directly upload the file/folder. After successful upload, return the tree structure of the file/folder.'>
+  <FilesListUploadTree />
 </Playground>

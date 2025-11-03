@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState, useRef, useContext } from 'react'
-import type { FileItemType } from '../types/files'
+import type { FileItemType, TargetType } from '../types/files'
 import { useImmer } from 'use-immer'
 import { Drawer, Progress, Button, App } from 'antd'
 import { type ProgressProps } from 'antd'
@@ -9,29 +9,37 @@ import fileUploadMock from '../common/fileUploadMock'
 import { type LocaleType } from '../config'
 import LocaleContext from '../context/LocaleContext'
 
-type UploadFileItemType = FileItemType & {
+export type UploadFileItemType = FileItemType & {
   icon: React.ReactNode,
   percent: number,
   percentStatus: ProgressProps['status'],
 }
 
-export type FilesUploadDrawerProps = {
+export type UploadResultFIleItemType = Omit<FileItemType, 'filePath' | 'folderPath'>
+
+export type UploadResultFileTreeItemType = UploadResultFIleItemType & {
+  children?: UploadResultFileTreeItemType[]
+}
+
+export type FilesUploadDrawerProps<T extends TargetType> = {
+  targetType: T,
   title?: string,
   open: boolean,
   setOpen: (open: boolean) => void,
   list?: FileItemType[],
   locale?: LocaleType,
-  onSuccess?: (item: UploadFileItemType[]) => void,
+  onSuccess?: (fileTrees: T extends 'list' ? UploadFileItemType[] : UploadResultFileTreeItemType[]) => void,
 }
 
-function FilesUploadDrawer({
+function FilesUploadDrawer<T extends TargetType>({
+  targetType = 'list' as T,
   title = '上传文件/文件夹',
   open = false,
   setOpen,
   list = [],
   locale,
   onSuccess
-}: FilesUploadDrawerProps) {
+}: FilesUploadDrawerProps<T>) {
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
 
@@ -138,7 +146,13 @@ function FilesUploadDrawer({
       setOpen(false)
       message.success(currentLocale === 'zh' ? '所有文件上传成功' : 'All files uploaded successfully')
       // console.log('success', fileList)
-      onSuccess?.(fileList)
+      if (onSuccess) {
+        if (targetType === 'list') {
+          onSuccess(fileList)
+        } else {
+          onSuccess(convertToTree(fileList) as T extends "list" ? UploadFileItemType[] : UploadResultFileTreeItemType[])
+        }
+      }
       return
     }
     
@@ -178,7 +192,43 @@ function FilesUploadDrawer({
     setOpen(false)
     const IgnoreErrorList = fileList.filter((item) => item.percentStatus !== 'exception')
     // console.log('success', IgnoreErrorList)
-    onSuccess?.(IgnoreErrorList)
+    if (onSuccess) {
+      if (targetType === 'list') {
+        onSuccess(IgnoreErrorList)
+      } else {
+        onSuccess(convertToTree(IgnoreErrorList) as T extends "list" ? UploadFileItemType[] : UploadResultFileTreeItemType[])
+      }
+    }
+  }
+
+  const convertToTree = (array: UploadFileItemType[]): UploadResultFileTreeItemType[] => {
+    const roots: UploadResultFileTreeItemType[] = []
+    array.forEach(item => {
+      let currentLevel = roots
+      if (item.folderPath) {
+        const paths = item.folderPath.split('/').filter(x => x !== '')
+        paths.forEach((folder) => {
+          const findIndex = currentLevel.findIndex(x => x.name === folder)
+          if (findIndex === -1) {
+            currentLevel.push({
+              name: folder,
+              type: 'folder',
+              children: []
+            })
+            currentLevel = currentLevel[currentLevel.length - 1].children as UploadResultFileTreeItemType[]
+          } else {
+            currentLevel = currentLevel[findIndex].children as UploadResultFileTreeItemType[]
+          }
+        })
+      }
+      currentLevel.push({
+        name: item.name,
+        type: item.type,
+        ...(item.type === 'file' ? { size: item.size, file: item.file } : {}),
+        ...(item.type === 'folder' ? { children: [] } : {})
+      })
+    })
+    return roots
   }
 
   const doCloseFn = useCallback(() => {

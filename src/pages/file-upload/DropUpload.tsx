@@ -63,6 +63,7 @@ function DropUpload() {
       <DropElement targetType='list' onDrop={onDropList} className='mt-4'></DropElement>
 
       <FilesUploadDrawer
+        targetType='list'
         open={drawerOpen}
         list={listData}
         setOpen={setDrawerOpen}

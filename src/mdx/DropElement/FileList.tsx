@@ -29,6 +29,7 @@ function FileList() {
         {listData}
       </JsonView>
       <FilesUploadDrawer
+        targetType='list'
         open={drawerOpen}
         list={listData}
         setOpen={setDrawerOpen}

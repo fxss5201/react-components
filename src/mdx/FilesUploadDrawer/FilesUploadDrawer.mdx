@@ -2,6 +2,8 @@ import React from 'react'
 import Playground from '../../components/Playground'
 import FilesListUpload from './FilesListUpload'
 import FilesListUploadRaw from './FilesListUpload.tsx?raw'
+import FilesListUploadTree from './FilesListUploadTree'
+import FilesListUploadTreeRaw from './FilesListUploadTree.tsx?raw'
 
 # FilesUploadDrawer
 
@@ -43,35 +45,49 @@ export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-type UploadFileItemType = FileItemType & {
+export type UploadFileItemType = FileItemType & {
   icon: React.ReactNode,
   percent: number,
   percentStatus: ProgressProps['status'],
 }
 
-export type FilesUploadDrawerProps = {
+export type UploadResultFIleItemType = Omit<FileItemType, 'filePath' | 'folderPath'>
+
+export type UploadResultFileTreeItemType = UploadResultFIleItemType & {
+  children?: UploadResultFileTreeItemType[]
+}
+
+export type FilesUploadDrawerProps<T extends TargetType> = {
+  targetType: T,
   title?: string,
   open: boolean,
   setOpen: (open: boolean) => void,
   list?: FileItemType[],
   locale?: LocaleType,
-  onSuccess?: (item: UploadFileItemType[]) => void,
+  onSuccess?: (fileTrees: T extends 'list' ? UploadFileItemType[] : UploadResultFileTreeItemType[]) => void,
 }
 ```
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| targetType | 上传成功回调函数的参数类型 | `'tree' \| 'list'` | - |
 | title | 抽屉标题 | `string` | '上传文件/文件夹' |
 | open | 是否打开抽屉 | `boolean` | `false` |
 | setOpen | 打开/关闭抽屉的回调函数 | `(open: boolean) => void` | - |
 | list | 上传文件/文件夹列表 | `FileItemType[]` | [] |
 | locale | 语言 | `'zh' \| 'en'` | `'zh'` |
-| onSuccess | 上传成功回调函数 | `(item: UploadFileItemType[]) => void` | - |
+| onSuccess | 上传成功回调函数 | `(fileTrees: T extends 'list' ? UploadFileItemType[] : UploadResultFileTreeItemType[]) => void` | - |
 
 ## 演示示例
 
 ### 上传文件/文件夹
 
-<Playground code={FilesListUploadRaw} title='上传文件/文件夹' description='选择之后直接上传文件/文件夹。'>
+<Playground code={FilesListUploadRaw} title='上传文件/文件夹' description='选择之后直接上传文件/文件夹，上传成功之后返回文件/文件夹的列表结构。'>
   <FilesListUpload />
+</Playground>
+
+### 上传文件/文件夹（树结构）
+
+<Playground code={FilesListUploadTreeRaw} title='上传文件/文件夹（树结构）' description='选择之后直接上传文件/文件夹，上传成功之后返回文件/文件夹的树结构。'>
+  <FilesListUploadTree />
 </Playground>

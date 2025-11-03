@@ -17,6 +17,7 @@ function FilesListUpload() {
       <FilesSelect targetType='list' isUpload={true} onSelect={onSelectFn} />
 
       <FilesUploadDrawer
+        targetType='list'
         open={drawerOpen}
         list={fileList}
         setOpen={setDrawerOpen}
