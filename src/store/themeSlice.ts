@@ -7,7 +7,7 @@ interface ThemeState {
 
 let initialTheme = config.defaultTheme
 if (config.theme) {
-  initialTheme = (localStorage.getItem('theme') as ThemeType) || config.defaultTheme
+  initialTheme = (localStorage.getItem(config.themeLocalStorageKey) as ThemeType) || config.defaultTheme
   if (!config.autoChangeTheme && initialTheme === 'system') {
     initialTheme = config.defaultTheme
   }
