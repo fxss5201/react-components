@@ -181,6 +181,7 @@ export const routers = [
     element: <Login />,
     meta: {
       label: '登录',
+      hideInTabs: true,
     }
   },
 ] as RoutersBaseType[]
@@ -252,6 +253,8 @@ export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'
     hideBreadcrumb?: boolean
     // 进入该路由时是否隐藏标签页，默认 false
     hideTabs?: boolean
+    // 在标签页中是否隐藏该路由，默认 false
+    hideInTabs?: boolean
   },
   children?: RoutersBaseType[]
 }

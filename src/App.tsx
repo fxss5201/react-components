@@ -78,7 +78,9 @@ function App() {
       }
 
       if (config.layoutTabs) {
-        addLayoutTabs({ value: location.path!, activeTab: location.path! })
+        if (!(location.meta?.hideInTabs || !!searchParams.get('hideInTabs'))) {
+          addLayoutTabs({ value: location.path!, activeTab: location.path! })
+        }
         if (location.meta?.hideTabs || !!searchParams.get('hideTabs')) {
           changeTabsShow(false)
         } else {

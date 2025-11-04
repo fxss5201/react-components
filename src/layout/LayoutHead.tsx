@@ -11,9 +11,10 @@ function LayoutHead({ className }: { className?: string }) {
 
   return (
     <Flex justify='space-between' align='center' className={cn(className, 'h-full')}>
-      <div className='text-[24px] cursor-pointer' onClick={() => navigate('/')}>{
-        config.logoImg ? <img src={config.logoImg} alt={config.logoText} title={config.logoText} className='w-6 h-6' /> : config.logoText
-      }</div>
+      <div className='text-[24px] cursor-pointer flex items-center' onClick={() => navigate('/')}>
+        {config.logoImg && <img src={config.logoImg} alt={config.logoText} title={config.logoText} className='w-6 h-6' />}
+        {config.logoText && <span className='ml-2 leading-[24px]'>{config.logoText}</span>}
+      </div>
       <div className='flex items-center leading-[24px]'>
         <LayoutTheme />
         <LayoutLocale className='ml-8' />

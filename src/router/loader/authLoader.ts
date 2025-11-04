@@ -24,11 +24,12 @@ export const authLoader: LoaderFunction = async ({ request }) => {
   
   // 如果是登录页面
   if (currentPath === '/login' || currentPath === '/login/') {
-    if (!isLogin && config.isNeedLogin) {
-      return true
-    } else {
-      throw redirect('/')
-    }
+    // if (!isLogin && config.isNeedLogin) {
+    //   return true
+    // } else {
+    //   throw redirect('/')
+    // }
+    return true
   }
   
   // 如果需要登录且未登录，则重定向到登录页面
