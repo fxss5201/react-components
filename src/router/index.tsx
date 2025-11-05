@@ -8,6 +8,7 @@ import NotFoundPage from '../pages/NotFoundPage'
 import Login from '../pages/Login'
 import Home from '../pages/Home'
 import { authLoader } from './loader/authLoader'
+import IconFont from '../components/IconFont'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -25,6 +26,7 @@ const AddActivity1 = lazy(() => import('../pages/activitys/AddActivity1'))
 const NoActivity = lazy(() => import('../pages/activitys/NoActivity'))
 const NoActivity1 = lazy(() => import('../pages/activitys/NoActivity1'))
 const SearchParamsPage = lazy(() => import('../pages/SearchParamsPage'))
+const JsonEditorPage = lazy(() => import('../pages/json/JsonEditorPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -80,6 +82,22 @@ export const routers = [
         element: <DropUploadMdx />,
         meta: {
           label: '拖拽上传',
+        }
+      }
+    ]
+  },
+  {
+    path: 'json',
+    meta: {
+      label: 'JSON',
+      icon: <IconFont type='icon-json' />,
+    },
+    children: [
+      {
+        path: 'json-editor',
+        element: <JsonEditorPage />,
+        meta: {
+          label: 'JSON 编辑器',
         }
       }
     ]
