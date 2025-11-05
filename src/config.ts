@@ -5,7 +5,7 @@ const config = {
 // 默认配置，可以用自定义配置覆盖（仅浅层覆盖）
 const defaultonfig = {
   // 是否需要登录才能访问，默认不需要
-  isNeedLogin: true,
+  isNeedLogin: false,
   // 登录状态保存在 localStorage 中的 key，防止被其他覆盖
   loginLocalStorageKey: 'react-components-login',
 
