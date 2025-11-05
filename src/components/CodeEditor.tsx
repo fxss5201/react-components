@@ -1,5 +1,5 @@
 import { type TextEditorProps } from 'json-edit-react'
-import CodeMirror, { basicSetup } from '@uiw/react-codemirror'
+import CodeMirror from '@uiw/react-codemirror'
 import { json } from '@codemirror/lang-json'
 import { markdown } from '@codemirror/lang-markdown'
 import { javascript } from '@codemirror/lang-javascript'
@@ -16,7 +16,7 @@ function CodeEditor({ value, onChange, onKeyDown }: CodeEditorProps) {
       theme={codeTheme}
       value={value}
       width="100%"
-      extensions={[basicSetup(), json(), markdown(), javascript({ jsx: true }), html()]}
+      extensions={[json(), markdown(), javascript({ jsx: true }), html()]}
       onChange={onChange}
       onKeyDown={onKeyDown}
     />
