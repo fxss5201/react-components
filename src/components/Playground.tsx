@@ -30,8 +30,12 @@ function Playground({ code, type = 'tsx', title, description, children, locale }
       <div className='px-4 pt-4'>
         {children}
       </div>
-      {title && <Divider orientation='left'>{title}</Divider>}
-      {description && <div className='px-4 pb-4'>{description}</div>}
+      {title && <Divider orientation='left'>
+        <MdRender>{title}</MdRender>
+      </Divider>}
+      {description && <div className='px-4 pb-4'>
+        <MdRender>{description}</MdRender>
+      </div>}
       <div className='h-10 border-t border-gray-300 dark:border-gray-600 flex items-center justify-center'>
         <Button type='text' onClick={toggleCodeShow} icon={<CodeOutlined />}>
           {codeShow ? collapseCode : displayCode}
