@@ -34,6 +34,7 @@ const AddActivity1 = lazy(() => import('../pages/activitys/AddActivity1'))
 const NoActivity = lazy(() => import('../pages/activitys/NoActivity'))
 const NoActivity1 = lazy(() => import('../pages/activitys/NoActivity1'))
 const SearchParamsPage = lazy(() => import('../pages/SearchParamsPage'))
+const JsonRenderPage = lazy(() => import('../pages/json/JsonRenderPage'))
 const JsonEditorPage = lazy(() => import('../pages/json/JsonEditorPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
@@ -86,22 +87,6 @@ export const routers = [
     ]
   },
   {
-    path: 'json',
-    meta: {
-      label: 'JSON',
-      icon: <IconFont type='icon-json' />,
-    },
-    children: [
-      {
-        path: 'json-editor',
-        element: <JsonEditorPage />,
-        meta: {
-          label: 'JSON 编辑器',
-        }
-      }
-    ]
-  },
-  {
     path: 'markdown',
     meta: {
       label: 'Markdown',
@@ -123,6 +108,29 @@ export const routers = [
           activity: true,
         }
       },
+    ]
+  },
+  {
+    path: 'json',
+    meta: {
+      label: 'JSON',
+      icon: <IconFont type='icon-json' />,
+    },
+    children: [
+      {
+        path: 'json-render',
+        element: <JsonRenderPage />,
+        meta: {
+          label: 'JSON 渲染',
+        }
+      },
+      {
+        path: 'json-editor',
+        element: <JsonEditorPage />,
+        meta: {
+          label: 'JSON 编辑器',
+        }
+      }
     ]
   },
   {

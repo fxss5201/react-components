@@ -1,0 +1,70 @@
+import React from 'react'
+import Playground from '../../../components/Playground'
+import JsonRenderString from './JsonRenderString'
+import JsonRenderStringRaw from './JsonRenderString.tsx?raw'
+import JsonRenderObject from './JsonRenderObject'
+import JsonRenderObjectRaw from './JsonRenderObject.tsx?raw'
+
+# JsonRender
+
+JsonRender component is used to render JSON strings or objects. It is just a simple encapsulation of the MdRender component.
+
+## TOC
+
+## API
+
+### Parameters Props
+
+``` ts
+export type MdRenderProps = {
+  children: object | string
+  className?: string
+  enableCopy?: boolean
+}
+```
+
+| Parameter | Description | Type | Default |
+| --- | --- | --- | --- |
+| `children` | JSON string or object | `object \| string` | - |
+| `className` | Custom class name | `string` | - |
+| `enableCopy` | Whether to enable copy code function | `boolean` | `true` |
+
+## Demo Examples
+
+### Render JSON String
+
+<Playground code={JsonRenderStringRaw} title='Render JSON String' description='Render JSON string result.'>
+  <JsonRenderString />
+</Playground>
+
+### Render JSON Object
+
+<Playground code={JsonRenderObjectRaw} title='Render JSON Object' description='Render JSON object result.'>
+  <JsonRenderObject />
+</Playground>
+
+## Source Code
+
+``` tsx
+import MdRender from './MdRender'
+
+export type JsonRenderProps = {
+  children: object | string
+  className?: string
+  enableCopy?: boolean
+}
+
+function JsonRender({ children, className, enableCopy = true }: JsonRenderProps) {
+  let jsonData = ''
+  if (typeof children === 'string') {
+    jsonData = children
+  } else {
+    jsonData = JSON.stringify(children, null, 2)
+  }
+  return (
+    <MdRender className={className} enableCopy={enableCopy}>{`\`\`\`json\n${jsonData}\n\`\`\``}</MdRender>
+  )
+}
+
+export default JsonRender
+```

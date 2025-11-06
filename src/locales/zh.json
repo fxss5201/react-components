@@ -37,7 +37,8 @@
     "files-select": "文件选择",
     "file-upload": "文件上传",
     "drop-upload": "拖拽上传",
-    "json-editor": "Json 编辑器"
+    "json-editor": "Json 编辑器",
+    "json-render": "Json 渲染"
   },
   "ActivityIndex": {
     "no-activity": "不保存状态",

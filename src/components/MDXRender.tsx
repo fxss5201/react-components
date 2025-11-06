@@ -3,7 +3,13 @@ import cn from 'classnames'
 import CodeRender from './CodeRender'
 import ALink from './ALink'
 
-function MDXRender({ children, className }: { children: React.ReactNode, className?: string }) {
+export type MDXRenderProps = {
+  children: React.ReactNode
+  className?: string
+  enableCopy?: boolean
+}
+
+function MDXRender({ children, className, enableCopy = true }: MDXRenderProps) {
   return (
     <div className={cn('markdown-body', className)}>
       <MDXProvider components={{
@@ -13,7 +19,11 @@ function MDXRender({ children, className }: { children: React.ReactNode, classNa
             <ALink href={href || ''}>{children}</ALink>
           )
         },
-        code: CodeRender,
+        code(props) {
+          return (
+            <CodeRender {...props} enableCopy={enableCopy}></CodeRender>
+          )
+        }
       }}>
         {children}
       </MDXProvider>

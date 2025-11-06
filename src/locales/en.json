@@ -37,7 +37,8 @@
     "files-select": "Files Select",
     "file-upload": "File Upload",
     "drop-upload": "Drop Upload",
-    "json-editor": "Json Editor"
+    "json-editor": "Json Editor",
+    "json-render": "Json Render"
   },
   "ActivityIndex": {
     "no-activity": "No Activity",
