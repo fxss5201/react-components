@@ -19,6 +19,7 @@ JsonRender component is used to render JSON strings or objects. It is just a sim
 export type MdRenderProps = {
   children: object | string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 ```
@@ -27,6 +28,7 @@ export type MdRenderProps = {
 | --- | --- | --- | --- |
 | `children` | JSON string or object | `object \| string` | - |
 | `className` | Custom class name | `string` | - |
+| `codeClassName` | Custom code block class name | `string` | - |
 | `enableCopy` | Whether to enable copy code function | `boolean` | `true` |
 
 ## Demo Examples
@@ -51,6 +53,7 @@ import MdRender from './MdRender'
 export type JsonRenderProps = {
   children: object | string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 

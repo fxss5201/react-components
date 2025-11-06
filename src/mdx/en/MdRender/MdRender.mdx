@@ -18,6 +18,7 @@ MdRender is a component that renders Markdown content with code highlighting and
 export type MdRenderProps = {
   children: string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 ```
@@ -26,6 +27,7 @@ export type MdRenderProps = {
 | --- | --- | --- | --- |
 | `children` | Markdown content | `string` | - |
 | `className` | Custom class name | `string` | - |
+| `codeClassName` | Custom code block class name | `string` | - |
 | `enableCopy` | Whether to enable the copy code functionality | `boolean` | `true` |
 
 ## Demos

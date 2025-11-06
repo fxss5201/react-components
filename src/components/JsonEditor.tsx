@@ -62,7 +62,7 @@ function JsonEditor({
       const typeMessage = type === 'value' ? (currentLocale === 'zh' ? '值' : 'Value') : (currentLocale === 'zh' ? '路径' : 'Path')
       notification.success({
         message: `${typeMessage} ${message}`,
-        description: <JsonRender enableCopy={false} className='max-h-[68vh] overflow-auto'>{stringValue}</JsonRender>,
+        description: <JsonRender enableCopy={false} codeClassName='max-h-[68vh] overflow-auto'>{stringValue}</JsonRender>,
         duration: 3,
       })
     } else {

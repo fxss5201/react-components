@@ -17,6 +17,7 @@ MdRender 组件用于展示 Markdown 内容，内置代码高亮、复制代码�
 export type MdRenderProps = {
   children: string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 ```
@@ -25,6 +26,7 @@ export type MdRenderProps = {
 | --- | --- | --- | --- |
 | `children` | Markdown 内容 | `string` | - |
 | `className` | 自定义类名 | `string` | - |
+| `codeClassName` | 自定义代码块类名 | `string` | - |
 | `enableCopy` | 是否开启复制代码功能 | `boolean` | `true` |
 
 ## 演示示例

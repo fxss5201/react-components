@@ -19,6 +19,7 @@ JsonRender 组件用于展示 JSON 字符串的渲染结果。只是对 MdRender
 export type MdRenderProps = {
   children: object | string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 ```
@@ -27,6 +28,7 @@ export type MdRenderProps = {
 | --- | --- | --- | --- |
 | `children` | JSON 字符串或对象 | `object \| string` | - |
 | `className` | 自定义类名 | `string` | - |
+| `codeClassName` | 自定义代码块类名 | `string` | - |
 | `enableCopy` | 是否开启复制代码功能 | `boolean` | `true` |
 
 ## 演示示例
@@ -51,6 +53,7 @@ import MdRender from './MdRender'
 export type JsonRenderProps = {
   children: object | string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 

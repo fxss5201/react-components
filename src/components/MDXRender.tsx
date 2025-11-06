@@ -6,6 +6,7 @@ import ALink from './ALink'
 export type MDXRenderProps = {
   children: React.ReactNode
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 

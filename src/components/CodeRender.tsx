@@ -7,13 +7,14 @@ import type { ExtraProps } from 'react-markdown'
 
 type CodeRenderProps = ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps & {
   theme?: 'dark' | 'light',
-  boxClassName?: string,
+  codeBoxClassName?: string,
+  codeClassName?: string,
   enableCopy?: boolean,
 }
-function CodeRender({ children, className, theme = 'light', boxClassName, enableCopy = true, ...rest }: CodeRenderProps) {
+function CodeRender({ children, className, theme = 'light', codeBoxClassName, codeClassName, enableCopy = true, ...rest }: CodeRenderProps) {
   const match = /language-(\w+)/.exec(className || '')
   return match ? (
-    <div className={cn('relative', boxClassName)}>
+    <div className={cn('relative', codeBoxClassName)}>
       <div className='absolute top-[-24px] left-[0] leading-6 z-10 text-gray-400 dark:text-gray-500'>{match[1]}</div>
       {enableCopy && (
         <div className='absolute top-[-24px] right-[-16px] z-10'>
@@ -21,8 +22,8 @@ function CodeRender({ children, className, theme = 'light', boxClassName, enable
         </div>
       )}
       <SyntaxHighlighter
-        PreTag="div"
-        className="code-block"
+        PreTag='div'
+        className={cn('code-block', codeClassName)}
         children={String(children).replace(/\n$/, '')}
         language={match[1]}
         showLineNumbers={true}
@@ -30,7 +31,7 @@ function CodeRender({ children, className, theme = 'light', boxClassName, enable
       />
     </div>
   ) : (
-    <code {...rest} className={cn(className, boxClassName)}>
+    <code {...rest} className={cn(className, codeBoxClassName)}>
       {children}
     </code>
   )

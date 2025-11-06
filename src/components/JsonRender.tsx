@@ -3,10 +3,11 @@ import MdRender from './MdRender'
 export type JsonRenderProps = {
   children: object | string
   className?: string
+  codeClassName?: string
   enableCopy?: boolean
 }
 
-function JsonRender({ children, className, enableCopy = true }: JsonRenderProps) {
+function JsonRender({ children, className, codeClassName, enableCopy = true }: JsonRenderProps) {
   let jsonData = ''
   if (typeof children === 'string') {
     jsonData = children
@@ -14,7 +15,7 @@ function JsonRender({ children, className, enableCopy = true }: JsonRenderProps)
     jsonData = JSON.stringify(children, null, 2)
   }
   return (
-    <MdRender className={className} enableCopy={enableCopy}>{`\`\`\`json\n${jsonData}\n\`\`\``}</MdRender>
+    <MdRender className={className} enableCopy={enableCopy} codeClassName={codeClassName}>{`\`\`\`json\n${jsonData}\n\`\`\``}</MdRender>
   )
 }
 
