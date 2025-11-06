@@ -1,0 +1,117 @@
+import React from 'react'
+import Playground from '../../components/Playground'
+import JsonViewDemo from './JsonViewDemo'
+import JsonViewDemoRaw from './JsonViewDemo.tsx?raw'
+import JsonEditorDemo from './JsonEditorDemo'
+import JsonEditorDemoRaw from './JsonEditorDemo.tsx?raw'
+
+# JsonEditor
+
+JsonEditor 组件用于编辑 JSON 字符串。
+
+## 目录
+
+## API
+
+### 参数 Props
+
+``` ts
+import {
+  type UpdateFunction,
+  type OnChangeFunction,
+  type CopyFunction,
+  type OnErrorFunction,
+} from 'json-edit-react'
+import { type LocaleType } from '../config'
+
+export type JsonEditorProps = {
+  children: object
+  viewOnly?: boolean
+  enableCopy?: boolean
+  enableSearch?: boolean
+  className?: string
+  searchClassName?: string
+  jsonClassName?: string
+  locale?: LocaleType
+  isCodeEditor?: boolean
+  onUpdate?: UpdateFunction
+  onEdit?: UpdateFunction
+  onDelete?: UpdateFunction
+  onAdd?: UpdateFunction
+  onChange?: OnChangeFunction
+}
+```
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| `children` | JSON 对象 | `object` | - |
+| `viewOnly` | 是否只读 | `boolean` | `false` |
+| `enableCopy` | 是否开启自定义复制代码功能 | `boolean` | `true` |
+| `enableSearch` | 是否开启搜索功能 | `boolean` | `true` |
+| `className` | 自定义类名 | `string` | - |
+| `searchClassName` | 搜索框自定义类名 | `string` | - |
+| `jsonClassName` | JSON显示区域自定义类名 | `string` | - |
+| `locale` | 语言 | `LocaleType` | `zh` |
+| `isCodeEditor` | 是否使用代码编辑器 | `boolean` | `false` |
+| `onUpdate` | 更新回调 | `UpdateFunction` | - |
+| `onEdit` | 编辑回调 | `UpdateFunction` | - |
+| `onDelete` | 删除回调 | `UpdateFunction` | - |
+| `onAdd` | 添加回调 | `UpdateFunction` | - |
+| `onChange` | 变化回调 | `OnChangeFunction` | - |
+
+`onUpdate`/ `onEdit`/ `onDelete`/ `onAdd` / `onChange` 具体用法可参照 [json-edit-react](https://github.com/CarlosNZ/json-edit-react?tab=readme-ov-file#update-functions)
+
+## 演示示例
+
+### JSON 对象编辑
+
+<Playground code={JsonEditorDemoRaw} title='JSON 对象编辑' description='JSON 对象编辑，开启编辑功能。'>
+  <JsonEditorDemo />
+</Playground>
+
+### JsonView 组件
+
+<Playground code={JsonViewDemoRaw} title='JSON 对象仅显示' description='JSON 对象仅显示，不开启编辑功能, 使用 `JsonView` 组件，是 `JsonEditor` 组件的简单封装。'>
+  <JsonViewDemo />
+</Playground>
+
+#### JsonView 源码
+
+``` tsx
+import JsonEditor from './JsonEditor'
+import { type LocaleType } from '../config'
+
+export type JsonViewProps = {
+  children: object
+  enableCopy?: boolean
+  enableSearch?: boolean
+  className?: string
+  searchClassName?: string
+  jsonClassName?: string
+  locale?: LocaleType
+}
+
+function JsonView({
+  children,
+  enableCopy = true,
+  enableSearch = true,
+  className,
+  searchClassName,
+  jsonClassName,
+  locale
+}: JsonViewProps) {
+  return (
+    <JsonEditor
+      viewOnly={true}
+      enableCopy={enableCopy}
+      enableSearch={enableSearch}
+      className={className}
+      searchClassName={searchClassName}
+      jsonClassName={jsonClassName}
+      locale={locale}
+    >{children}</JsonEditor>
+  )
+}
+
+export default JsonView
+```

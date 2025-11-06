@@ -1,0 +1,117 @@
+import React from 'react'
+import Playground from '../../../components/Playground'
+import JsonViewDemo from './JsonViewDemo'
+import JsonViewDemoRaw from './JsonViewDemo.tsx?raw'
+import JsonEditorDemo from './JsonEditorDemo'
+import JsonEditorDemoRaw from './JsonEditorDemo.tsx?raw'
+
+# JsonEditor
+
+JsonEditor component is used to edit JSON strings.
+
+## TOC
+
+## API
+
+### Parameters Props
+
+``` ts
+import {
+  type UpdateFunction,
+  type OnChangeFunction,
+  type CopyFunction,
+  type OnErrorFunction,
+} from 'json-edit-react'
+import { type LocaleType } from '../config'
+
+export type JsonEditorProps = {
+  children: object
+  viewOnly?: boolean
+  enableCopy?: boolean
+  enableSearch?: boolean
+  className?: string
+  searchClassName?: string
+  jsonClassName?: string
+  locale?: LocaleType
+  isCodeEditor?: boolean
+  onUpdate?: UpdateFunction
+  onEdit?: UpdateFunction
+  onDelete?: UpdateFunction
+  onAdd?: UpdateFunction
+  onChange?: OnChangeFunction
+}
+```
+
+| Parameter | Description | Type | Default |
+| --- | --- | --- | --- |
+| `children` | JSON object | `object` | - |
+| `viewOnly` | Whether to read-only | `boolean` | `false` |
+| `enableCopy` | Whether to enable custom copy code function | `boolean` | `true` |
+| `enableSearch` | Whether to enable search function | `boolean` | `true` |
+| `className` | Custom class name | `string` | - |
+| `searchClassName` | Search box custom class name | `string` | - |
+| `jsonClassName` | JSON display area custom class name | `string` | - |
+| `locale` | Language | `LocaleType` | `zh` |
+| `isCodeEditor` | Whether to use code editor | `boolean` | `false` |
+| `onUpdate` | Update callback | `UpdateFunction` | - |
+| `onEdit` | Edit callback | `UpdateFunction` | - |
+| `onDelete` | Delete callback | `UpdateFunction` | - |
+| `onAdd` | Add callback | `UpdateFunction` | - |
+| `onChange` | Change callback | `OnChangeFunction` | - |
+
+`onUpdate`/ `onEdit`/ `onDelete`/ `onAdd` / `onChange` specific usage can refer to [json-edit-react](https://github.com/CarlosNZ/json-edit-react?tab=readme-ov-file#update-functions)
+
+## Demos
+
+### JSON Object Editor
+
+<Playground code={JsonEditorDemoRaw} title='JSON Object Editor' description='JSON Object Editor, enable edit function.'>
+  <JsonEditorDemo />
+</Playground>
+
+### JsonView Component
+
+<Playground code={JsonViewDemoRaw} title='JSON Object Viewer' description='JSON Object Viewer, disable edit function, using `JsonView` component is a simple encapsulation of `JsonEditor` component.'>
+  <JsonViewDemo />
+</Playground>
+
+#### JsonView Source Code
+
+``` tsx
+import JsonEditor from './JsonEditor'
+import { type LocaleType } from '../config'
+
+export type JsonViewProps = {
+  children: object
+  enableCopy?: boolean
+  enableSearch?: boolean
+  className?: string
+  searchClassName?: string
+  jsonClassName?: string
+  locale?: LocaleType
+}
+
+function JsonView({
+  children,
+  enableCopy = true,
+  enableSearch = true,
+  className,
+  searchClassName,
+  jsonClassName,
+  locale
+}: JsonViewProps) {
+  return (
+    <JsonEditor
+      viewOnly={true}
+      enableCopy={enableCopy}
+      enableSearch={enableSearch}
+      className={className}
+      searchClassName={searchClassName}
+      jsonClassName={jsonClassName}
+      locale={locale}
+    >{children}</JsonEditor>
+  )
+}
+
+export default JsonView
+```
