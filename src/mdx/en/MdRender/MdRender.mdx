@@ -1,0 +1,33 @@
+import React from 'react'
+
+# MdRender
+
+MdRender is a component that renders Markdown content with code highlighting and copy functionality.
+
+> **Note:**
+> - To use the directory function within a component, you need to add a '## 目录' or a '## TOC' in the Markdown content. The component will automatically parse the directory, **ensuring that each page has only one directory**.
+
+
+## 目录
+
+## API
+
+### Parameters Props
+
+``` ts
+export type MdRenderProps = {
+  children: string
+  className?: string
+  enableCopy?: boolean
+}
+```
+
+| Parameter | Description | Type | Default |
+| --- | --- | --- | --- |
+| `children` | Markdown content | `string` | - |
+| `className` | Custom class name | `string` | - |
+| `enableCopy` | Whether to enable the copy code functionality | `boolean` | `true` |
+
+## Demos
+
+[MdRender 演示示例](markdown/md-demo-page)

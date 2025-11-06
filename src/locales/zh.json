@@ -20,7 +20,8 @@
   "Menu": {
     "home": "首页",
     "copy-to-clipboard-page": "复制到剪贴板",
-    "md-page": "Markdown",
+    "md-demo-page": "Markdown 演示",
+    "md-render-page": "Markdown 渲染",
     "files-upload": "文件上传",
     "error-page": "错误页面",
     "pro-components": "Pro Components",

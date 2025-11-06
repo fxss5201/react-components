@@ -20,7 +20,8 @@
   "Menu": {
     "home": "Home",
     "copy-to-clipboard-page": "Copy to Clipboard",
-    "md-page": "Markdown",
+    "md-demo-page": "Markdown Demo",
+    "md-render-page": "Markdown Render",
     "files-upload": "Files Upload",
     "error-page": "Error Page",
     "pro-components": "Pro Components",

@@ -1,7 +1,14 @@
 import { createBrowserRouter } from 'react-router'
 import type { RouteObject } from 'react-router'
 import { lazy } from 'react'
-import { HomeOutlined, UploadOutlined, FileMarkdownOutlined, CopyOutlined, CloseCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons'
+import {
+  HomeOutlined,
+  UploadOutlined,
+  FileMarkdownOutlined,
+  CopyOutlined,
+  CloseCircleOutlined,
+  QuestionCircleOutlined
+} from '@ant-design/icons'
 import App from '../App'
 import PageLayout from '../pages/PageLayout'
 import NotFoundPage from '../pages/NotFoundPage'
@@ -16,7 +23,8 @@ const FilesUpload = lazy(() => import('../pages/file-upload/FilesUpload'))
 const FilesSelect = lazy(() => import('../pages/file-upload/FilesSelect'))
 // const DropUpload = lazy(() => import('../pages/file-upload/DropUpload'))
 const DropUploadMdx = lazy(() => import('../pages/file-upload/DropUploadMdx'))
-const MdPage = lazy(() => import('../pages/MdPage'))
+const MdDemoPage = lazy(() => import('../pages/markdown/MdDemoPage'))
+const MdRenderPage = lazy(() => import('../pages/markdown/MdRenderPage'))
 const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
 const ErrorPage = lazy(() => import('../pages/ErrorPage'))
 const SkeletonPage = lazy(() => import('../pages/pro-components/SkeletonPage'))
@@ -45,15 +53,6 @@ export const routers = [
     meta: {
       label: '复制到剪贴板',
       icon: <CopyOutlined />,
-    }
-  },
-  {
-    path: 'md-page',
-    element: <MdPage />,
-    meta: {
-      label: 'Markdown 页面',
-      icon: <FileMarkdownOutlined />,
-      activity: true,
     }
   },
   {
@@ -100,6 +99,30 @@ export const routers = [
           label: 'JSON 编辑器',
         }
       }
+    ]
+  },
+  {
+    path: 'markdown',
+    meta: {
+      label: 'Markdown',
+      icon: <FileMarkdownOutlined />,
+    },
+    children: [
+      {
+        path: 'md-render-page',
+        element: <MdRenderPage />,
+        meta: {
+          label: 'Markdown 渲染',
+        }
+      },
+      {
+        path: 'md-demo-page',
+        element: <MdDemoPage />,
+        meta: {
+          label: 'Markdown 演示',
+          activity: true,
+        }
+      },
     ]
   },
   {
