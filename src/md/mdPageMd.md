@@ -4,13 +4,23 @@
 
 ## 列表项
 
+### 有序列表
+
 1. 列表1
 2. 列表2
 3. 列表3
 
+### 无序列表
+
 - 列表1
 - 列表2
 - 列表3
+
+### 任务列表
+
+- [ ] 任务1
+- [x] 任务2
+- [ ] 任务3
 
 ## 表格
 
@@ -67,12 +77,10 @@
 ### 多行代码
 
 ```js
-for (var i = 1; i <= 5; i++) {
-  (function(j) {
-    setTimeout(function timer() {
-      console.log(j);
-    }, j * 1000);
-  })(i);
+for (let i = 1; i <= 5; i++) {
+  setTimeout(function timer() {
+    console.log(i)
+  }, i * 1000)
 }
 ```
 

@@ -4,13 +4,23 @@
 
 ## List Item
 
+### Ordered List
+
 1. List 1
 2. List 2
 3. List 3
 
+### Unordered List
+
 - List 1
 - List 2
 - List 3
+
+### Task List
+
+- [ ] Task 1
+- [x] Task 2
+- [ ] Task 3
 
 ## Table
 
@@ -67,12 +77,10 @@ In-line code: `<hello>` `world`
 ### Multi-line code
 
 ```js
-for (var i = 1; i <= 5; i++) {
-  (function(j) {
-    setTimeout(function timer() {
-      console.log(j);
-    }, j * 1000);
-  })(i);
+for (let i = 1; i <= 5; i++) {
+  setTimeout(function timer() {
+    console.log(i)
+  }, i * 1000)
 }
 ```
 
