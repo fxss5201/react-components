@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { Splitter, Input } from 'antd'
+import { Splitter } from 'antd'
 import MdRender from '../components/MdRender'
 import mdPageMd from '../md/mdPageMd.md?raw'
 import mdPageMdEn from '../md/en/mdPageMd.md?raw'
 import { useLocale } from '../Hooks/useLocale'
 import { useUpdateEffect } from 'ahooks'
-
-const { TextArea } = Input
+import CodeEditor from '../components/CodeEditor'
 
 function MdPage() {
   const locale = useLocale()
@@ -20,7 +19,7 @@ function MdPage() {
       <Splitter.Panel collapsible>
         <div className='p-4'>
           <div className='text-lg font-bold mb-3'>Markdown 编辑</div>
-          <TextArea value={markdown} onChange={(e) => setMarkdown(e.target.value)} rows={15} />
+          <CodeEditor value={markdown} onChange={setMarkdown} className='border border-gray-300 dark:border-gray-700' />
         </div>
       </Splitter.Panel>
       <Splitter.Panel collapsible>
