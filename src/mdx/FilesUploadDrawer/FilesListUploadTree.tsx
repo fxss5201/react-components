@@ -30,7 +30,7 @@ function FilesListUploadTree() {
         onSuccess={onSuccessFn}
       />
 
-      <JsonView className='mt-4! max-h-100 overflow-auto'>
+      <JsonView className='mt-4!' jsonClassName='max-h-100 overflow-auto'>
         {treeData}
       </JsonView>
     </div>

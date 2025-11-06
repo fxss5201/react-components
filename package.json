@@ -49,6 +49,7 @@
     "remark-toc": "^9.0.0",
     "tailwindcss": "^4.1.13",
     "use-immer": "^0.11.0",
+    "use-undo": "^1.1.1",
     "vscode-icons-js": "^11.6.1"
   },
   "devDependencies": {

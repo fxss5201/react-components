@@ -11,8 +11,9 @@ import CodeRender from './CodeRender'
 export type MdRenderProps = {
   children: string
   className?: string
+  enableCopy?: boolean
 }
-function MdRender({children, className}: MdRenderProps) {
+function MdRender({children, className, enableCopy = true}: MdRenderProps) {
   const { theme } = useTheme()
 
   return (
@@ -30,7 +31,7 @@ function MdRender({children, className}: MdRenderProps) {
           },
           code(props) {
             return (
-              <CodeRender {...props} theme={theme}></CodeRender>
+              <CodeRender {...props} theme={theme} enableCopy={enableCopy}></CodeRender>
             )
           }
         }}

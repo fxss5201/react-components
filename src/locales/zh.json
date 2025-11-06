@@ -35,7 +35,8 @@
     "search-params-page": "路由搜索参数",
     "files-select": "文件选择",
     "file-upload": "文件上传",
-    "drop-upload": "拖拽上传"
+    "drop-upload": "拖拽上传",
+    "json-editor": "Json 编辑器"
   },
   "ActivityIndex": {
     "no-activity": "不保存状态",

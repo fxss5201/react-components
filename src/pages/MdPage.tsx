@@ -12,7 +12,6 @@ function MdPage() {
   const locale = useLocale()
   const [markdown, setMarkdown] = useState(locale === 'en' ? mdPageMdEn : mdPageMd)
   useUpdateEffect(() => {
-    console.log(locale)
     setMarkdown(locale === 'en' ? mdPageMdEn : mdPageMd)
   }, [locale])
 

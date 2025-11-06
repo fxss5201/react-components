@@ -8,15 +8,18 @@ import type { ExtraProps } from 'react-markdown'
 type CodeRenderProps = ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps & {
   theme?: 'dark' | 'light',
   boxClassName?: string,
+  enableCopy?: boolean,
 }
-function CodeRender({ children, className, theme = 'light', boxClassName, ...rest }: CodeRenderProps) {
+function CodeRender({ children, className, theme = 'light', boxClassName, enableCopy = true, ...rest }: CodeRenderProps) {
   const match = /language-(\w+)/.exec(className || '')
   return match ? (
     <div className={cn('relative', boxClassName)}>
       <div className='absolute top-[-24px] left-[0] leading-6 z-10 text-gray-400 dark:text-gray-500'>{match[1]}</div>
-      <div className='absolute top-[-24px] right-[-16px] z-10'>
-        <CopyToClipboard text={String(children).replace(/\n$/, '')}></CopyToClipboard>
-      </div>
+      {enableCopy && (
+        <div className='absolute top-[-24px] right-[-16px] z-10'>
+          <CopyToClipboard text={String(children).replace(/\n$/, '')}></CopyToClipboard>
+        </div>
+      )}
       <SyntaxHighlighter
         PreTag="div"
         className="code-block"

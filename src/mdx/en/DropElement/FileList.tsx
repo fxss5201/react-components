@@ -25,7 +25,7 @@ function FileList() {
   return (
     <>
       <DropElement targetType='list' onDrop={onDropList} className='mt-4'></DropElement>
-      <JsonView className='mt-4! max-h-100 overflow-auto'>
+      <JsonView className='mt-4!' jsonClassName='max-h-100 overflow-auto'>
         {listData}
       </JsonView>
       <FilesUploadDrawer
