@@ -10,13 +10,15 @@ export type DropElementProps<T extends TargetType> = {
   locale?: LocaleType
   targetType: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
   onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+  children?: React.ReactNode
 }
 
 function DropElement<T extends TargetType>({
   className = '',
   locale,
   targetType = 'tree' as T,
-  onDrop
+  onDrop,
+  children
 }: DropElementProps<T>) {
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
@@ -196,9 +198,11 @@ function DropElement<T extends TargetType>({
   return (
     <div ref={dropAreaRef}
       className={
-        cn('border-2 border-dashed border-gray-300 rounded-md p-4 text-gray-400 text-2xl h-50 flex items-center justify-center', className)
+        cn('border-2 border-dashed border-gray-300 rounded-md p-4 text-gray-400 h-50 flex items-center justify-center', className)
       }
-    >{currentLocale === 'zh' ? '请拖放文件或文件夹到这里' : 'Please drag and drop files or folders here'}</div>
+    >{children || (
+      <div className='text-2xl'>{currentLocale === 'zh' ? '请拖放文件或文件夹到这里' : 'Please drag and drop files or folders here'}</div>
+    )}</div>
   )
 }
 

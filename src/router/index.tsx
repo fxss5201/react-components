@@ -19,10 +19,10 @@ import IconFont from '../components/IconFont'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-const FilesUpload = lazy(() => import('../pages/file-upload/FilesUpload'))
-const FilesSelect = lazy(() => import('../pages/file-upload/FilesSelect'))
-// const DropUpload = lazy(() => import('../pages/file-upload/DropUpload'))
-const DropUploadMdx = lazy(() => import('../pages/file-upload/DropUploadMdx'))
+const FilesUpload = lazy(() => import('../pages/file-related/FilesUpload'))
+const FilesSelect = lazy(() => import('../pages/file-related/FilesSelect'))
+const DropUpload = lazy(() => import('../pages/file-related/DropUpload'))
+const FileHash = lazy(() => import('../pages/file-related/FileHash'))
 const MdDemoPage = lazy(() => import('../pages/markdown/MdDemoPage'))
 const MdRenderPage = lazy(() => import('../pages/markdown/MdRenderPage'))
 const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
@@ -57,9 +57,9 @@ export const routers = [
     }
   },
   {
-    path: 'file-upload',
+    path: 'file-related',
     meta: {
-      label: '文件上传',
+      label: '文件相关',
       icon: <UploadOutlined />,
     },
     children: [
@@ -79,9 +79,16 @@ export const routers = [
       },
       {
         path: 'drop-upload',
-        element: <DropUploadMdx />,
+        element: <DropUpload />,
         meta: {
           label: '拖拽上传',
+        }
+      },
+      {
+        path: 'file-hash',
+        element: <FileHash />,
+        meta: {
+          label: '文件哈希',
         }
       }
     ]

@@ -1,0 +1,28 @@
+import React from 'react'
+import Playground from '../../../components/Playground'
+import FileHash from './FileHash'
+import FileHashRaw from './FileHash.tsx?raw'
+
+# FileHash
+
+## TOC
+
+## Source Code
+
+``` ts
+export type AlgorithmType = 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512'
+
+export async function calculateFileHashHex(file: File, algorithm: AlgorithmType = 'SHA-256'): Promise<string> {
+  const arrayBuffer = await file.arrayBuffer()
+  const hashBuffer = await window.crypto.subtle.digest(algorithm, arrayBuffer)
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
+  return hashHex
+}
+```
+
+## Demo
+
+<Playground code={FileHashRaw} title='File Hash Calculator' description='Drag files or folders to calculate their hash values (supports recursive calculation of hash values for all files in a folder, file hash values can be used as unique identifiers for file content).'>
+  <FileHash />
+</Playground>

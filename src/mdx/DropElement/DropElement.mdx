@@ -50,6 +50,7 @@ export type DropElementProps<T extends TargetType> = {
   locale?: LocaleType
   targetType: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
   onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+  children?: React.ReactNode
 }
 ```
 
@@ -59,6 +60,7 @@ export type DropElementProps<T extends TargetType> = {
 | `locale` | 语言 | `'zh' \| 'en'` | `'zh'` |
 | `type` | 回调函数参数类型 | `'tree' \| 'list'` | `'tree'` |
 | `onDrop` | 拖拽结束后的回调函数 | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+| `children` | 自定义内容 | `React.ReactNode` | - |
 
 ## 演示示例
 
