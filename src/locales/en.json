@@ -35,7 +35,8 @@
     "no-activity1": "No Route Activity (Controlled)",
     "search-params-page": "SearchParams",
     "files-select": "Files Select",
-    "file-upload": "File Upload",
+    "files-upload": "Files Upload",
+    "file-hash": "File Hash",
     "drop-upload": "Drop Upload",
     "json-editor": "Json Editor",
     "json-render": "Json Render"

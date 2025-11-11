@@ -16,8 +16,10 @@ export const resources = {
 export type LangResourcesType = (typeof resources)[keyof typeof resources]
 
 let initLocale = config.defaultLocale
+const htmlElement = document.documentElement
 if (config.locales) {
   initLocale = (localStorage.getItem(config.localeLocalStorageKey) as LocaleType) || config.defaultLocale
+  htmlElement.setAttribute('lang', initLocale === 'zh' ? 'zh-CN' : 'en-US')
 }
 
 i18n
