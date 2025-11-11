@@ -1,0 +1,37 @@
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+
+export type UserState = {
+  value: {
+    // 用户名
+    name: string
+    // 头像
+    img?: string
+    // 消息数量
+    badge?: number
+  }
+}
+
+const initialState: UserState = {
+  value: {
+    name: '',
+    img: '',
+    badge: 0
+  }
+}
+
+export const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    changeUserInfo: (state, action: PayloadAction<UserState['value']>) => {
+      state.value = action.payload
+    },
+    changeBadge: (state, action: PayloadAction<number>) => {
+      state.value.badge = action.payload
+    }
+  }
+})
+
+export const { changeUserInfo, changeBadge } = userSlice.actions
+
+export default userSlice.reducer

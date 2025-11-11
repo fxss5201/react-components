@@ -19,6 +19,7 @@ import { routersList } from './router'
 import config from './config'
 import { useActivitys } from './storeHooks/useActivitys'
 import { useLayoutTabs } from './storeHooks/useLayoutTabs'
+import { useUser } from './storeHooks/useUser'
 
 function App() {
   const { theme } = useTheme()
@@ -31,6 +32,7 @@ function App() {
   const { addActivitys } = useActivitys()
   const { addLayoutTabs } = useLayoutTabs()
   const [searchParams] = useSearchParams()
+  const { changeUserInfo } = useUser()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -89,6 +91,13 @@ function App() {
       }
     }
   }, [pathname, t])
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem(config.loginLocalStorageKey)
+    if (userInfo) {
+      changeUserInfo(JSON.parse(userInfo))
+    }
+  }, [])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>

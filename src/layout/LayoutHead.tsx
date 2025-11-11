@@ -5,6 +5,7 @@ import cn from 'classnames'
 import config from '../config'
 import LayoutTheme from './LayoutTheme'
 import LayoutLocale from './LayoutLocale'
+import LayoutUser from './LayoutUser'
 
 function LayoutHead({ className }: { className?: string }) {
   const navigate = useNavigateFn()
@@ -24,6 +25,7 @@ function LayoutHead({ className }: { className?: string }) {
             <GithubOutlined />
           </a>
         )}
+        {config.isNeedLogin && <LayoutUser className='ml-8' />}
       </div>
     </Flex>
   )

@@ -20,7 +20,7 @@ export const authLoader: LoaderFunction = async ({ request }) => {
   }
   
   // 检查登录状态
-  const isLogin = localStorage.getItem(config.loginLocalStorageKey) === 'true'
+  const isLogin = localStorage.getItem(config.loginLocalStorageKey) !== null
   
   // 如果是登录页面
   if (currentPath === '/login' || currentPath === '/login/') {

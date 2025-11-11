@@ -4,6 +4,7 @@ import routeLoadingReducer from './routeLoadingSlice'
 import layoutStateReducer from './layoutStateSlice'
 import activitysReducer from './activitysSlice'
 import layoutTabsReducer from './layoutTabsSlice'
+import userReducer from './userSlice'
 
 const store =  configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store =  configureStore({
     layoutState: layoutStateReducer,
     activitys: activitysReducer,
     layoutTabs: layoutTabsReducer,
+    user: userReducer,
   }
 })
 

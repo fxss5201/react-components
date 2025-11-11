@@ -21,6 +21,7 @@ import { useLocale } from '../Hooks/useLocale'
 import LayoutTheme from '../layout/LayoutTheme'
 import LayoutLocale from '../layout/LayoutLocale'
 import config from '../config'
+import { useUser } from '../storeHooks/useUser'
 
 type LoginType = 'phone' | 'account'
 interface LoginFormValues {
@@ -45,6 +46,7 @@ function Login() {
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
   const [loginType, setLoginType] = useState<LoginType>('account')
+  const { changeUserInfo } = useUser()
 
   const iconStyles: CSSProperties = {
     marginInlineStart: '16px',
@@ -97,7 +99,13 @@ function Login() {
               localStorage.removeItem('rememberLogin')
             }
           }
-          localStorage.setItem(config.loginLocalStorageKey, String(true))
+          const userInfo = {
+            name: values.username || values.mobile || '',
+            img: config.logoImg,
+            badge: 10,
+          }
+          changeUserInfo(userInfo)
+          localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(userInfo))
           await waitTime(2000)
           message.success(locale === 'zh' ? '登录成功' : 'Login success')
           navigate('/')
