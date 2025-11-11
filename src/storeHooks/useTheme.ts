@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeTheme } from '../store/themeSlice'
 import { type RootState, type AppDispatch } from '../store'
@@ -36,7 +36,7 @@ export const useTheme = () => {
   }, [storeTheme])
 
   const dispatch = useDispatch<AppDispatch>()
-  const changeThemeCallback = useCallback((value: ThemeType) => dispatch(changeTheme(value)), [dispatch])
+  const changeThemeCallback = (value: ThemeType) => dispatch(changeTheme(value))
 
   return { theme, storeTheme, changeTheme: changeThemeCallback }
 }
