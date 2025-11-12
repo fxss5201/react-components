@@ -25,11 +25,11 @@ import { useUser } from '../storeHooks/useUser'
 
 type LoginType = 'phone' | 'account'
 interface LoginFormValues {
-  username?: string;
-  password?: string;
-  rememberPassword?: boolean;
-  mobile?: string;
-  captcha?: string;
+  username?: string
+  password?: string
+  rememberPassword?: boolean
+  mobile?: string
+  captcha?: string
 }
 
 const waitTime = (time: number = 100) => {
@@ -133,7 +133,7 @@ function Login() {
               name='username'
               fieldProps={{
                 size: 'large',
-                prefix: <UserOutlined className={'prefixIcon'} />,
+                prefix: <UserOutlined />,
               }}
               placeholder={locale === 'zh' ? '用户名' : 'Username'}
               rules={[
@@ -147,7 +147,7 @@ function Login() {
               name='password'
               fieldProps={{
                 size: 'large',
-                prefix: <LockOutlined className={'prefixIcon'} />,
+                prefix: <LockOutlined />,
                 strengthText:
                   locale === 'zh' ? '密码应包含数字、字母和特殊字符，至少 8 个字符长。' : 'Password should contain numbers, letters and special characters, at least 8 characters long.',
                 statusRender: (value) => {
@@ -194,7 +194,10 @@ function Login() {
               <ProFormCheckbox noStyle name='rememberPassword'>
                 {locale === 'zh' ? '记住密码' : 'Remember password'}
               </ProFormCheckbox>
-              <a>
+              <a onClick={(e) => {
+                e.preventDefault()
+                navigate('/reset-password')
+              }}>
                 {locale === 'zh' ? '忘记密码' : 'Forgot password'}
               </a>
             </div>
@@ -205,7 +208,7 @@ function Login() {
             <ProFormText
               fieldProps={{
                 size: 'large',
-                prefix: <MobileOutlined className={'prefixIcon'} />,
+                prefix: <MobileOutlined />,
               }}
               name='mobile'
               placeholder={locale === 'zh' ? '手机号' : 'Mobile'}
@@ -223,7 +226,7 @@ function Login() {
             <ProFormCaptcha
               fieldProps={{
                 size: 'large',
-                prefix: <LockOutlined className={'prefixIcon'} />,
+                prefix: <LockOutlined />,
               }}
               captchaProps={{
                 size: 'large',

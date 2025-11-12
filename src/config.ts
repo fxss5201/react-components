@@ -5,9 +5,11 @@ const config = {
 // 默认配置，可以用自定义配置覆盖（仅浅层覆盖）
 const defaultonfig = {
   // 是否需要登录才能访问，默认不需要
-  isNeedLogin: false,
+  isNeedLogin: true,
   // 登录状态保存在 localStorage 中的 key，防止被其他覆盖
   loginLocalStorageKey: 'react-components-login',
+  // 白名单，登录页面和重置密码页面不需要登录
+  whiteList: ['/login', '/reset-password'],
 
   // logoText 配置，在 logoText 和 logoImg 都配置时，页头左侧 logoImg 优先级更高
   logoText: 'react-components',
@@ -16,7 +18,7 @@ const defaultonfig = {
   // 是否开启主题切换功能，默认开启
   theme: true,
   // 默认主题，如果未开启主题切换功能，则直接显示该主题
-  defaultTheme: 'dark',
+  defaultTheme: 'system',
   // 系统主题切换时，是否自动切换主题
   autoChangeTheme: true,
   // 主题保存在 localStorage 中的 key，防止被其他覆盖
@@ -73,6 +75,7 @@ export type LocaleType = 'zh' | 'en'
 export type DefaultConfigType = {
   isNeedLogin: boolean
   loginLocalStorageKey: string
+  whiteList: string[]
   logoText: string
   logoImg: string
   theme: boolean

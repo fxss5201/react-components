@@ -51,29 +51,48 @@
   position: fixed;
   top: 180px;
   right: 16px;
-  width: 200px;
+  width: 220px;
   margin: 0 !important;
+  padding: 4px 8px;
   z-index: 100;
   background-color: rgba(255, 255, 255, 0.8);
   opacity: 0.2;
+  border-bottom: 0;
 }
 .markdown-body [id='TOC'] + ul,
 .markdown-body [id='toc'] + ul,
 .markdown-body [id='目录'] + ul {
   font-size: 14px;
   position: fixed;
-  top: 214px;
+  top: 216px;
   right: 16px;
-  width: 200px;
+  width: 220px;
   max-height: calc(100vh - 428px);
   padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 6px;
+  margin: 0 !important;
   z-index: 100;
   background-color: rgba(255, 255, 255, 0.8);
   opacity: 0.2;
   overflow: auto;
 }
+.markdown-body [id='TOC']:hover,
+.markdown-body [id='toc']:hover,
+.markdown-body [id='目录']:hover,
 .markdown-body [id='TOC'] + ul:hover,
 .markdown-body [id='toc'] + ul:hover,
 .markdown-body [id='目录'] + ul:hover {
   opacity: 1;
+}
+
+.dark .markdown-body [id='TOC'],
+.dark .markdown-body [id='toc'],
+.dark .markdown-body [id='目录'] {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.dark .markdown-body [id='TOC'] + ul,
+.dark .markdown-body [id='toc'] + ul,
+.dark .markdown-body [id='目录'] + ul {
+  background-color: rgba(0, 0, 0, 0.8);
 }

@@ -23,7 +23,7 @@ export const authLoader: LoaderFunction = async ({ request }) => {
   const isLogin = localStorage.getItem(config.loginLocalStorageKey) !== null
   
   // 如果是登录页面
-  if (currentPath === '/login' || currentPath === '/login/') {
+  if (config.whiteList.includes(currentPath)) {
     // if (!isLogin && config.isNeedLogin) {
     //   return true
     // } else {

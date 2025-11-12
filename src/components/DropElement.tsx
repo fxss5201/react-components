@@ -87,7 +87,7 @@ function DropElement<T extends TargetType>({
           fileTrees.push(...entryFiles)
         }
       }
-      // console.log('fileTrees', fileTrees)
+      // console.log("🚀 ~ handleDropItems ~ fileTrees:", fileTrees)
       onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
     }
   }
@@ -190,7 +190,7 @@ function DropElement<T extends TargetType>({
         size: item.size,
         type: 'file'
       }))
-      // console.log('fileTrees', fileTrees)
+      // console.log("🚀 ~ handleDropFiles ~ fileTrees:", fileTrees)
       onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
     }
   }

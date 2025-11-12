@@ -13,9 +13,11 @@ import App from '../App'
 import PageLayout from '../pages/PageLayout'
 import NotFoundPage from '../pages/NotFoundPage'
 import Login from '../pages/Login'
+import ResetPassword from '../pages/ResetPassword'
 import Home from '../pages/Home'
 import { authLoader } from './loader/authLoader'
 import IconFont from '../components/IconFont'
+import config from '../config'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -240,8 +242,16 @@ export const routers = [
       hideInTabs: true,
     }
   },
+  {
+    path: 'reset-password',
+    element: <ResetPassword />,
+    meta: {
+      label: '重置密码',
+      hideInTabs: true,
+    }
+  },
 ] as RoutersBaseType[]
-
+const whiteList = config.whiteList.map(item => item.slice(1))
 const router = createBrowserRouter([
   {
     path: '/',
@@ -251,9 +261,9 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <PageLayout />,
-        children: routers.filter(item => item.path !== 'login') as RoutersBaseType[]
+        children: routers.filter(item => !item.path || !whiteList.includes(item.path)) as RoutersBaseType[]
       },
-      ...routers.filter(item => item.path === 'login') as RoutersBaseType[]
+      ...routers.filter(item => item.path && whiteList.includes(item.path)) as RoutersBaseType[]
     ]
   },
   {

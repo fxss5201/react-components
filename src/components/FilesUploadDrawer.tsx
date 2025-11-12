@@ -145,7 +145,6 @@ function FilesUploadDrawer<T extends TargetType>({
     if (fileList.length > 0 && fileList.every((item) => item.percentStatus === 'success')) {
       setOpen(false)
       message.success(currentLocale === 'zh' ? '所有文件上传成功' : 'All files uploaded successfully')
-      // console.log('success', fileList)
       if (onSuccess) {
         if (targetType === 'list') {
           onSuccess(fileList)
@@ -191,7 +190,6 @@ function FilesUploadDrawer<T extends TargetType>({
   const onIgnoreError = () => {
     setOpen(false)
     const IgnoreErrorList = fileList.filter((item) => item.percentStatus !== 'exception')
-    // console.log('success', IgnoreErrorList)
     if (onSuccess) {
       if (targetType === 'list') {
         onSuccess(IgnoreErrorList)

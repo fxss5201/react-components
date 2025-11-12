@@ -78,7 +78,6 @@ function FilesSelect<T extends TargetType>({
       if (!dirHandle) {
         return
       }
-      // console.log(dirHandle)
       
       let rootFiles: FileTreeItem[] = []
       if (type === 'upload-folder-include-root') {
@@ -104,7 +103,7 @@ function FilesSelect<T extends TargetType>({
       if (error instanceof Error && error.message.includes('aborted')) {
         message.warning('请选择文件夹')
       } else {
-        console.log(error)
+        console.log("🚀 ~ selectDirectoryStoreFn ~ error:", error)
       }
     }
   }
@@ -177,7 +176,6 @@ function flattenFileTree(fileTree: FileTreeItem[], isIgnoreFolder = false): File
   
   function traverse(node: FileTreeItem) {
     const { children, ...fileItem } = node
-    // console.log(children)
     if (isIgnoreFolder) {
       if (node.type === 'file') {
         result.push(fileItem)
