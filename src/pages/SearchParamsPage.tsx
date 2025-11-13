@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from 'antd'
-import { useNavigateFn } from '../Hooks/useNavigateFn'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
 
 function SearchParamsPage() {
   const { i18n } = useTranslation()

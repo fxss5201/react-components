@@ -1,5 +1,5 @@
 import React from 'react'
-import Playground from '../../components/Playground'
+import Playground from '@/components/Playground'
 import JsonViewDemo from './JsonViewDemo'
 import JsonViewDemoRaw from './JsonViewDemo.tsx?raw'
 import JsonEditorDemo from './JsonEditorDemo'
@@ -22,7 +22,7 @@ import {
   type CopyFunction,
   type OnErrorFunction,
 } from 'json-edit-react'
-import { type LocaleType } from '../config'
+import { type LocaleType } from '@/config'
 
 export type JsonEditorProps = {
   children: object
@@ -79,7 +79,7 @@ export type JsonEditorProps = {
 
 ``` tsx
 import JsonEditor from './JsonEditor'
-import { type LocaleType } from '../config'
+import { type LocaleType } from '@/config'
 
 export type JsonViewProps = {
   children: object

@@ -1,8 +1,8 @@
 import { Popover } from 'antd'
 import { SyncOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons'
-import { useTheme } from '../storeHooks/useTheme'
+import { useTheme } from '@/storeHooks/useTheme'
 import cn from 'classnames'
-import config, { type ThemeType } from '../config'
+import config, { type ThemeType } from '@/config'
 
 function LayoutTheme({ className }: { className?: string }) {
   const { storeTheme, changeTheme } = useTheme()

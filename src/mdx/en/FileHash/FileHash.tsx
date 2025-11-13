@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Select, Spin } from 'antd'
-import DropElement from '../../../components/DropElement'
-import type { FileTreeFileItem, FileItemType } from '../../../types/files'
-import JsonView from '../../../components/JsonView'
-import { calculateFileHashHex, type AlgorithmType } from '../../../utils/calculateFileHashHex'
+import DropElement from '@/components/DropElement'
+import type { FileTreeFileItem, FileItemType } from '@/types/files'
+import JsonView from '@/components/JsonView'
+import { calculateFileHashHex, type AlgorithmType } from '@/utils/calculateFileHashHex'
 
 type FileHashItemType = FileItemType & {
   hashHex: string

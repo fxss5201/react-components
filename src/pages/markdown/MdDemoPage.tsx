@@ -1,5 +1,5 @@
-import { useLocale } from '../../Hooks/useLocale'
-import Playground from '../../components/Playground'
+import { useLocale } from '@/Hooks/useLocale'
+import Playground from '@/components/Playground'
 import MdDemo from './MdDemo'
 import MdDemoRaw from './MdDemo.tsx?raw'
 

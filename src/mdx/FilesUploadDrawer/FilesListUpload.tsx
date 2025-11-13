@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import FilesUploadDrawer, { type UploadFileItemType } from '../../components/FilesUploadDrawer'
-import FilesSelect from '../../components/FilesSelect'
-import type { FileItemType } from '../../types/files'
-import JsonView from '../../components/JsonView'
+import FilesUploadDrawer, { type UploadFileItemType } from '@/components/FilesUploadDrawer'
+import FilesSelect from '@/components/FilesSelect'
+import type { FileItemType } from '@/types/files'
+import JsonView from '@/components/JsonView'
 
 function FilesListUpload() {
   const [drawerOpen, setDrawerOpen] = useState(false)

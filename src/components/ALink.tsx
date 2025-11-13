@@ -1,4 +1,4 @@
-import { useNavigateFn } from '../Hooks/useNavigateFn'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import OutLinkIcon from './OutLinkIcon'
 import cn from 'classnames'
 

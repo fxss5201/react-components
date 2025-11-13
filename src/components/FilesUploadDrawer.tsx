@@ -1,13 +1,13 @@
 import { useEffect, useCallback, useState, useRef, useContext } from 'react'
-import type { FileItemType, TargetType } from '../types/files'
+import type { FileItemType, TargetType } from '@/types/files'
 import { useImmer } from 'use-immer'
 import { Drawer, Progress, Button, App } from 'antd'
 import { type ProgressProps } from 'antd'
 import cn from 'classnames'
 import FileIcon from './FileIcon'
-import fileUploadMock from '../common/fileUploadMock'
-import { type LocaleType } from '../config'
-import LocaleContext from '../context/LocaleContext'
+import fileUploadMock from '@/common/fileUploadMock'
+import { type LocaleType } from '@/config'
+import LocaleContext from '@/context/LocaleContext'
 
 export type UploadFileItemType = FileItemType & {
   icon: React.ReactNode,

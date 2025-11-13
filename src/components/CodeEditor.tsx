@@ -5,7 +5,7 @@ import { markdown } from '@codemirror/lang-markdown'
 import { javascript } from '@codemirror/lang-javascript'
 import { html } from '@codemirror/lang-html'
 import { githubLight, githubDark } from '@uiw/codemirror-theme-github'
-import { useTheme } from '../storeHooks/useTheme'
+import { useTheme } from '@/storeHooks/useTheme'
 
 export type CodeEditorProps = Omit<TextEditorProps, 'onKeyDown'> & {
   className?: string

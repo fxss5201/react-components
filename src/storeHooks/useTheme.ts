@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeTheme } from '../store/themeSlice'
-import { type RootState, type AppDispatch } from '../store'
-import { type ThemeType } from '../config'
-import config from '../config'
+import { changeTheme } from '@/store/themeSlice'
+import { type RootState, type AppDispatch } from '@/store'
+import { type ThemeType } from '@/config'
+import config from '@/config'
 
 export const useTheme = () => {
   const storeTheme = useSelector((state: RootState) => state.theme.value)

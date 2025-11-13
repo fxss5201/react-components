@@ -1,7 +1,7 @@
-import MDXRender from '../../components/MDXRender'
-import MdRenderMdx from '../../mdx/MdRender/MdRender.mdx'
-import MdRenderMdxEn from '../../mdx/en/MdRender/MdRender.mdx'
-import { useLocale } from '../../Hooks/useLocale'
+import MDXRender from '@/components/MDXRender'
+import MdRenderMdx from '@/mdx/MdRender/MdRender.mdx'
+import MdRenderMdxEn from '@/mdx/en/MdRender/MdRender.mdx'
+import { useLocale } from '@/Hooks/useLocale'
 
 function MdRenderPage() {
   const locale = useLocale()

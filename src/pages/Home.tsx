@@ -1,11 +1,11 @@
-import { useNavigateFn } from '../Hooks/useNavigateFn'
-import MdRender from '../components/MdRender'
-import homeMd from '../md/homeMd.md?raw'
-import homeMdEn from '../md/en/homeMd.md?raw'
-import { routersTree } from '../router/index'
-import type { RoutersType } from '../router/index'
-import { useLocale } from '../Hooks/useLocale'
-import HomeMenuList from '../components/HomeMenuList'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import MdRender from '@/components/MdRender'
+import homeMd from '@/md/homeMd.md?raw'
+import homeMdEn from '@/md/en/homeMd.md?raw'
+import { routersTree } from '@/router/index'
+import type { RoutersType } from '@/router/index'
+import { useLocale } from '@/Hooks/useLocale'
+import HomeMenuList from '@/components/HomeMenuList'
 
 const noShowFunctionList = ['/']
 

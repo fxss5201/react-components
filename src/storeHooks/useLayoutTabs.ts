@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { type RootState, type AppDispatch } from '../store'
-import { setLayoutActiveTab, setLayoutTabs, addLayoutTabs, removeLayoutTabs, clearLayoutTabs } from '../store/layoutTabsSlice'
-import { type ChangeLayoutTabsPayloadAction } from '../store/layoutTabsSlice'
+import { type RootState, type AppDispatch } from '@/store'
+import { setLayoutActiveTab, setLayoutTabs, addLayoutTabs, removeLayoutTabs, clearLayoutTabs } from '@/store/layoutTabsSlice'
+import { type ChangeLayoutTabsPayloadAction } from '@/store/layoutTabsSlice'
 
 export function useLayoutTabs() {
   const layoutTabsState = useSelector((state: RootState) => state.layoutTabs.value)

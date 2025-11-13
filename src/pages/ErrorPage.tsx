@@ -1,7 +1,7 @@
-import MdRender from '../components/MdRender'
-import { useLocale } from '../Hooks/useLocale'
-import errorPageMd from '../md/ErrorPageMd.md?raw'
-import errorPageMdEn from '../md/en/ErrorPageMd.md?raw'
+import MdRender from '@/components/MdRender'
+import { useLocale } from '@/Hooks/useLocale'
+import errorPageMd from '@/md/ErrorPageMd.md?raw'
+import errorPageMdEn from '@/md/en/ErrorPageMd.md?raw'
 
 function ErrorPage() {
   const locale = useLocale()

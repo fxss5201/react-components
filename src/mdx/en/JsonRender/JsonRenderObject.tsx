@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Checkbox } from 'antd'
-import JsonRender from '../../../components/JsonRender'
+import JsonRender from '@/components/JsonRender'
 
 function JsonRenderObject() {
   const [enableCopy, setEnableCopy] = useState(true)

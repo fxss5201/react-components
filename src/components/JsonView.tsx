@@ -1,5 +1,5 @@
 import JsonEditor from './JsonEditor'
-import { type LocaleType } from '../config'
+import { type LocaleType } from '@/config'
 
 export type JsonViewProps = {
   children: object

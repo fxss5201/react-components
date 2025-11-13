@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Checkbox } from 'antd'
-import JsonEditor from '../../components/JsonEditor'
+import JsonEditor from '@/components/JsonEditor'
 
 function JsonViewDemo() {
   const [enableCopy, setEnableCopy] = useState(true)

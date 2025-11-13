@@ -2,8 +2,8 @@ import { useState, useRef, useCallback, useEffect, useContext } from 'react'
 import copy from 'copy-to-clipboard'
 import { Button, Tooltip } from 'antd'
 import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
-import LocaleContext from '../context/LocaleContext'
-import { type LocaleType } from '../config'
+import LocaleContext from '@/context/LocaleContext'
+import { type LocaleType } from '@/config'
 
 export type CopyToClipboardProps = {
   text?: string,

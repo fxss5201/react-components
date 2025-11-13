@@ -1,6 +1,6 @@
 import type { LoaderFunction } from 'react-router'
 import { redirect } from 'react-router'
-import config from '../../config'
+import config from '@/config'
 
 const BASE_URL = import.meta.env.BASE_URL
 

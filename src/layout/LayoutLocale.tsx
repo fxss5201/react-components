@@ -1,8 +1,8 @@
 import { Popover } from 'antd'
-import config, { type LocaleType } from '../config'
-import { useLocale } from '../Hooks/useLocale'
-import { useChangeLocale } from '../Hooks/useChangeLocale'
-import IconFont from '../components/IconFont'
+import config, { type LocaleType } from '@/config'
+import { useLocale } from '@/Hooks/useLocale'
+import { useChangeLocale } from '@/Hooks/useChangeLocale'
+import IconFont from '@/components/IconFont'
 import cn from 'classnames'
 
 function LayoutLocale({ className }: { className?: string }) {

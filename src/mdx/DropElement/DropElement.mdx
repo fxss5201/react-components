@@ -3,7 +3,7 @@ import FileTree from './FileTree'
 import FileTreeRaw from './FileTree.tsx?raw'
 import FileList from './FileList'
 import FileListRaw from './FileList.tsx?raw'
-import Playground from '../../components/Playground'
+import Playground from '@/components/Playground'
 
 # DropElement
 
@@ -43,7 +43,7 @@ export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-import type { TargetType, FileTreeFileItem, FileTreeItem } from '../types/files'
+import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
 
 export type DropElementProps<T extends TargetType> = {
   className?: string

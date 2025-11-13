@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { type RootState, type AppDispatch } from '../store'
-import { changeUserInfo, changeBadge , type UserState } from '../store/userSlice'
+import { type RootState, type AppDispatch } from '@/store'
+import { changeUserInfo, changeBadge , type UserState } from '@/store/userSlice'
 
 export function useUser() {
   const user = useSelector((state: RootState) => state.user.value)

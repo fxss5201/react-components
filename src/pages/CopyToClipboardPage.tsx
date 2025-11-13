@@ -1,7 +1,7 @@
-import MDXRender from '../components/MDXRender'
-import CopyToClipboardMdx from '../mdx/CopyToClipboard/CopyToClipboard.mdx'
-import CopyToClipboardMdxEn from '../mdx/en/CopyToClipboard/CopyToClipboard.mdx'
-import { useLocale } from '../Hooks/useLocale'
+import MDXRender from '@/components/MDXRender'
+import CopyToClipboardMdx from '@/mdx/CopyToClipboard/CopyToClipboard.mdx'
+import CopyToClipboardMdxEn from '@/mdx/en/CopyToClipboard/CopyToClipboard.mdx'
+import { useLocale } from '@/Hooks/useLocale'
 
 function CopyToClipboardPage() {
   const locale = useLocale()

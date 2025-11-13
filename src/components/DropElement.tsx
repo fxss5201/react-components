@@ -1,9 +1,9 @@
 import { useRef, useContext } from 'react'
 import { useEventListener } from 'ahooks'
 import cn from 'classnames'
-import LocaleContext from '../context/LocaleContext'
-import { type LocaleType } from '../config'
-import type { TargetType, FileTreeFileItem, FileTreeItem } from '../types/files'
+import LocaleContext from '@/context/LocaleContext'
+import { type LocaleType } from '@/config'
+import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
 
 export type DropElementProps<T extends TargetType> = {
   className?: string

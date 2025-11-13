@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import DropElement from '../../../components/DropElement'
-import type { FileTreeFileItem, FileItemType } from '../../../types/files'
-import FilesUploadDrawer from '../../../components/FilesUploadDrawer'
-import JsonView from '../../../components/JsonView'
+import DropElement from '@/components/DropElement'
+import type { FileTreeFileItem, FileItemType } from '@/types/files'
+import FilesUploadDrawer from '@/components/FilesUploadDrawer'
+import JsonView from '@/components/JsonView'
 
 function FileList() {
   const [listData, setListData] = useState<FileItemType[]>([])

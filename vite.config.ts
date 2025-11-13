@@ -12,6 +12,11 @@ const ReactCompilerConfig = { /* ... */ }
 // https://vite.dev/config/
 export default defineConfig({
   base: '/react-components/',
+  resolve: {
+    alias: {
+      '@': '/src',
+    },
+  },
   plugins: [
     tailwindcss(),
     react({

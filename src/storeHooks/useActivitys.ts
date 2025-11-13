@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { type RootState, type AppDispatch } from '../store'
-import { addActivitys, removeActivitys, clearActivitys } from '../store/activitysSlice'
+import { type RootState, type AppDispatch } from '@/store'
+import { addActivitys, removeActivitys, clearActivitys } from '@/store/activitysSlice'
 
 export function useActivitys() {
   const activitys = useSelector((state: RootState) => state.activitys.value)

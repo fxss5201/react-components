@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import { useMatches } from 'react-router'
 import { Breadcrumb } from 'antd'
-import { routersList } from '../router'
+import { routersList } from '@/router'
 import { useTranslation } from 'react-i18next'
-import { useNavigateFn } from '../Hooks/useNavigateFn'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import cn from 'classnames'
 
 function LayoutBreadcrumb({ className }: { className?: string }) {

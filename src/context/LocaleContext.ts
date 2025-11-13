@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import config from '../config'
+import config from '@/config'
 
 const LocaleContext = createContext(config.defaultLocale)
 

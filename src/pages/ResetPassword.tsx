@@ -9,11 +9,11 @@ import {
   ProFormText,
 } from '@ant-design/pro-components'
 import { App, theme as antdTheme, Form, Button } from 'antd'
-import { useNavigateFn } from '../Hooks/useNavigateFn'
-import { useLocale } from '../Hooks/useLocale'
-import LayoutTheme from '../layout/LayoutTheme'
-import LayoutLocale from '../layout/LayoutLocale'
-import config from '../config'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useLocale } from '@/Hooks/useLocale'
+import LayoutTheme from '@/layout/LayoutTheme'
+import LayoutLocale from '@/layout/LayoutLocale'
+import config from '@/config'
 
 interface ResetPasswordFormValues {
   username: string

@@ -1,5 +1,5 @@
 import React from 'react'
-import Playground from '../../../components/Playground'
+import Playground from '@/components/Playground'
 import FilesListUpload from './FilesListUpload'
 import FilesListUploadRaw from './FilesListUpload.tsx?raw'
 import FileSelectList from './FileSelectList'
@@ -47,7 +47,7 @@ export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '../types/files'
+import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '@/types/files'
 
 export type FileTreeItem = FileItemType & {
   children?: FileTreeItem[]

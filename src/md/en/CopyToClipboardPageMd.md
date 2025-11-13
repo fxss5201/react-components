@@ -5,7 +5,7 @@ Copy to clipboard is used to copy text, code, or other content to the clipboard 
 ```tsx
 import { useState } from 'react'
 import { Input } from 'antd'
-import CopyToClipboard from '../components/CopyToClipboard'
+import CopyToClipboard from '@/components/CopyToClipboard'
 
 const { TextArea } = Input
 

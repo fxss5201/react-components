@@ -1,7 +1,7 @@
-import MDXRender from '../../components/MDXRender'
-import FileHashMdx from '../../mdx/FileHash/FileHash.mdx'
-import FileHashMdxEn from '../../mdx/en/FileHash/FileHash.mdx'
-import { useLocale } from '../../Hooks/useLocale'
+import MDXRender from '@/components/MDXRender'
+import FileHashMdx from '@/mdx/FileHash/FileHash.mdx'
+import FileHashMdxEn from '@/mdx/en/FileHash/FileHash.mdx'
+import { useLocale } from '@/Hooks/useLocale'
 
 function FileHash() {
   const locale = useLocale()

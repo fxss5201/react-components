@@ -1,5 +1,5 @@
 import { Button, Result } from 'antd'
-import { useNavigateFn } from '../Hooks/useNavigateFn'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import { useTranslation } from 'react-i18next'
 
 function NotFoundPage() {

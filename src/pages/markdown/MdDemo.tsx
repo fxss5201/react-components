@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { Splitter, Checkbox } from 'antd'
-import MdRender from '../../components/MdRender'
-import mdPageMd from '../../md/mdPageMd.md?raw'
-import mdPageMdEn from '../../md/en/mdPageMd.md?raw'
-import { useLocale } from '../../Hooks/useLocale'
+import MdRender from '@/components/MdRender'
+import mdPageMd from '@/md/mdPageMd.md?raw'
+import mdPageMdEn from '@/md/en/mdPageMd.md?raw'
+import { useLocale } from '@/Hooks/useLocale'
 import { useUpdateEffect } from 'ahooks'
-import CodeEditor from '../../components/CodeEditor'
+import CodeEditor from '@/components/CodeEditor'
 
 function MdDemo() {
   const locale = useLocale()
   const [markdown, setMarkdown] = useState(locale === 'en' ? mdPageMdEn : mdPageMd)
   useUpdateEffect(() => {
     setMarkdown(locale === 'en' ? mdPageMdEn : mdPageMd)
-  }, [locale])
+  }, [locale, mdPageMd, mdPageMdEn])
   const [enableCopy, setEnableCopy] = useState(true)
 
   return (

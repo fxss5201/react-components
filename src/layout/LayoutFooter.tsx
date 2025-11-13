@@ -1,7 +1,7 @@
 import cn from 'classnames'
-import config from '../config'
+import config from '@/config'
 import { useTranslation } from 'react-i18next'
-import ALink from '../components/ALink'
+import ALink from '@/components/ALink'
 
 function LayoutFooter({ className }: { className?: string }) {
   const { t } = useTranslation()

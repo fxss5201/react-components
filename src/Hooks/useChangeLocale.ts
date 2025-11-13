@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import config, { type LocaleType } from '../config'
+import config, { type LocaleType } from '@/config'
 
 const htmlElement = document.documentElement
 

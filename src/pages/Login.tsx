@@ -16,12 +16,12 @@ import {
 import { Space, Tabs, App, theme as antdTheme } from 'antd'
 import type { CSSProperties } from 'react'
 import { useState, Activity } from 'react'
-import { useNavigateFn } from '../Hooks/useNavigateFn'
-import { useLocale } from '../Hooks/useLocale'
-import LayoutTheme from '../layout/LayoutTheme'
-import LayoutLocale from '../layout/LayoutLocale'
-import config from '../config'
-import { useUser } from '../storeHooks/useUser'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useLocale } from '@/Hooks/useLocale'
+import LayoutTheme from '@/layout/LayoutTheme'
+import LayoutLocale from '@/layout/LayoutLocale'
+import config from '@/config'
+import { useUser } from '@/storeHooks/useUser'
 
 type LoginType = 'phone' | 'account'
 interface LoginFormValues {

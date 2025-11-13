@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import FilesSelect from '../../components/FilesSelect'
-import type { FileTreeFileItem } from '../../types/files'
-import JsonView from '../../components/JsonView'
+import FilesSelect from '@/components/FilesSelect'
+import type { FileTreeFileItem } from '@/types/files'
+import JsonView from '@/components/JsonView'
 
 function FileSelectListIgnoreFolder() {
   const [listData, setListData] = useState<FileTreeFileItem[]>([])

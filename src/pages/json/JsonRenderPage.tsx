@@ -1,7 +1,7 @@
-import MDXRender from '../../components/MDXRender'
-import JsonRenderMdx from '../../mdx/JsonRender/JsonRender.mdx'
-import JsonRenderMdxEn from '../../mdx/en/JsonRender/JsonRender.mdx'
-import { useLocale } from '../../Hooks/useLocale'
+import MDXRender from '@/components/MDXRender'
+import JsonRenderMdx from '@/mdx/JsonRender/JsonRender.mdx'
+import JsonRenderMdxEn from '@/mdx/en/JsonRender/JsonRender.mdx'
+import { useLocale } from '@/Hooks/useLocale'
 
 function JsonRenderPage() {
   const locale = useLocale()

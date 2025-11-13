@@ -9,35 +9,35 @@ import {
   CloseCircleOutlined,
   QuestionCircleOutlined
 } from '@ant-design/icons'
-import App from '../App'
-import PageLayout from '../pages/PageLayout'
-import NotFoundPage from '../pages/NotFoundPage'
-import Login from '../pages/Login'
-import ResetPassword from '../pages/ResetPassword'
-import Home from '../pages/Home'
+import App from '@/App'
+import PageLayout from '@/pages/PageLayout'
+import NotFoundPage from '@/pages/NotFoundPage'
+import Login from '@/pages/Login'
+import ResetPassword from '@/pages/ResetPassword'
+import Home from '@/pages/Home'
 import { authLoader } from './loader/authLoader'
-import IconFont from '../components/IconFont'
-import config from '../config'
+import IconFont from '@/components/IconFont'
+import config from '@/config'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-const FilesUpload = lazy(() => import('../pages/file-related/FilesUpload'))
-const FilesSelect = lazy(() => import('../pages/file-related/FilesSelect'))
-const DropUpload = lazy(() => import('../pages/file-related/DropUpload'))
-const FileHash = lazy(() => import('../pages/file-related/FileHash'))
-const MdDemoPage = lazy(() => import('../pages/markdown/MdDemoPage'))
-const MdRenderPage = lazy(() => import('../pages/markdown/MdRenderPage'))
-const CopyToClipboardPage = lazy(() => import('../pages/CopyToClipboardPage'))
-const ErrorPage = lazy(() => import('../pages/ErrorPage'))
-const SkeletonPage = lazy(() => import('../pages/pro-components/SkeletonPage'))
-const ActivityIndex = lazy(() => import('../pages/activitys/ActivityIndex'))
-const AddActivity = lazy(() => import('../pages/activitys/AddActivity'))
-const AddActivity1 = lazy(() => import('../pages/activitys/AddActivity1'))
-const NoActivity = lazy(() => import('../pages/activitys/NoActivity'))
-const NoActivity1 = lazy(() => import('../pages/activitys/NoActivity1'))
-const SearchParamsPage = lazy(() => import('../pages/SearchParamsPage'))
-const JsonRenderPage = lazy(() => import('../pages/json/JsonRenderPage'))
-const JsonEditorPage = lazy(() => import('../pages/json/JsonEditorPage'))
+const FilesUpload = lazy(() => import('@/pages/file-related/FilesUpload'))
+const FilesSelect = lazy(() => import('@/pages/file-related/FilesSelect'))
+const DropUpload = lazy(() => import('@/pages/file-related/DropUpload'))
+const FileHash = lazy(() => import('@/pages/file-related/FileHash'))
+const MdDemoPage = lazy(() => import('@/pages/markdown/MdDemoPage'))
+const MdRenderPage = lazy(() => import('@/pages/markdown/MdRenderPage'))
+const CopyToClipboardPage = lazy(() => import('@/pages/CopyToClipboardPage'))
+const ErrorPage = lazy(() => import('@/pages/ErrorPage'))
+const SkeletonPage = lazy(() => import('@/pages/pro-components/SkeletonPage'))
+const ActivityIndex = lazy(() => import('@/pages/activitys/ActivityIndex'))
+const AddActivity = lazy(() => import('@/pages/activitys/AddActivity'))
+const AddActivity1 = lazy(() => import('@/pages/activitys/AddActivity1'))
+const NoActivity = lazy(() => import('@/pages/activitys/NoActivity'))
+const NoActivity1 = lazy(() => import('@/pages/activitys/NoActivity1'))
+const SearchParamsPage = lazy(() => import('@/pages/SearchParamsPage'))
+const JsonRenderPage = lazy(() => import('@/pages/json/JsonRenderPage'))
+const JsonEditorPage = lazy(() => import('@/pages/json/JsonEditorPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -113,8 +113,7 @@ export const routers = [
         path: 'md-demo-page',
         element: <MdDemoPage />,
         meta: {
-          label: 'Markdown 演示',
-          activity: true,
+          label: 'Markdown 演示'
         }
       },
     ]

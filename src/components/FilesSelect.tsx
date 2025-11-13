@@ -1,11 +1,11 @@
 import { useRef, useContext } from 'react'
-import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '../types/files'
+import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '@/types/files'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, Space, App } from 'antd'
-import { type LocaleType } from '../config'
+import { type LocaleType } from '@/config'
 import cn from 'classnames'
-import LocaleContext from '../context/LocaleContext'
+import LocaleContext from '@/context/LocaleContext'
 
 export type FileTreeItem = FileItemType & {
   children?: FileTreeItem[]

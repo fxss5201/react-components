@@ -1,10 +1,10 @@
 import { Avatar, Badge, Popover } from 'antd'
 import cn from 'classnames'
 import { LogoutOutlined } from '@ant-design/icons'
-import { useUser } from '../storeHooks/useUser'
-import { useNavigateFn } from '../Hooks/useNavigateFn'
-import config from '../config'
-import { useTheme } from '../storeHooks/useTheme'
+import { useUser } from '@/storeHooks/useUser'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import config from '@/config'
+import { useTheme } from '@/storeHooks/useTheme'
 
 function LayoutUser({ className }: { className?: string }) {
   const { name, img, badge, changeUserInfo } = useUser()

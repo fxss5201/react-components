@@ -1,7 +1,7 @@
-import MDXRender from '../../components/MDXRender'
-import DropElementMdx from '../../mdx/DropElement/DropElement.mdx'
-import DropElementMdxEn from '../../mdx/en/DropElement/DropElement.mdx'
-import { useLocale } from '../../Hooks/useLocale'
+import MDXRender from '@/components/MDXRender'
+import DropElementMdx from '@/mdx/DropElement/DropElement.mdx'
+import DropElementMdxEn from '@/mdx/en/DropElement/DropElement.mdx'
+import { useLocale } from '@/Hooks/useLocale'
 
 function DropUploadMdx() {
   const locale = useLocale()

@@ -2,8 +2,8 @@ import { Activity, useState, useContext } from 'react'
 import MdRender from './MdRender'
 import { CodeOutlined, UpOutlined } from '@ant-design/icons'
 import { Button, Divider } from 'antd'
-import LocaleContext from '../context/LocaleContext'
-import { type LocaleType } from '../config'
+import LocaleContext from '@/context/LocaleContext'
+import { type LocaleType } from '@/config'
 
 export type PlaygroundProps = {
   code: string

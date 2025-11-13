@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { type RootState, type AppDispatch } from '../store'
-import { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow } from '../store/layoutStateSlice'
+import { type RootState, type AppDispatch } from '@/store'
+import { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow } from '@/store/layoutStateSlice'
 
 export function useLayoutState() {
   const layoutState = useSelector((state: RootState) => state.layoutState.value)

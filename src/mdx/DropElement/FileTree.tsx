@@ -1,8 +1,8 @@
 import React from 'react'
 import { Tree } from 'antd'
-import DropElement from '../../components/DropElement'
-import type { FileTreeItem } from '../../types/files'
-import FileIcon from '../../components/FileIcon'
+import DropElement from '@/components/DropElement'
+import type { FileTreeItem } from '@/types/files'
+import FileIcon from '@/components/FileIcon'
 
 function DropUpload() {
   const [treeData, setTreeData] = React.useState<FileTreeItem[]>([])
