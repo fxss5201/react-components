@@ -7,7 +7,8 @@ import {
   FileMarkdownOutlined,
   CopyOutlined,
   CloseCircleOutlined,
-  QuestionCircleOutlined
+  QuestionCircleOutlined,
+  PieChartOutlined,
 } from '@ant-design/icons'
 import App from '@/App'
 import PageLayout from '@/pages/PageLayout'
@@ -38,6 +39,7 @@ const NoActivity1 = lazy(() => import('@/pages/activitys/NoActivity1'))
 const SearchParamsPage = lazy(() => import('@/pages/SearchParamsPage'))
 const JsonRenderPage = lazy(() => import('@/pages/json/JsonRenderPage'))
 const JsonEditorPage = lazy(() => import('@/pages/json/JsonEditorPage'))
+const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -137,6 +139,22 @@ export const routers = [
         element: <JsonEditorPage />,
         meta: {
           label: 'JSON 编辑器',
+        }
+      }
+    ]
+  },
+  {
+    path: 'echarts',
+    meta: {
+      label: 'Echarts',
+      icon: <PieChartOutlined />,
+    },
+    children: [
+      {
+        path: 'echarts-block',
+        element: <EchartsPage />,
+        meta: {
+          label: 'echarts基础模块',
         }
       }
     ]

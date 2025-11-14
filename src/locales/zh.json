@@ -39,7 +39,8 @@
     "file-hash": "文件哈希",
     "drop-upload": "拖拽上传",
     "json-editor": "Json 编辑器",
-    "json-render": "Json 渲染"
+    "json-render": "Json 渲染",
+    "echarts-block": "echarts 模块"
   },
   "ActivityIndex": {
     "no-activity": "不保存状态",

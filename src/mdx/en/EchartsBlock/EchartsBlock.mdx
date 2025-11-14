@@ -1,0 +1,104 @@
+import React from 'react'
+import Playground from '@/components/Playground'
+import EchartsBlockDemo from './EchartsBlockDemo'
+import EchartsBlockDemoRaw from './EchartsBlockDemo.tsx?raw'
+import EchartsBlockLine from './EchartsBlockLine.tsx'
+import EchartsBlockLineRaw from './EchartsBlockLine.tsx?raw'
+import EchartsBlockBar from './EchartsBlockBar.tsx'
+import EchartsBlockBarRaw from './EchartsBlockBar.tsx?raw'
+import EchartsBlockPie from './EchartsBlockPie.tsx'
+import EchartsBlockPieRaw from './EchartsBlockPie.tsx?raw'
+
+# EchartsBlock
+
+EchartsBlock is a component for rendering Echarts charts.
+
+## TOC
+
+## API
+
+``` ts
+export type EchartsType = 'line' | 'bar' | 'pie'
+export type EchartsDataLeafItem = {
+  name?: string
+  value: number
+}
+export type EchartsDataItem = {
+  name?: string
+  data: EchartsDataLeafItem[] | number[]
+}
+export type EchartsData = EchartsDataItem[]
+
+export type EchartsBlockProps = {
+  className?: string
+  width?: string | number
+  height?: string | number
+  style?: React.CSSProperties
+  opts?: echarts.EChartsInitOpts
+  option: echarts.EChartsOption
+  loading?: boolean
+  locale?: LocaleType
+  theme?: 'dark' | 'light'
+  ref?: React.Ref<{
+    echartsInstance: echarts.ECharts
+  }>
+  echartsType?: EchartsType
+  echartsXAxisData?: string[]
+  echartsData?: EchartsData
+  autoPlay?: boolean | {
+    interval?: number
+  }
+}
+```
+
+### Parameters Props
+
+| Parameter | Description | Type | Default |
+| --------- | ----------- | ---- | ------- |
+| `className` | Custom class name | `string` | - |
+| `width` | Chart width | `string \| number` | - |
+| `height` | Chart height | `string \| number` | - |
+| `style` | Custom style | `React.CSSProperties` | - |
+| `opts` | Echarts init options | `echarts.EChartsInitOpts` | - |
+| `option` | Echarts chart options | `echarts.EChartsOption` | - |
+| `loading` | ECharts Loading | `boolean` | `false` |
+| `locale` | Locale type | `'zh' \| 'en'` | `'zh'` |
+| `theme` | Theme type | `'dark' \| 'light'` | `'light'` |
+| `ref` | Echarts instance ref | `React.Ref<{ echartsInstance: echarts.ECharts }>` | - |
+| `echartsType` | Chart type, after setting, will overwrite the `series` data in the `option`, providing a method for separating data and `option` settings | `EchartsType` | - |
+| `echartsXAxisData` | X axis data, after setting, will overwrite the `xAxis` data in the `option`, only effective when `echartsType` is `line` or `bar` | `string[]` | - |
+| `echartsData` | Chart data | `EchartsData` | - |
+| `autoPlay` | Whether to automatically play, only effective when the chart type is `line / bar / pie` | `boolean \| { interval?: number }` | `false` |
+
+> **Note：**
+> 1. `echartsType` / `echartsXAxisData` / `echartsData` / `autoPlay` are only effective when the chart type is `line / bar / pie`;
+> 2. `echartsType` and `echartsData` must be set at the same time, otherwise they will not take effect;
+> 3. When `echartsType` is `line / bar`, `echartsXAxisData` must be set, otherwise they will not take effect.
+
+## Demos
+
+The following demonstration example is editable on the left and real-time rendering of chart results on the right.
+
+### Basic Chart Example
+
+<Playground code={EchartsBlockDemoRaw} title='Echarts Chart Example' description='Render Echarts chart.'>
+  <EchartsBlockDemo />
+</Playground>
+
+### Line Chart Example
+
+<Playground code={EchartsBlockLineRaw} title='Echarts Line Chart Example' description='Render Echarts line chart.'>
+  <EchartsBlockLine />
+</Playground>
+
+### Bar Chart Example
+
+<Playground code={EchartsBlockBarRaw} title='Echarts Bar Chart Example' description='Render Echarts bar chart.'>
+  <EchartsBlockBar />
+</Playground>
+
+### Pie Chart Example
+
+<Playground code={EchartsBlockPieRaw} title='Echarts Pie Chart Example' description='Render Echarts pie chart.'>
+  <EchartsBlockPie />
+</Playground>

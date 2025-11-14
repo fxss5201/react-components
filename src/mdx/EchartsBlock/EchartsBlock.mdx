@@ -1,0 +1,106 @@
+import React from 'react'
+import Playground from '@/components/Playground'
+import EchartsBlockDemo from './EchartsBlockDemo'
+import EchartsBlockDemoRaw from './EchartsBlockDemo.tsx?raw'
+import EchartsBlockLine from './EchartsBlockLine.tsx'
+import EchartsBlockLineRaw from './EchartsBlockLine.tsx?raw'
+import EchartsBlockBar from './EchartsBlockBar.tsx'
+import EchartsBlockBarRaw from './EchartsBlockBar.tsx?raw'
+import EchartsBlockPie from './EchartsBlockPie.tsx'
+import EchartsBlockPieRaw from './EchartsBlockPie.tsx?raw'
+
+# EchartsBlock
+
+EchartsBlock 组件用于展示 Echarts 图表。
+
+## 目录
+
+## API
+
+### 参数 Props
+
+``` ts
+export type EchartsType = 'line' | 'bar' | 'pie'
+export type EchartsDataLeafItem = {
+  name?: string
+  value: number
+}
+export type EchartsDataItem = {
+  name?: string
+  data: EchartsDataLeafItem[] | number[]
+}
+export type EchartsData = EchartsDataItem[]
+
+export type EchartsBlockProps = {
+  className?: string
+  width?: string | number
+  height?: string | number
+  style?: React.CSSProperties
+  opts?: echarts.EChartsInitOpts
+  option: echarts.EChartsOption
+  loading?: boolean
+  locale?: LocaleType
+  theme?: 'dark' | 'light'
+  ref?: React.Ref<{
+    echartsInstance: echarts.ECharts
+  }>
+  // echartsType 和 echartsData 设置之后会覆盖 option 中的 series 数据，提供数据和option分离的设置方法
+  echartsType?: EchartsType
+  // echartsXAxisData 设置之后会覆盖 option 中的 xAxis 数据，echartsType 为 line 或 bar 时生效
+  echartsXAxisData?: string[]
+  echartsData?: EchartsData
+  autoPlay?: boolean | {
+    interval?: number
+  }
+}
+```
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| `className` | 自定义class类名 | `string` | - |
+| `width` | 图表宽度 | `string \| number` | - |
+| `height` | 图表高度 | `string \| number` | - |
+| `style` | 自定义样式 | `React.CSSProperties` | - |
+| `opts` | Echarts 初始化选项 | `echarts.EChartsInitOpts` | - |
+| `option` | Echarts 图表选项 | `echarts.EChartsOption` | - |
+| `loading` | 显示加载状态 | `boolean` | `false` |
+| `locale` | 语言 | `'zh' \| 'en'` | `'zh'` |
+| `theme` | 主题 | `'dark' \| 'light'` | `'light'` |
+| `ref` | 图表实例引用 | `React.Ref<{ echartsInstance: echarts.ECharts }>` | - |
+| `echartsType` | 图表类型，设置之后会覆盖 `option` 中的 `series` 数据，提供数据和 `option` 分离的设置方法 | `EchartsType` | - |
+| `echartsXAxisData` | X 轴数据，设置之后会覆盖 `option` 中的 `xAxis` 数据，仅在 `echartsType` 为 `line` 或 `bar` 时生效 | `string[]` | - |
+| `echartsData` | 图表数据 | `EchartsData` | - |
+| `autoPlay` | 是否自动播放, 仅在 图表类型 为 `line / bar / pie` 时生效 | `boolean \| { interval?: number }` | `false` |
+
+> **注意：**
+> 1. `echartsType` / `echartsXAxisData` / `echartsData` / `autoPlay` 当前仅在 图表类型 为 `line / bar / pie` 时生效；
+> 2. `echartsType` 和 `echartsData` 必须同时设置，否则不会生效；
+> 3. `echartsType` 为 `line / bar` 时，`echartsXAxisData` 必须设置，否则不会生效。
+
+## 演示示例
+
+以下演示示例，左侧可编辑，右侧实时渲染图表结果。
+
+### 基础图表示例
+
+<Playground code={EchartsBlockDemoRaw} title='Echarts 图表示例' description='展示 Echarts 图表的渲染结果。'>
+  <EchartsBlockDemo />
+</Playground>
+
+### 折线图示例
+
+<Playground code={EchartsBlockLineRaw} title='Echarts 折线图示例' description='展示 Echarts 折线图的渲染结果。'>
+  <EchartsBlockLine />
+</Playground>
+
+### 柱状图示例
+
+<Playground code={EchartsBlockBarRaw} title='Echarts 柱状图示例' description='展示 Echarts 柱状图的渲染结果。'>
+  <EchartsBlockBar />
+</Playground>
+
+### 饼图示例
+
+<Playground code={EchartsBlockPieRaw} title='Echarts 饼图示例' description='展示 Echarts 饼图的渲染结果。'>
+  <EchartsBlockPie />
+</Playground>
