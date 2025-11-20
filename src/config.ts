@@ -70,8 +70,11 @@ const defaultonfig = {
   }
 } as DefaultConfigType
 
-export type ThemeType = 'system' | 'light' | 'dark'
-export type LocaleType = 'zh' | 'en'
+export const themeList = ['system', 'light', 'dark'] as const
+export type ThemeType = (typeof themeList)[number]
+export const localeList = ['zh', 'en'] as const
+export type LocaleType = (typeof localeList)[number]
+
 export type DefaultConfigType = {
   isNeedLogin: boolean
   loginLocalStorageKey: string

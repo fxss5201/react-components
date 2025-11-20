@@ -1,7 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import en from './en.json'
-import zh from './zh.json'
+import en from './en/index'
+import zh from './zh/index'
 import config, { type LocaleType } from '@/config'
 
 export const resources = { 

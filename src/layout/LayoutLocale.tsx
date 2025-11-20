@@ -1,9 +1,24 @@
 import { Popover } from 'antd'
-import config, { type LocaleType } from '@/config'
+import config, { localeList, type LocaleType } from '@/config'
 import { useLocale } from '@/Hooks/useLocale'
 import { useChangeLocale } from '@/Hooks/useChangeLocale'
 import IconFont from '@/components/IconFont'
 import cn from 'classnames'
+
+const langMap = {
+  zh: {
+    label: '中文',
+    icon: <IconFont type='icon-zh' />
+  },
+  en: {
+    label: 'English',
+    icon: <IconFont type='icon-en' />
+  }
+}
+const localeItems = localeList.map(item => ({
+  ...langMap[item],
+  type: item
+}))
 
 function LayoutLocale({ className }: { className?: string }) {
   const locale = useLocale()
@@ -11,10 +26,7 @@ function LayoutLocale({ className }: { className?: string }) {
 
   return config.locales &&  (
     <Popover content={
-      [
-        { type: 'zh', label: '中文', icon: <IconFont type='icon-zh' /> },
-        { type: 'en', label: 'English', icon: <IconFont type='icon-en' /> },
-      ].map(item => (
+      localeItems.map(item => (
         <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm', { 'text-[#1677ff]': item.type === locale })}
           key={item.type} onClick={() => changeLocale(item.type as LocaleType)}>
           {item.icon}
