@@ -41,32 +41,28 @@ export const flattenObject = (obj: Record<string, any>, prefix = '', result = {}
  * @param {String} [connect='.'] - 连接键名的字符串
  * @returns {Object} 嵌套对象
  */
-export const transformFlatObject = (flatObj: object, connect: string = '.'): object => {
-  const result: object = {}
+export const transformFlatObject = (flatObj: Record<string, any>, connect: string = '.'): Record<string, any> => {
+  const result: Record<string, any> = {}
   
   // 遍历扁平对象的每个键值对
   for (const [keyPath, value] of Object.entries(flatObj)) {
     // 将键按点分割成路径数组
     const keys = keyPath.split(connect)
-    let current = result
+    let current: Record<string, any> = result
     
     // 逐层构建嵌套对象
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]
       // 如果是最后一层，直接赋值
       if (i === keys.length - 1) {
-        // @ts-ignore
         current[key] = value
       } else {
         // 如果当前层级不存在，创建空对象
-        // @ts-ignore
         if (!current[key]) {
-          // @ts-ignore
           current[key] = {}
         }
         // 进入下一层级
-        // @ts-ignore
-        current = current[key]
+        current = current[key] as Record<string, any>
       }
     }
   }
