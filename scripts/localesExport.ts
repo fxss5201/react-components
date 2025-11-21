@@ -27,7 +27,7 @@ const program = new Command()
 
 program
   .option('-s, --source <path>', 'Language file directory | 语言文件目录', './src/locales')
-  .option('-o, --output <path>', 'Output file path | 输出文件路径', './dist/locales')
+  .option('-o, --output <path>', 'Output file path | 输出文件路径', './dist')
   .option('-f, --format <type>', 'Output format, optional values: excel, json, md | 输出格式，可选值：excel, json, md', 'excel')
   .option('-a, --all', 'Export all language files, including system.json | 导出所有语言文件，包含 system.json', false)
 
