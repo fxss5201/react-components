@@ -27,7 +27,7 @@ function CopyToClipboard({
   locale
 }: CopyToClipboardProps) {
   const [copied, setCopied] = useState<boolean>(false)
-  const timeoutRef = useRef<number | null>(null)
+  const timeoutRef = useRef<NodeJS.Timeout>(null)
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
 
