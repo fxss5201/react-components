@@ -1,0 +1,13 @@
+{
+  "footer": {
+    "blog": "个人博客",
+    "author": "作者 Github"
+  },
+
+  "ActivityIndex": {
+    "no-activity": "不保存状态",
+    "uncontrolled": "非受控",
+    "controlled": "受控",
+    "add-activity": "保存状态"
+  }
+}

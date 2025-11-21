@@ -43,7 +43,7 @@ function PageLayout() {
               theme={theme}
               className={cn('sticky z-999', bgClassName, headShow ? 'top-[64px] h-[calc(100vh-64px)]' : 'top-0 h-screen')}
               trigger={
-                <Tooltip title={menuCollapsed ? t('Expand Menu', { defaultValue: 'Expand Menu' }) : t('Collapse Menu', { defaultValue: 'Collapse Menu' })}>
+                <Tooltip title={menuCollapsed ? t('system.Expand Menu', { defaultValue: 'Expand Menu' }) : t('system.Collapse Menu', { defaultValue: 'Collapse Menu' })}>
                   <Button type="text" icon={ menuCollapsed ? <RightOutlined /> : <LeftOutlined />} block />
                 </Tooltip>
               }>

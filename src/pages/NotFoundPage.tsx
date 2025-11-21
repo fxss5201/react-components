@@ -13,9 +13,9 @@ function NotFoundPage() {
   return (
     <Result
       status="404"
-      title={t('NotFoundPage.title')}
-      subTitle={t('NotFoundPage.subTitle')}
-      extra={<Button type="primary" onClick={goHome}>{t('Home')}</Button>}
+      title={t('system.NotFoundPage.title')}
+      subTitle={t('system.NotFoundPage.subTitle')}
+      extra={<Button type="primary" onClick={goHome}>{t('system.Home')}</Button>}
     />
   )
 }

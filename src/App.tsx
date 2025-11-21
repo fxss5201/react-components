@@ -41,7 +41,7 @@ function App() {
   useEffect(() => {
     const location = routersList.find(item => item.path === pathname)
     if (location) {
-      setTitle(`${t(`Menu.${location.meta.key}`, { defaultValue: location.meta.label })} | ${config.logoText}`)
+      setTitle(`${t(`menu.${location.meta.key}`, { defaultValue: location.meta.label })} | ${config.logoText}`)
 
       if (location.meta?.activity && location.element) {
         addActivitys(location.path!)

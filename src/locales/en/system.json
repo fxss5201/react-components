@@ -1,11 +1,19 @@
 {
+  "Home": "Home",
   "Expand Menu": "Expand Menu",
   "Collapse Menu": "Collapse Menu",
   "NotFoundPage": {
     "title": "404 Not Found",
     "subTitle": "Sorry, the page you visited does not exist."
   },
+  "LayoutTabs": {
+    "Close": "Close Tab",
+    "CloseLeft": "Close Left Tabs",
+    "CloseRight": "Close Right Tabs",
+    "CloseOther": "Close Other Tabs"
+  },
   "Follow system": "Follow system",
   "Light mode": "Light mode",
-  "Dark mode": "Dark mode"
+  "Dark mode": "Dark mode",
+  "Logout": "Logout"
 }

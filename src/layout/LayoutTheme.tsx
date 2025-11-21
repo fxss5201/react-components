@@ -11,15 +11,15 @@ function LayoutTheme({ className }: { className?: string }) {
   
   const themeMap = {
     system: {
-      label: t('Follow system', { defaultValue: '跟随系统' }),
+      label: t('system.Follow system', { defaultValue: '跟随系统' }),
       icon: <SyncOutlined />
     },
     light: {
-      label: t('Light mode', { defaultValue: '亮色模式' }),
+      label: t('system.Light mode', { defaultValue: '亮色模式' }),
       icon: <SunOutlined />
     },
     dark: {
-      label: t('Dark mode', { defaultValue: '暗黑模式' }),
+      label: t('system.Dark mode', { defaultValue: '暗黑模式' }),
       icon: <MoonOutlined />
     }
   }

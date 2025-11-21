@@ -15,7 +15,7 @@ function HomeMenuList({ items, linkClick }: { items: RoutersType[]; linkClick: (
             linkClick(item)
           }}>
             {item.meta.icon}
-            <span className='ml-2'>{t(`Menu.${item.meta?.key || item.path}`, { defaultValue: item.meta?.label }) || item.path || ''}</span>
+            <span className='ml-2'>{t(`menu.${item.meta?.key || item.path}`, { defaultValue: item.meta?.label }) || item.path || ''}</span>
           </a>
           {item.children && (
             <HomeMenuList items={item.children} linkClick={linkClick}></HomeMenuList>

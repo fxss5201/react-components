@@ -5,11 +5,13 @@ import { useUser } from '@/storeHooks/useUser'
 import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import config from '@/config'
 import { useTheme } from '@/storeHooks/useTheme'
+import { useTranslation } from 'react-i18next'
 
 function LayoutUser({ className }: { className?: string }) {
   const { name, img, badge, changeUserInfo } = useUser()
   const { theme } = useTheme()
   const navigate = useNavigateFn()
+  const { t } = useTranslation()
 
   const clickFn = (type: string) => {
     if (type === 'logout') {
@@ -26,7 +28,7 @@ function LayoutUser({ className }: { className?: string }) {
   return (
     <Popover content={
       [
-        { type: 'logout', label: '退出登录', icon: <LogoutOutlined /> }
+        { type: 'logout', label: t('system.Logout', { defaultValue: '退出登录' }), icon: <LogoutOutlined /> }
       ].map(item => (
         <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm')}
           key={item.type} onClick={() => clickFn(item.type)}>

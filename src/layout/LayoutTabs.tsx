@@ -63,7 +63,7 @@ function LayoutTabs({ className }: { className?: string }) {
       const router = routersList.find((r) => r.path === item)
       return {
         key: item,
-        label: t(`Menu.${router!.meta?.key || router!.path}`, { defaultValue: router!.meta?.label }) || router!.path || '',
+        label: t(`menu.${router!.meta?.key || router!.path}`, { defaultValue: router!.meta?.label }) || router!.path || '',
         icon: router!.meta?.icon,
         closable: item !== '/',
       }
@@ -208,25 +208,25 @@ function LayoutTabs({ className }: { className?: string }) {
           {menuKey !== '/' && (
             <Item id='close' onClick={handleItemClick}>
               <CloseOutlined className='mr-2' />
-              {t('LayoutTabs.Close', { defaultValue: '关闭标签页' })}
+              {t('system.LayoutTabs.Close', { defaultValue: '关闭标签页' })}
             </Item>
           )}
           {layoutTabs.indexOf(menuKey) !== 0 && (
             <Item id='closeLeft' onClick={handleItemClick}>
               <LeftSquareOutlined className='mr-2' />
-              {t('LayoutTabs.CloseLeft', { defaultValue: '关闭左侧标签页' })}
+              {t('system.LayoutTabs.CloseLeft', { defaultValue: '关闭左侧标签页' })}
             </Item>
           )}
           {layoutTabs.length > 1 && layoutTabs.indexOf(menuKey) !== layoutTabs.length - 1 && (
             <Item id='closeRight' onClick={handleItemClick}>
               <RightSquareOutlined className='mr-2' />
-              {t('LayoutTabs.CloseRight', { defaultValue: '关闭右侧标签页' })}
+              {t('system.LayoutTabs.CloseRight', { defaultValue: '关闭右侧标签页' })}
             </Item>
           )}
           {layoutTabs.length > 1 && (
             <Item id='closeOther' onClick={handleItemClick}>
               <CloseSquareOutlined className='mr-2' />
-              {t('LayoutTabs.CloseOther', { defaultValue: '关闭其他标签页' })}
+              {t('system.LayoutTabs.CloseOther', { defaultValue: '关闭其他标签页' })}
             </Item>
           )}
         </Menu>

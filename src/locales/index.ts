@@ -35,6 +35,6 @@ i18n
   })
 
 // 在非组件中获取多语言值
-// console.log(i18n.t('Menu.files-upload'))
+// console.log(i18n.t('menu.files-upload'))
 
 export default i18n

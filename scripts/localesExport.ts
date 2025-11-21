@@ -66,14 +66,15 @@ async function localesExport(sourceDir: string, outputPath: string, format: stri
         const jsonContent = JSON.parse(content)
         const flattenJsonContent = flattenObject(jsonContent)
         for (const key in flattenJsonContent) {
-          const curLocaleContentRowIndex = localesContent.findIndex((item) => item.key === key)
+          const fullKey = file === 'default.json' ? key : `${file.split('.')[0]}.${key}`
+          const curLocaleContentRowIndex = localesContent.findIndex((item) => item.key === fullKey)
           if (curLocaleContentRowIndex !== -1) {
             localesContent[curLocaleContentRowIndex][locale] = flattenJsonContent[key]
           } else {
             const pathList = key.split('.')
             localesContent.push({
               file,
-              key,
+              key: fullKey,
               name: pathList[pathList.length - 1],
               [locale]: flattenJsonContent[key]
             })
