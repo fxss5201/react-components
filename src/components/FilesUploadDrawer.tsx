@@ -204,7 +204,7 @@ function FilesUploadDrawer<T extends TargetType>({
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setRefreshDone(true)
     }
-  }, [open, fileList, uploadFile, uploadFolder, uploading, setOpen, message])
+  }, [open, fileList, uploadFile, uploadFolder, uploading, setOpen, message, currentLocale, onSuccess, targetType])
 
   const onRefreshUpload = useCallback(() => {
     setRefreshDone(false)

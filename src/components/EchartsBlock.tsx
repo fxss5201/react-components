@@ -217,9 +217,11 @@ function EchartsBlock({
         echartsRemoveEvents()
       }
     }
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPlay])
   useEffect(() => {
     echartsInit()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opts])
   useEffect(() => {
     if (echartsType) {
@@ -227,9 +229,11 @@ function EchartsBlock({
     } else {
       echartsSetOption(option)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [option])
   useEffect(() => {
     echartsLoading(loading)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading])
   const size = useSize(echartsRef)
   useEffect(() => {
