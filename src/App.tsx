@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import zhCN from 'antd/es/locale/zh_CN'
 import enUS from 'antd/es/locale/en_US'
 import 'dayjs/locale/zh-cn'
@@ -28,7 +28,6 @@ function App() {
   const { isRouteLoading, changeRouteLoading } = useRouteLoading()
   const { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow } = useLayoutState()
   const { t } = useTranslation()
-  const [title, setTitle] = useState('')
   const { addActivitys } = useActivitys()
   const { addLayoutTabs } = useLayoutTabs()
   const [searchParams] = useSearchParams()
@@ -36,72 +35,63 @@ function App() {
 
   useEffect(() => {
     changeRouteLoading(false)
+  }, [pathname, changeRouteLoading])
+
+  const matchedRoute = useMemo(() => {
+    return routersList.find(item => item.path === pathname)
   }, [pathname])
 
   useEffect(() => {
-    const location = routersList.find(item => item.path === pathname)
-    if (location) {
-      setTitle(`${t(`menu.${location.meta.key}`, { defaultValue: location.meta.label })} | ${config.logoText}`)
+    if (matchedRoute) {
+      document.title = `${t(`menu.${matchedRoute.meta.key}`, { defaultValue: matchedRoute.meta.label })} | ${config.logoText}`
+    } else {
+      document.title = config.logoText
+    }
+  }, [matchedRoute, t])
 
-      if (location.meta?.activity && location.element) {
-        addActivitys(location.path!)
-      }
+  useEffect(() => {
+    if (!matchedRoute) return
 
-      if (location.meta?.hideHead || !!searchParams.get('hideHead')) {
-        changeHeadShow(false)
-      } else {
-        changeHeadShow(true)
-      }
+    if (matchedRoute.meta?.activity && matchedRoute.element) {
+      addActivitys(matchedRoute.path!)
+    }
 
-      if (location.meta?.hideMenu || !!searchParams.get('hideMenu')) {
-        changeMenuShow(false)
-      } else {
-        changeMenuShow(true)
+    if (config.layoutTabs) {
+      if (!(matchedRoute.meta?.hideInTabs || !!searchParams.get('hideInTabs'))) {
+        addLayoutTabs({ value: matchedRoute.path!, activeTab: matchedRoute.path! })
       }
+    }
+  }, [matchedRoute, addActivitys, addLayoutTabs, searchParams])
 
-      if (location.meta?.collapseMenu || !!searchParams.get('collapseMenu')) {
-        changeMenuCollapsed(true)
-      } else {
-        changeMenuCollapsed(false)
-      }
+  useEffect(() => {
+    if (matchedRoute) {
+      changeHeadShow(!(matchedRoute.meta?.hideHead || !!searchParams.get('hideHead')))
 
-      if (location.meta?.hideFooter || !!searchParams.get('hideFooter')) {
-        changeFooterShow(false)
-      } else {
-        changeFooterShow(true)
-      }
+      changeMenuShow(!(matchedRoute.meta?.hideMenu || !!searchParams.get('hideMenu')))
+
+      changeFooterShow(!(matchedRoute.meta?.hideFooter || !!searchParams.get('hideFooter')))
+
+      changeMenuCollapsed(!!(matchedRoute.meta?.collapseMenu || !!searchParams.get('collapseMenu')))
 
       if (config.breadcrumb) {
-        if (location.meta?.hideBreadcrumb || !!searchParams.get('hideBreadcrumb')) {
-          changeBreadcrumbShow(false)
-        } else {
-          changeBreadcrumbShow(true)
-        }
+        changeBreadcrumbShow(!(matchedRoute.meta?.hideBreadcrumb || !!searchParams.get('hideBreadcrumb')))
       }
 
       if (config.layoutTabs) {
-        if (!(location.meta?.hideInTabs || !!searchParams.get('hideInTabs'))) {
-          addLayoutTabs({ value: location.path!, activeTab: location.path! })
-        }
-        if (location.meta?.hideTabs || !!searchParams.get('hideTabs')) {
-          changeTabsShow(false)
-        } else {
-          changeTabsShow(true)
-        }
+        changeTabsShow(!(matchedRoute.meta?.hideTabs || !!searchParams.get('hideTabs')))
       }
     }
-  }, [pathname, t])
+  }, [matchedRoute, changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow, searchParams])
 
   useEffect(() => {
     const userInfo = localStorage.getItem(config.loginLocalStorageKey)
     if (userInfo) {
       changeUserInfo(JSON.parse(userInfo))
     }
-  }, [])
+  }, [changeUserInfo])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <title>{title}</title>
       <StyleProvider layer>
         <ConfigProvider
           locale={locale === 'zh' ? zhCN : enUS}

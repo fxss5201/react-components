@@ -185,8 +185,8 @@ function flattenFileTree(fileTree: FileTreeItem[], isIgnoreFolder = false): File
     }
     
     // 递归处理子节点
-    if (node.children && node.children.length > 0) {
-      node.children.forEach(traverse)
+    if (children && children.length > 0) {
+      children.forEach(traverse)
     }
   }
   

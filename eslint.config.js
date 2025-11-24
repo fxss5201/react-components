@@ -21,11 +21,12 @@ export default tseslint.config([
     },
     rules: {
       "@typescript-eslint/ban-ts-comment": [
-        "warn",
+        "error",
         {
-          "ts-ignore": "off",
+          "ts-ignore": false,
         }
-      ]
+      ],
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   },
 ])

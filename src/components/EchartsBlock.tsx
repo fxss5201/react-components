@@ -92,7 +92,7 @@ function EchartsBlock({
     } else {
       echartsSetOption(option)
     }
-    if (!!autoPlay) {
+    if (autoPlay) {
       echartsPlay()
       echartsAddEvents()
     }
@@ -212,7 +212,7 @@ function EchartsBlock({
     echartsInit()
     return () => {
       echartsDispose()
-      if (!!autoPlay) {
+      if (autoPlay) {
         echartsPause()
         echartsRemoveEvents()
       }

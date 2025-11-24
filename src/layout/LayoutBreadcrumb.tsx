@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useMatches } from 'react-router'
 import { Breadcrumb } from 'antd'
 import { routersList } from '@/router'
@@ -7,7 +6,7 @@ import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import cn from 'classnames'
 
 function LayoutBreadcrumb({ className }: { className?: string }) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const matches = useMatches()
   const navigate = useNavigateFn()
 
@@ -34,12 +33,8 @@ function LayoutBreadcrumb({ className }: { className?: string }) {
     })
   }
 
-  const breadcrumbItems = useMemo(() => {
-    return getBreadcrumbItems(routes)
-  }, [i18n.language, routes])
-
   return (
-    <Breadcrumb items={breadcrumbItems} className={cn('p-4', className)}></Breadcrumb>
+    <Breadcrumb items={getBreadcrumbItems(routes)} className={cn('p-4', className)}></Breadcrumb>
   )
 }
 

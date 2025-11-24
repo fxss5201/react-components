@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import { Menu } from 'antd'
@@ -15,7 +15,7 @@ function LayoutSider({ className }: { className?: string }) {
   const { theme } = useTheme()
   const navigate = useNavigateFn()
   const { pathname } = useLocation()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   const [selectedKey, setSelectedKey] = useState(pathname)
   const [openKeys, setOpenKeys] = useState<string[]>([])
@@ -23,6 +23,7 @@ function LayoutSider({ className }: { className?: string }) {
   useEffect(() => {
     const location = routersList.find(item => item.path === pathname)
     if (location) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedKey(location.path as string)
     }
 
@@ -57,9 +58,7 @@ function LayoutSider({ className }: { className?: string }) {
     })
   }
 
-  const menuItems = useMemo(() => {
-    return getMenuItems(routersTree)
-  }, [i18n.language])
+  const menuItems = getMenuItems(routersTree)
 
   function menuClickFn({ key }: { key: string }) {
     if (key !== selectedKey) {

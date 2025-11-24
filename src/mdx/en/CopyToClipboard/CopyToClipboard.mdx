@@ -17,7 +17,7 @@ Project uses `"react": "^19.2.0"` version, and originally used [react-copy-to-cl
 export type CopyToClipboardProps = {
   text?: string,
   getText?: () => string,
-  children?: React.ReactNode | ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
+  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
   disabled?: boolean,
   timeout?: number,
   onCopy?: (text: string) => void,

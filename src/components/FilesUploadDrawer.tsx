@@ -81,7 +81,7 @@ function FilesUploadDrawer<T extends TargetType>({
       setUploading(false)
       clearInterval(interval)
     })
-  }, [updateFileList])
+  }, [updateFileList, currentLocale])
 
   const uploadFolder = useCallback(async (item: UploadFileItemType) => {
     setUploading(true)
@@ -121,7 +121,7 @@ function FilesUploadDrawer<T extends TargetType>({
       setUploading(false)
       clearInterval(interval)
     })
-  }, [updateFileList])
+  }, [updateFileList, currentLocale])
 
   useEffect(() => {
     if (open && list.length > 0) {
@@ -136,6 +136,36 @@ function FilesUploadDrawer<T extends TargetType>({
       updateFileList([])
     }
   }, [open, list, updateFileList])
+
+  const convertToTree = (array: UploadFileItemType[]): UploadResultFileTreeItemType[] => {
+    const roots: UploadResultFileTreeItemType[] = []
+    array.forEach(item => {
+      let currentLevel = roots
+      if (item.folderPath) {
+        const paths = item.folderPath.split('/').filter(x => x !== '')
+        paths.forEach((folder) => {
+          const findIndex = currentLevel.findIndex(x => x.name === folder)
+          if (findIndex === -1) {
+            currentLevel.push({
+              name: folder,
+              type: 'folder',
+              children: []
+            })
+            currentLevel = currentLevel[currentLevel.length - 1].children as UploadResultFileTreeItemType[]
+          } else {
+            currentLevel = currentLevel[findIndex].children as UploadResultFileTreeItemType[]
+          }
+        })
+      }
+      currentLevel.push({
+        name: item.name,
+        type: item.type,
+        ...(item.type === 'file' ? { size: item.size, file: item.file } : {}),
+        ...(item.type === 'folder' ? { children: [] } : {})
+      })
+    })
+    return roots
+  }
 
   const [refreshDone, setRefreshDone] = useState<boolean>(true)
   useEffect(() => {
@@ -171,6 +201,7 @@ function FilesUploadDrawer<T extends TargetType>({
         return () => clearTimeout(timer)
       }
     } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRefreshDone(true)
     }
   }, [open, fileList, uploadFile, uploadFolder, uploading, setOpen, message])
@@ -199,36 +230,6 @@ function FilesUploadDrawer<T extends TargetType>({
     }
   }
 
-  const convertToTree = (array: UploadFileItemType[]): UploadResultFileTreeItemType[] => {
-    const roots: UploadResultFileTreeItemType[] = []
-    array.forEach(item => {
-      let currentLevel = roots
-      if (item.folderPath) {
-        const paths = item.folderPath.split('/').filter(x => x !== '')
-        paths.forEach((folder) => {
-          const findIndex = currentLevel.findIndex(x => x.name === folder)
-          if (findIndex === -1) {
-            currentLevel.push({
-              name: folder,
-              type: 'folder',
-              children: []
-            })
-            currentLevel = currentLevel[currentLevel.length - 1].children as UploadResultFileTreeItemType[]
-          } else {
-            currentLevel = currentLevel[findIndex].children as UploadResultFileTreeItemType[]
-          }
-        })
-      }
-      currentLevel.push({
-        name: item.name,
-        type: item.type,
-        ...(item.type === 'file' ? { size: item.size, file: item.file } : {}),
-        ...(item.type === 'folder' ? { children: [] } : {})
-      })
-    })
-    return roots
-  }
-
   const doCloseFn = useCallback(() => {
     modal.confirm({
       title: currentLocale === 'zh' ? '关闭提示' : 'Close Prompt',
@@ -242,7 +243,7 @@ function FilesUploadDrawer<T extends TargetType>({
         // 取消关闭
       }
     })
-}, [setOpen, modal])
+}, [setOpen, modal, currentLocale])
 
   return (
     <Drawer

@@ -15,7 +15,7 @@ export function useChangeLocale() {
     localStorage.setItem(config.localeLocalStorageKey, locale)
     i18n.changeLanguage(locale)
     htmlElement.setAttribute('lang', langMap[locale])
-  }, [i18n.language])
+  }, [i18n])
 
   return changeLocale
 }

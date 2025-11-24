@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useContext } from 'react'
+import { useState, useCallback, useEffect, useContext } from 'react'
 import copy from 'copy-to-clipboard'
 import { Button, Tooltip } from 'antd'
 import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
@@ -8,7 +8,7 @@ import { type LocaleType } from '@/config'
 export type CopyToClipboardProps = {
   text?: string,
   getText?: () => string,
-  children?: React.ReactNode | ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
+  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
   disabled?: boolean,
   timeout?: number,
   onCopy?: (text: string) => void,
@@ -27,16 +27,16 @@ function CopyToClipboard({
   locale
 }: CopyToClipboardProps) {
   const [copied, setCopied] = useState<boolean>(false)
-  const timeoutRef = useRef<NodeJS.Timeout>(null)
+  const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timeout | null>(null)
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
 
   const clearPreviousTimeout = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-      timeoutRef.current = null
+    if (timeoutRef) {
+      clearTimeout(timeoutRef)
+      setTimeoutRef(null)
     }
-  }, [])
+  }, [timeoutRef])
 
   const copyToClipboard = useCallback(async () => {
     if (disabled) return
@@ -54,10 +54,10 @@ function CopyToClipboard({
       onCopy?.(copyText)
 
       if (timeout > 0) {
-        timeoutRef.current = setTimeout(() => {
+        setTimeoutRef(setTimeout(() => {
           setCopied(false)
-          timeoutRef.current = null
-        }, timeout)
+          setTimeoutRef(null)
+        }, timeout))
       }
     } else {
       setCopied(false)
@@ -76,17 +76,15 @@ function CopyToClipboard({
     if (typeof children === 'function') {
       return children({ copied, copyToClipboard })
     }
-    return children || (
-      copied ? (
-          <>
-            <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
-            <Button type="text" icon={<CheckOutlined />} />
-          </>
-        ) : (
-          <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
-            <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
-          </Tooltip>
-        )
+    return copied ? (
+      <>
+        <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
+        <Button type="text" icon={<CheckOutlined />} />
+      </>
+    ) : (
+      <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
+        <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
+      </Tooltip>
     )
   }, [children, copied, copyToClipboard, currentLocale])
 

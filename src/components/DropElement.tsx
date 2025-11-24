@@ -23,40 +23,11 @@ function DropElement<T extends TargetType>({
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
 
-  const dropAreaRef = useRef<HTMLDivElement>(null)
-  useEventListener(
-    ['dragover', 'dragenter', 'dragleave', 'drop'],
-    (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-    },
-    { target: dropAreaRef }
-  )
-  useEventListener(
-    ['dragover', 'dragenter'],
-    () => {
-      dropAreaRef.current!.style.borderColor = '#2b7fff'
-    },
-    { target: dropAreaRef }
-  )
-  useEventListener(
-    ['dragleave', 'drop'],
-    () => {
-      dropAreaRef.current!.style.borderColor = '#d1d5dc'
-    },
-    { target: dropAreaRef }
-  )
-  useEventListener(
-    ['drop'],
-    (e) => {
-      handleDrop(e)
-    },
-    { target: dropAreaRef }
-  )
   async function handleDrop(e: DragEvent) {
     try {
       await handleDropItems(e)
     } catch (error) {
+      console.log(error)
       handleDropFiles(e)
     }
   }
@@ -105,9 +76,9 @@ function DropElement<T extends TargetType>({
         type: 'file'
       })
     } else if (entry.isDirectory) {
-      let directoryReader = (entry as FileSystemDirectoryEntry).createReader()
+      const directoryReader = (entry as FileSystemDirectoryEntry).createReader()
       const entries = await syncReadEntries(directoryReader)
-      let childrenList: FileTreeItem[] = []
+      const childrenList: FileTreeItem[] = []
       parentList.push({
         filePath: entry.fullPath,
         folderPath: entry.fullPath.split('/').slice(0, -1).join('/'),
@@ -134,7 +105,7 @@ function DropElement<T extends TargetType>({
         type: 'file'
       })
     } else if (entry.isDirectory) {
-      let directoryReader = (entry as FileSystemDirectoryEntry).createReader()
+      const directoryReader = (entry as FileSystemDirectoryEntry).createReader()
       const entries = await syncReadEntries(directoryReader)
       const promises = entries.map(entry => readerFileList(entry))
       const subFiles = await Promise.all(promises)
@@ -194,6 +165,37 @@ function DropElement<T extends TargetType>({
       onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
     }
   }
+
+  const dropAreaRef = useRef<HTMLDivElement>(null)
+  useEventListener(
+    ['dragover', 'dragenter', 'dragleave', 'drop'],
+    (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+    },
+    { target: dropAreaRef }
+  )
+  useEventListener(
+    ['dragover', 'dragenter'],
+    () => {
+      dropAreaRef.current!.style.borderColor = '#2b7fff'
+    },
+    { target: dropAreaRef }
+  )
+  useEventListener(
+    ['dragleave', 'drop'],
+    () => {
+      dropAreaRef.current!.style.borderColor = '#d1d5dc'
+    },
+    { target: dropAreaRef }
+  )
+  useEventListener(
+    ['drop'],
+    (e) => {
+      handleDrop(e)
+    },
+    { target: dropAreaRef }
+  )
 
   return (
     <div ref={dropAreaRef}

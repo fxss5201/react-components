@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import type { DragEndEvent } from '@dnd-kit/core'
 import { closestCenter, DndContext, PointerSensor, useSensor } from '@dnd-kit/core'
 import {
@@ -32,7 +32,7 @@ type ItemProps = {
   key: string
 }
 
-const DraggableTabNode: React.FC<Readonly<DraggableTabPaneProps>> = ({ className, ...props }) => {
+const DraggableTabNode: React.FC<Readonly<DraggableTabPaneProps>> = ({ ...props }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: props['data-node-key'],
   })
@@ -54,7 +54,7 @@ const DraggableTabNode: React.FC<Readonly<DraggableTabPaneProps>> = ({ className
 
 function LayoutTabs({ className }: { className?: string }) {
   const { layoutTabs, layoutActiveTab, removeLayoutTabs, clearLayoutTabs, setLayoutTabs } = useLayoutTabs()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigateFn()
   const { theme } = useTheme()
 
@@ -70,9 +70,7 @@ function LayoutTabs({ className }: { className?: string }) {
     })
   }
 
-  const tabsItems = useMemo(() => {
-    return getItems(layoutTabs)
-  }, [i18n.language, layoutTabs])
+  const tabsItems = getItems(layoutTabs)
 
   const sensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 

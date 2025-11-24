@@ -17,7 +17,7 @@ import Playground from '@/components/Playground'
 export type CopyToClipboardProps = {
   text?: string,
   getText?: () => string,
-  children?: React.ReactNode | ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
+  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
   disabled?: boolean,
   timeout?: number,
   onCopy?: (text: string) => void,
