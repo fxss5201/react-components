@@ -17,7 +17,7 @@ import NotAuthorizedPage from '@/pages/NotAuthorizedPage'
 import Login from '@/pages/Login'
 import ResetPassword from '@/pages/ResetPassword'
 import Home from '@/pages/Home'
-import { authLoader } from './loader/authLoader'
+import { loginMiddleware } from './middleware/loginMiddleware'
 import IconFont from '@/components/IconFont'
 import config from '@/config'
 
@@ -285,7 +285,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    loader: authLoader,
+    middleware: [loginMiddleware],
     children: [
       {
         path: '/',
@@ -297,16 +297,10 @@ const router = createBrowserRouter([
   },
   {
     path: `/*`,
-    element: <NotFoundPage />,
-    meta: {
-      label: '404 页面',
-    }
+    element: <NotFoundPage />
   }
 ] as RouteObject[], {
-  basename: BASE_URL,
-  future: {
-    unstable_middleware: true,
-  },
+  basename: BASE_URL
 })
 
 export default router

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { type RootState, type AppDispatch } from '@/store'
-import { changeUserInfo, changeBadge , type UserState } from '@/store/userSlice'
+import { changeUserInfo, changeBadge, changePermissionList, type UserState } from '@/store/userSlice'
 
 export function useUser() {
   const user = useSelector((state: RootState) => state.user.value)
@@ -8,6 +8,7 @@ export function useUser() {
   const dispatch = useDispatch<AppDispatch>()
   const changeUserInfoCallback = (value: UserState['value']) => dispatch(changeUserInfo(value))
   const changeBadgeCallback = (value: number) => dispatch(changeBadge(value))
+  const changePermissionListCallback = (value: string[]) => dispatch(changePermissionList(value))
 
   return {
     name: user.name,
@@ -15,6 +16,7 @@ export function useUser() {
     badge: user.badge,
     permissionList: user.permissionList,
     changeUserInfo: changeUserInfoCallback,
-    changeBadge: changeBadgeCallback
+    changeBadge: changeBadgeCallback,
+    changePermissionList: changePermissionListCallback,
   }
 }

@@ -31,10 +31,13 @@ export const userSlice = createSlice({
     },
     changeBadge: (state, action: PayloadAction<number>) => {
       state.value.badge = action.payload
+    },
+    changePermissionList: (state, action: PayloadAction<string[]>) => {
+      state.value.permissionList = action.payload
     }
   }
 })
 
-export const { changeUserInfo, changeBadge } = userSlice.actions
+export const { changeUserInfo, changeBadge, changePermissionList } = userSlice.actions
 
 export default userSlice.reducer

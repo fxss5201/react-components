@@ -1,10 +1,10 @@
-import type { LoaderFunction } from 'react-router'
+import type { MiddlewareFunction } from 'react-router'
 import { redirect } from 'react-router'
 import config from '@/config'
 
 const BASE_URL = import.meta.env.BASE_URL
 
-export const authLoader: LoaderFunction = async ({ request }) => {
+export const loginMiddleware: MiddlewareFunction = async ({ request }) => {
   // 获取当前路径，避免登录页面无限重定向
   const url = new URL(request.url)
   let currentPath = url.pathname

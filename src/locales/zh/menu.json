@@ -22,5 +22,7 @@
   "json-editor": "Json 编辑器",
   "json-render": "Json 渲染",
   "echarts-block": "echarts 模块",
-  "not-authorized": "403 权限不足"
+  "not-authorized": "403 权限不足",
+  "login": "登录",
+  "reset-password": "重置密码"
 }
