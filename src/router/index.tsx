@@ -20,6 +20,8 @@ import Home from '@/pages/Home'
 import { loginMiddleware } from './middleware/loginMiddleware'
 import IconFont from '@/components/IconFont'
 import config from '@/config'
+import type { RoutersBaseType, RoutersType } from './types'
+import { createRoutersTree, createRoutersList, addAuthorizedMiddleware } from './utils'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -59,6 +61,7 @@ export const routers = [
     meta: {
       label: '复制到剪贴板',
       icon: <CopyOutlined />,
+      permission: '01',
     }
   },
   {
@@ -66,6 +69,7 @@ export const routers = [
     meta: {
       label: '文件相关',
       icon: <UploadOutlined />,
+      permission: '02',
     },
     children: [
       {
@@ -103,6 +107,7 @@ export const routers = [
     meta: {
       label: 'Markdown',
       icon: <FileMarkdownOutlined />,
+      permission: '03',
     },
     children: [
       {
@@ -280,30 +285,6 @@ export const routers = [
     }
   },
 ] as RoutersBaseType[]
-const whiteList = config.whiteList.map(item => item.slice(1))
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    middleware: [loginMiddleware],
-    children: [
-      {
-        path: '/',
-        element: <PageLayout />,
-        children: routers.filter(item => !item.path || !whiteList.includes(item.path)) as RoutersBaseType[]
-      },
-      ...routers.filter(item => item.path && whiteList.includes(item.path)) as RoutersBaseType[]
-    ]
-  },
-  {
-    path: `/*`,
-    element: <NotFoundPage />
-  }
-] as RouteObject[], {
-  basename: BASE_URL
-})
-
-export default router
 
 // routersTree 是 routers 的树结构，每个节点都有 path 属性（path是所有的唯一标识，如果是 index 为 true 的节点，则 path 为父路径，否则为父路径 + 路径），children 是子节点的数组，此时的key仅作为多语言的key使用
 const routersTree = createRoutersTree(routers, '/')
@@ -316,79 +297,35 @@ export {
   routersList
 }
 
-// RoutersBaseType 是路由配置的基础类型，用于规范 routers 配置
-export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
-  element?: React.ReactNode
-  meta: {
-    // index 为 true 的时候，需要指定 key，否则会报错
-    key?: string
-    // 菜单label，如果是多语言，根据 path （index 为 true 时，则根据 key ） 去配置
-    label: string
-    // 菜单图表
-    icon?: React.ReactNode
-    // 当前路由是否需要使用 Activity 组件保存路由状态，默认 false （仅在 element 存在时生效）
-    activity?: boolean
-    // 是否隐藏在菜单中，父路由为 true 时，子路由也会被隐藏
-    hideInMenu?: boolean
-    // 进入该路由时是否隐藏头部，默认 false
-    hideHead?: boolean
-    // 进入该路由时是否隐藏菜单，默认 false
-    hideMenu?: boolean
-    // 进入该路由时是否收起菜单，默认 false
-    collapseMenu?: boolean,
-    // 进入该路由时是否隐藏底部，默认 false
-    hideFooter?: boolean
-    // 进入该路由时是否隐藏面包屑导航，默认 false
-    hideBreadcrumb?: boolean
-    // 进入该路由时是否隐藏标签页，默认 false
-    hideTabs?: boolean
-    // 在标签页中是否隐藏该路由，默认 false
-    hideInTabs?: boolean
-    // 路由权限，不设置的时候默认所有用户都可以访问，设置的时候根据用户的权限判断是否显示该路由
-    permission?: string
-  },
-  children?: RoutersBaseType[]
+const whiteList = config.whiteList.map(item => item.slice(1))
+let lastRouters = routers
+if (config.isNeedLogin) {
+  lastRouters = addAuthorizedMiddleware(lastRouters)
+  console.log('lastRouters', lastRouters)
 }
+const innerRouters = lastRouters.filter(item => !item.path || !whiteList.includes(item.path)) as RoutersBaseType[]
+const outerRouters = lastRouters.filter(item => item.path && whiteList.includes(item.path)) as RoutersBaseType[]
 
-// RoutersType 是生成的 routersTree 或 routersList 的类型，主要是保证每个节点都有 key 属性
-export type RoutersType = Omit<RoutersBaseType, 'meta' | 'children'> & {
-  meta: Omit<RoutersBaseType['meta'], 'key'> & {
-    key: string
-  },
-  children?: RoutersType[]
-}
-
-function createRoutersTree(routers: RoutersBaseType[] | RoutersType[], parentPath: string = '',): RoutersType[] {
-  return routers.map(item => {
-    return {
-      ...item,
-      path: item.index ? parentPath : `${parentPath.endsWith('/') ? parentPath : parentPath + '/'}${item.path!}`,
-      meta: {
-        ...item.meta,
-        key: item.meta.key || item.path!
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    middleware: [loginMiddleware],
+    children: [
+      {
+        path: '/',
+        element: <PageLayout />,
+        children: innerRouters
       },
-      ...(
-        item.children ? {
-          children: createRoutersTree(item.children, `${parentPath.endsWith('/') ? parentPath : parentPath + '/'}${item.path!}`) 
-        } : {}
-      )
-    } as RoutersType
-  })
-}
+      ...outerRouters
+    ]
+  },
+  {
+    path: `/*`,
+    element: <NotFoundPage />
+  }
+] as RouteObject[], {
+  basename: BASE_URL
+})
 
-function createRoutersList(routers: RoutersBaseType[] | RoutersType[], parentPath: string = '', list: RoutersType[] = []): RoutersType[] {
-  routers.forEach((item) => {
-    list.push({
-      ...item,
-      path: item.index ? parentPath : `${parentPath.endsWith('/') ? parentPath : parentPath + '/'}${item.path!}`,
-      meta: {
-        ...item.meta,
-        key: item.meta.key || item.path!
-      }
-    } as RoutersType)
-    if (item.children) {
-      list.push(...createRoutersList(item.children, `${parentPath.endsWith('/') ? parentPath : parentPath + '/'}${item.path!}`))
-    }
-  })
-  return list
-}
+export default router

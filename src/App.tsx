@@ -20,7 +20,6 @@ import config from './config'
 import { useActivitys } from './storeHooks/useActivitys'
 import { useLayoutTabs } from './storeHooks/useLayoutTabs'
 import { useUser } from './storeHooks/useUser'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
 
 function App() {
   const { theme } = useTheme()
@@ -33,7 +32,6 @@ function App() {
   const { addLayoutTabs } = useLayoutTabs()
   const [searchParams] = useSearchParams()
   const { changeUserInfo } = useUser()
-  const navigate = useNavigateFn()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -49,12 +47,9 @@ function App() {
       if (userInfo) {
         const userObj = JSON.parse(userInfo)
         changeUserInfo(userObj)
-        if (matchedRoute?.meta?.permission && !userObj.permissionList?.includes(matchedRoute.meta.permission)) {
-          navigate('/not-authorized')
-        }
       }
     }
-  }, [changeUserInfo, matchedRoute, navigate])
+  }, [changeUserInfo])
 
   useEffect(() => {
     if (matchedRoute) {

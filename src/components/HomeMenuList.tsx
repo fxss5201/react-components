@@ -1,4 +1,4 @@
-import type { RoutersType } from '@/router/index'
+import type { RoutersType } from '@/router/types'
 import { useTranslation } from 'react-i18next'
 
 const BASE_URL = import.meta.env.BASE_URL
