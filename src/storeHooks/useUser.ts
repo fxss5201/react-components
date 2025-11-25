@@ -13,6 +13,7 @@ export function useUser() {
     name: user.name,
     img: user.img,
     badge: user.badge,
+    permissionList: user.permissionList,
     changeUserInfo: changeUserInfoCallback,
     changeBadge: changeBadgeCallback
   }

@@ -103,6 +103,7 @@ function Login() {
             name: values.username || values.mobile || '',
             img: config.logoImg,
             badge: 10,
+            permissionList: values.username === 'admin' ? ['01', '02', '03', '09'] : ['01', '02'],
           }
           changeUserInfo(userInfo)
           localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(userInfo))
@@ -135,7 +136,7 @@ function Login() {
                 size: 'large',
                 prefix: <UserOutlined />,
               }}
-              placeholder={locale === 'zh' ? '用户名' : 'Username'}
+              placeholder={locale === 'zh' ? '用户名：admin 或 user' : 'Username: admin or user'}
               rules={[
                 {
                   required: true,

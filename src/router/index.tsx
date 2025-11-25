@@ -13,6 +13,7 @@ import {
 import App from '@/App'
 import PageLayout from '@/pages/PageLayout'
 import NotFoundPage from '@/pages/NotFoundPage'
+import NotAuthorizedPage from '@/pages/NotAuthorizedPage'
 import Login from '@/pages/Login'
 import ResetPassword from '@/pages/ResetPassword'
 import Home from '@/pages/Home'
@@ -249,6 +250,7 @@ export const routers = [
       // hideFooter: true,
       // hideBreadcrumb: true,
       // hideTabs: true,
+      permission: '09',
     }
   },
   {
@@ -265,6 +267,16 @@ export const routers = [
     meta: {
       label: '重置密码',
       hideInTabs: true,
+    }
+  },
+  {
+    path: 'not-authorized',
+    element: <NotAuthorizedPage />,
+    meta: {
+      label: '403 权限不足',
+      hideInTabs: true,
+      hideInMenu: true,
+      hideBreadcrumb: true,
     }
   },
 ] as RoutersBaseType[]
@@ -338,6 +350,8 @@ export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'
     hideTabs?: boolean
     // 在标签页中是否隐藏该路由，默认 false
     hideInTabs?: boolean
+    // 路由权限，不设置的时候默认所有用户都可以访问，设置的时候根据用户的权限判断是否显示该路由
+    permission?: string
   },
   children?: RoutersBaseType[]
 }

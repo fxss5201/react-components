@@ -8,6 +8,8 @@ export type UserState = {
     img?: string
     // 消息数量
     badge?: number
+    // 路由权限
+    permissionList?: string[]
   }
 }
 
@@ -15,7 +17,8 @@ const initialState: UserState = {
   value: {
     name: '',
     img: '',
-    badge: 0
+    badge: 0,
+    permissionList: []
   }
 }
 

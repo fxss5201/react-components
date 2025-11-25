@@ -2,7 +2,7 @@ import { Button, Result } from 'antd'
 import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import { useTranslation } from 'react-i18next'
 
-function NotFoundPage() {
+function NotAuthorizedPage() {
   const { t } = useTranslation()
 
   const navigate = useNavigateFn()
@@ -12,12 +12,12 @@ function NotFoundPage() {
 
   return (
     <Result
-      status="404"
-      title={t('system.NotFoundPage.title')}
-      subTitle={t('system.NotFoundPage.subTitle')}
+      status="403"
+      title={t('system.NotAuthorizedPage.title')}
+      subTitle={t('system.NotAuthorizedPage.subTitle')}
       extra={<Button type="primary" onClick={goHome}>{t('system.Home')}</Button>}
     />
   )
 }
 
-export default NotFoundPage
+export default NotAuthorizedPage

@@ -20,6 +20,7 @@ import config from './config'
 import { useActivitys } from './storeHooks/useActivitys'
 import { useLayoutTabs } from './storeHooks/useLayoutTabs'
 import { useUser } from './storeHooks/useUser'
+import { useNavigateFn } from '@/Hooks/useNavigateFn'
 
 function App() {
   const { theme } = useTheme()
@@ -32,6 +33,7 @@ function App() {
   const { addLayoutTabs } = useLayoutTabs()
   const [searchParams] = useSearchParams()
   const { changeUserInfo } = useUser()
+  const navigate = useNavigateFn()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -40,6 +42,19 @@ function App() {
   const matchedRoute = useMemo(() => {
     return routersList.find(item => item.path === pathname)
   }, [pathname])
+
+  useEffect(() => {
+    if (config.isNeedLogin) {
+      const userInfo = localStorage.getItem(config.loginLocalStorageKey)
+      if (userInfo) {
+        const userObj = JSON.parse(userInfo)
+        changeUserInfo(userObj)
+        if (matchedRoute?.meta?.permission && !userObj.permissionList?.includes(matchedRoute.meta.permission)) {
+          navigate('/not-authorized')
+        }
+      }
+    }
+  }, [changeUserInfo, matchedRoute, navigate])
 
   useEffect(() => {
     if (matchedRoute) {
@@ -82,13 +97,6 @@ function App() {
       }
     }
   }, [matchedRoute, changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow, searchParams])
-
-  useEffect(() => {
-    const userInfo = localStorage.getItem(config.loginLocalStorageKey)
-    if (userInfo) {
-      changeUserInfo(JSON.parse(userInfo))
-    }
-  }, [changeUserInfo])
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>

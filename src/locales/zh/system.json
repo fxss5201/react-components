@@ -6,6 +6,10 @@
     "title": "404 页面不存在",
     "subTitle": "很抱歉，您访问的页面不存在。"
   },
+  "NotAuthorizedPage": {
+    "title": "403 权限不足",
+    "subTitle": "很抱歉，您没有权限访问该页面。"
+  },
   "LayoutTabs": {
     "Close": "关闭标签页",
     "CloseLeft": "关闭左侧标签页",

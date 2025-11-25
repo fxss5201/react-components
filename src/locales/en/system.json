@@ -6,6 +6,10 @@
     "title": "404 Not Found",
     "subTitle": "Sorry, the page you visited does not exist."
   },
+  "NotAuthorizedPage": {
+    "title": "403 Not Authorized",
+    "subTitle": "Sorry, you are not authorized to access this page."
+  },
   "LayoutTabs": {
     "Close": "Close Tab",
     "CloseLeft": "Close Left Tabs",

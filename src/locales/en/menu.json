@@ -21,5 +21,6 @@
   "drop-upload": "Drop Upload",
   "json-editor": "Json Editor",
   "json-render": "Json Render",
-  "echarts-block": "Echarts Block"
+  "echarts-block": "Echarts Block",
+  "not-authorized": "403 Not Authorized"
 }

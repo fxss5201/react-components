@@ -8,6 +8,8 @@ import { routersTree, routersList } from '@/router'
 import type { RoutersType } from '@/router'
 import type { MenuProps } from 'antd'
 import cn from 'classnames'
+import { useUser } from '@/storeHooks/useUser'
+import config from '@/config'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -16,6 +18,7 @@ function LayoutSider({ className }: { className?: string }) {
   const navigate = useNavigateFn()
   const { pathname } = useLocation()
   const { t } = useTranslation()
+  const { permissionList } = useUser()
 
   const [selectedKey, setSelectedKey] = useState(pathname)
   const [openKeys, setOpenKeys] = useState<string[]>([])
@@ -58,7 +61,19 @@ function LayoutSider({ className }: { className?: string }) {
     })
   }
 
-  const menuItems = getMenuItems(routersTree)
+  function getPermissionMenuItems(routersTree: RoutersType[]): RoutersType[] {
+    return routersTree.filter(item => {
+      if (item.meta?.permission) {
+        return permissionList?.includes(item.meta.permission)
+      } else if (item.children) {
+        item.children = getPermissionMenuItems(item.children)
+        return item.children.length > 0
+      }
+      return true
+    })
+  }
+
+  const menuItems = config.isNeedLogin ? getMenuItems(getPermissionMenuItems(routersTree)) : getMenuItems(routersTree)
 
   function menuClickFn({ key }: { key: string }) {
     if (key !== selectedKey) {
