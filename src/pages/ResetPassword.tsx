@@ -10,10 +10,10 @@ import {
 } from '@ant-design/pro-components'
 import { App, theme as antdTheme, Form, Button } from 'antd'
 import { useNavigateFn } from '@/Hooks/useNavigateFn'
-import { useLocale } from '@/Hooks/useLocale'
 import LayoutTheme from '@/layout/LayoutTheme'
 import LayoutLocale from '@/layout/LayoutLocale'
 import config from '@/config'
+import { useTranslation } from 'react-i18next'
 
 interface ResetPasswordFormValues {
   username: string
@@ -32,8 +32,8 @@ const waitTime = (time: number = 100) => {
 }
 
 function ResetPassword() {
+  const { t } = useTranslation()
   const navigate = useNavigateFn()
-  const locale = useLocale()
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
   const [loading, setLoading] = useState(false)
@@ -50,7 +50,7 @@ function ResetPassword() {
           <div className='text-3xl font-bold'>{config.logoText}</div>
         </div>
       </div>
-      <div className='my-6 text-center text-2xl font-bold'>{locale === 'zh' ? '重置密码' : 'Reset password'}</div>
+      <div className='my-6 text-center text-2xl font-bold'>{t('resetPassword.Reset password', { defaultValue: '重置密码' })}</div>
       <Form<ResetPasswordFormValues>
         className='w-82 mx-auto'
         initialValues={{
@@ -65,7 +65,7 @@ function ResetPassword() {
           console.log(values)
           await waitTime(2000)
           setLoading(false)
-          message.success(locale === 'zh' ? '密码重置成功' : 'Password reset success')
+          message.success(t('resetPassword.Password reset success', { defaultValue: '密码重置成功' }))
           navigate('/login')
         }}
       >
@@ -75,11 +75,11 @@ function ResetPassword() {
             size: 'large',
             prefix: <UserOutlined />,
           }}
-          placeholder={locale === 'zh' ? '用户名' : 'Username'}
+          placeholder={t('resetPassword.Username', { defaultValue: '用户名' })}
           rules={[
             {
               required: true,
-              message: locale === 'zh' ? '请输入用户名!' : 'Please input username!',
+              message: t('resetPassword.Please input username!', { defaultValue: '请输入用户名!' }),
             },
           ]}
         />
@@ -89,15 +89,15 @@ function ResetPassword() {
             prefix: <MobileOutlined />,
           }}
           name='mobile'
-          placeholder={locale === 'zh' ? '手机号' : 'Mobile'}
+          placeholder={t('resetPassword.Mobile', { defaultValue: '手机号' })}
           rules={[
             {
               required: true,
-              message: locale === 'zh' ? '请输入手机号！' : 'Please input mobile!',
+              message: t('resetPassword.Please input mobile!', { defaultValue: '请输入手机号!' }),
             },
             {
               pattern: /^1\d{10}$/,
-              message: locale === 'zh' ? '手机号格式错误！' : 'Mobile format error!',
+              message: t('resetPassword.Mobile format error!', { defaultValue: '手机号格式错误!' }),
             },
           ]}
         />
@@ -109,22 +109,22 @@ function ResetPassword() {
           captchaProps={{
             size: 'large',
           }}
-          placeholder={locale === 'zh' ? '请输入验证码' : 'Please input captcha'}
+          placeholder={t('resetPassword.Please input captcha', { defaultValue: '请输入验证码' })}
           captchaTextRender={(timing, count) => {
             if (timing) {
-              return locale === 'zh' ? `${count}秒后重新获取` : `${count} seconds later`
+              return `${count} ${t('resetPassword.seconds later', { defaultValue: '秒后重新获取' })}`
             }
-            return locale === 'zh' ? '获取验证码' : 'Get captcha'
+            return t('resetPassword.Get captcha', { defaultValue: '获取验证码' })
           }}
           name='captcha'
           rules={[
             {
               required: true,
-              message: locale === 'zh' ? '请输入验证码！' : 'Please input captcha!',
+              message: t('resetPassword.Please input captcha!', { defaultValue: '请输入验证码!' }),
             },
           ]}
           onGetCaptcha={async () => {
-            message.success(locale === 'zh' ? '获取验证码成功！' : 'Get captcha success!');
+            message.success(t('resetPassword.Get captcha success!', { defaultValue: '获取验证码成功!' }));
           }}
         />
         <ProFormText.Password
@@ -132,8 +132,7 @@ function ResetPassword() {
           fieldProps={{
             size: 'large',
             prefix: <LockOutlined />,
-            strengthText:
-              locale === 'zh' ? '密码应包含数字、字母和特殊字符，至少 8 个字符长。' : 'Password should contain numbers, letters and special characters, at least 8 characters long.',
+            strengthText: t('resetPassword.Password should contain numbers, letters and special characters, at least 8 characters long.', { defaultValue: '密码必须包含数字、字母和特殊字符，至少8个字符长。' }),
             statusRender: (value) => {
               const getStatus = () => {
                 if (value && value.length > 12) {
@@ -148,29 +147,29 @@ function ResetPassword() {
               if (status === 'pass') {
                 return (
                   <div style={{ color: token.colorWarning }}>
-                    {locale === 'zh' ? '强度：中' : 'Strength: medium'}
+                    {t('resetPassword.Strength: medium', { defaultValue: '强度：中等' })}
                   </div>
                 )
               }
               if (status === 'ok') {
                 return (
                   <div style={{ color: token.colorSuccess }}>
-                    {locale === 'zh' ? '强度：强' : 'Strength: strong'}
+                    {t('resetPassword.Strength: strong', { defaultValue: '强度：强' })}
                   </div>
                 )
               }
               return (
                 <div style={{ color: token.colorError }}>
-                  {locale === 'zh' ? '强度：弱' : 'Strength: weak'}
+                  {t('resetPassword.Strength: weak', { defaultValue: '强度：弱' })}
                 </div>
               )
             },
           }}
-          placeholder={locale === 'zh' ? '密码' : 'Password'}
+          placeholder={t('resetPassword.Password', { defaultValue: '密码' })}
           rules={[
             {
               required: true,
-              message: locale === 'zh' ? '请输入密码！' : 'Please input password!',
+              message: t('resetPassword.Please input password!', { defaultValue: '请输入密码！' }),
             },
           ]}
         />
@@ -180,8 +179,7 @@ function ResetPassword() {
           fieldProps={{
             size: 'large',
             prefix: <LockOutlined />,
-            strengthText:
-              locale === 'zh' ? '密码应包含数字、字母和特殊字符，至少 8 个字符长。' : 'Password should contain numbers, letters and special characters, at least 8 characters long.',
+            strengthText: t('resetPassword.Password should contain numbers, letters and special characters, at least 8 characters long.', { defaultValue: '密码必须包含数字、字母和特殊字符，至少8个字符长。' }),
             statusRender: (value) => {
               const getStatus = () => {
                 if (value && value.length > 12) {
@@ -196,36 +194,36 @@ function ResetPassword() {
               if (status === 'pass') {
                 return (
                   <div style={{ color: token.colorWarning }}>
-                    {locale === 'zh' ? '强度：中' : 'Strength: medium'}
+                    {t('resetPassword.Strength: medium', { defaultValue: '强度：中等' })}
                   </div>
                 )
               }
               if (status === 'ok') {
                 return (
                   <div style={{ color: token.colorSuccess }}>
-                    {locale === 'zh' ? '强度：强' : 'Strength: strong'}
+                    {t('resetPassword.Strength: strong', { defaultValue: '强度：强' })}
                   </div>
                 )
               }
               return (
                 <div style={{ color: token.colorError }}>
-                  {locale === 'zh' ? '强度：弱' : 'Strength: weak'}
+                  {t('resetPassword.Strength: weak', { defaultValue: '强度：弱' })}
                 </div>
               )
             },
           }}
-          placeholder={locale === 'zh' ? '确认密码' : 'Confirm password'}
+          placeholder={t('resetPassword.Confirm password', { defaultValue: '确认密码' })}
           rules={[
             {
               required: true,
-              message: locale === 'zh' ? '请输入确认密码！' : 'Please input confirm password!',
+              message: t('resetPassword.Please input confirm password!', { defaultValue: '请输入确认密码！' }),
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue('password') === value) {
                   return Promise.resolve()
                 }
-                return Promise.reject(new Error(locale === 'zh' ? '两次输入的密码不一致！' : 'The new password that you entered do not match!'));
+                return Promise.reject(t('resetPassword.The new password that you entered do not match!', { defaultValue: '两次输入的密码不一致！' }));
               },
             }),
           ]}
@@ -236,12 +234,12 @@ function ResetPassword() {
             e.preventDefault()
             navigate('/login')
           }}>
-            {locale === 'zh' ? '去登录' : 'Go to login'}
+            {t('resetPassword.Go to login', { defaultValue: '返回登录' })}
           </a>
         </div>
         <Form.Item>
           <Button type='primary' htmlType='submit' block size='large' loading={loading}>
-            {locale === 'zh' ? '重置密码' : 'Reset password'}
+            {t('resetPassword.Reset password', { defaultValue: '重置密码' })}
           </Button>
         </Form.Item>
       </Form>

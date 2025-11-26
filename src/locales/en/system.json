@@ -1,5 +1,6 @@
 {
   "Home": "Home",
+  "Retry": "Retry",
   "Expand Menu": "Expand Menu",
   "Collapse Menu": "Collapse Menu",
   "NotFoundPage": {
@@ -20,5 +21,9 @@
   "Light mode": "Light mode",
   "Dark mode": "Dark mode",
   "Logout": "Logout",
-  "UserInfo": "User Info"
+  "UserInfo": "User Info",
+  "errorFallback": {
+    "title": "Oops! Something went wrong.",
+    "subTitle": "Please review and modify the following information."
+  }
 }

@@ -17,11 +17,11 @@ import { Space, Tabs, App, theme as antdTheme } from 'antd'
 import type { CSSProperties } from 'react'
 import { useState, Activity } from 'react'
 import { useNavigateFn } from '@/Hooks/useNavigateFn'
-import { useLocale } from '@/Hooks/useLocale'
 import LayoutTheme from '@/layout/LayoutTheme'
 import LayoutLocale from '@/layout/LayoutLocale'
 import config from '@/config'
 import { useUser } from '@/storeHooks/useUser'
+import { useTranslation } from 'react-i18next'
 
 type LoginType = 'phone' | 'account'
 interface LoginFormValues {
@@ -41,8 +41,8 @@ const waitTime = (time: number = 100) => {
 }
 
 function Login() {
+  const { t } = useTranslation()
   const navigate = useNavigateFn()
-  const locale = useLocale()
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
   const [loginType, setLoginType] = useState<LoginType>('account')
@@ -67,7 +67,7 @@ function Login() {
         title={config.logoText}
         actions={
           <Space>
-            {locale === 'zh' ? '其他登录方式' : 'Other login methods'}
+            {t('login.Other login methods', { defaultValue: '其他登录方式' })}
             <AlipayCircleOutlined style={iconStyles} />
             <TaobaoCircleOutlined style={iconStyles} />
             <WechatOutlined style={iconStyles} />
@@ -109,7 +109,7 @@ function Login() {
           changeUserInfo(userInfo)
           localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(userInfo))
           await waitTime(2000)
-          message.success(locale === 'zh' ? '登录成功' : 'Login success')
+          message.success(t('login.Login success', { defaultValue: '登录成功' }))
           navigate('/')
         }}
       >
@@ -120,11 +120,11 @@ function Login() {
           items={[
             {
               key: 'account',
-              label: locale === 'zh' ? '账号密码登录' : 'Account password login',
+              label: t('login.Account password login', { defaultValue: '账号密码登录' }),
             },
             {
               key: 'phone',
-              label: locale === 'zh' ? '手机号登录' : 'Phone login',
+              label: t('login.Phone login', { defaultValue: '手机号登录' }),
             },
           ]}
           className='mt-6'
@@ -137,11 +137,11 @@ function Login() {
                 size: 'large',
                 prefix: <UserOutlined />,
               }}
-              placeholder={locale === 'zh' ? '用户名：admin 或 user' : 'Username: admin or user'}
+              placeholder={t('login.Username: admin or user', { defaultValue: '用户名：admin 或 user' })}
               rules={[
                 {
                   required: true,
-                  message: locale === 'zh' ? '请输入用户名!' : 'Please input username!',
+                  message: t('login.Please input username!', { defaultValue: '请输入用户名！' }),
                 },
               ]}
             />
@@ -150,8 +150,7 @@ function Login() {
               fieldProps={{
                 size: 'large',
                 prefix: <LockOutlined />,
-                strengthText:
-                  locale === 'zh' ? '密码应包含数字、字母和特殊字符，至少 8 个字符长。' : 'Password should contain numbers, letters and special characters, at least 8 characters long.',
+                strengthText: t('login.Password should contain numbers, letters and special characters, at least 8 characters long.', { defaultValue: '密码必须包含数字、字母和特殊字符，至少8个字符长。' }),
                 statusRender: (value) => {
                   const getStatus = () => {
                     if (value && value.length > 12) {
@@ -166,41 +165,41 @@ function Login() {
                   if (status === 'pass') {
                     return (
                       <div style={{ color: token.colorWarning }}>
-                        {locale === 'zh' ? '强度：中' : 'Strength: medium'}
+                        {t('login.Strength: medium', { defaultValue: '强度：中等' })}
                       </div>
                     )
                   }
                   if (status === 'ok') {
                     return (
                       <div style={{ color: token.colorSuccess }}>
-                        {locale === 'zh' ? '强度：强' : 'Strength: strong'}
+                        {t('login.Strength: strong', { defaultValue: '强度：强' })}
                       </div>
                     )
                   }
                   return (
                     <div style={{ color: token.colorError }}>
-                      {locale === 'zh' ? '强度：弱' : 'Strength: weak'}
+                      {t('login.Strength: weak', { defaultValue: '强度：弱' })}
                     </div>
                   )
                 },
               }}
-              placeholder={locale === 'zh' ? '密码' : 'Password'}
+              placeholder={t('login.Password', { defaultValue: '密码' })}
               rules={[
                 {
                   required: true,
-                  message: locale === 'zh' ? '请输入密码！' : 'Please input password!',
+                  message: t('login.Please input password!', { defaultValue: '请输入密码！' }),
                 },
               ]}
             />
             <div className='flex items-center justify-between mb-6'>
               <ProFormCheckbox noStyle name='rememberPassword'>
-                {locale === 'zh' ? '记住密码' : 'Remember password'}
+                {t('login.Remember password', { defaultValue: '记住密码' })}
               </ProFormCheckbox>
               <a onClick={(e) => {
                 e.preventDefault()
                 navigate('/reset-password')
               }}>
-                {locale === 'zh' ? '忘记密码' : 'Forgot password'}
+                {t('login.Forgot password', { defaultValue: '忘记密码' })}
               </a>
             </div>
           </>
@@ -213,15 +212,15 @@ function Login() {
                 prefix: <MobileOutlined />,
               }}
               name='mobile'
-              placeholder={locale === 'zh' ? '手机号' : 'Mobile'}
+              placeholder={t('login.Mobile', { defaultValue: '手机号' })}
               rules={[
                 {
                   required: true,
-                  message: locale === 'zh' ? '请输入手机号！' : 'Please input mobile!',
+                  message: t('login.Please input mobile!', { defaultValue: '请输入手机号！' }),
                 },
                 {
                   pattern: /^1\d{10}$/,
-                  message: locale === 'zh' ? '手机号格式错误！' : 'Mobile format error!',
+                  message: t('login.Mobile format error!', { defaultValue: '手机号格式错误！' }),
                 },
               ]}
             />
@@ -233,22 +232,22 @@ function Login() {
               captchaProps={{
                 size: 'large',
               }}
-              placeholder={locale === 'zh' ? '请输入验证码' : 'Please input captcha'}
+              placeholder={t('login.Please input captcha', { defaultValue: '请输入验证码！' })}
               captchaTextRender={(timing, count) => {
                 if (timing) {
-                  return locale === 'zh' ? `${count}秒后重新获取` : `${count} seconds later`
+                  return `${count} ${t('login.seconds later', { defaultValue: '秒后重新获取' })}`
                 }
-                return locale === 'zh' ? '获取验证码' : 'Get captcha'
+                return t('login.Get captcha', { defaultValue: '获取验证码' })
               }}
               name='captcha'
               rules={[
                 {
                   required: true,
-                  message: locale === 'zh' ? '请输入验证码！' : 'Please input captcha!',
+                  message: t('login.Please input captcha!', { defaultValue: '请输入验证码！' }),
                 },
               ]}
               onGetCaptcha={async () => {
-                message.success(locale === 'zh' ? '获取验证码成功！' : 'Get captcha success!');
+                message.success(t('login.Get captcha success!', { defaultValue: '获取验证码成功！' }));
               }}
             />
           </>

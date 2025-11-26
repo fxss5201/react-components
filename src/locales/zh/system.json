@@ -1,5 +1,6 @@
 {
   "Home": "首页",
+  "Retry": "重试",
   "Expand Menu": "展开菜单",
   "Collapse Menu": "收起菜单",
   "NotFoundPage": {
@@ -20,5 +21,9 @@
   "Light mode": "亮色模式",
   "Dark mode": "暗黑模式",
   "Logout": "退出登录",
-  "UserInfo": "用户信息"
+  "UserInfo": "用户信息",
+  "errorFallback": {
+    "title": "发生错误",
+    "subTitle": "请检查并修改以下信息。"
+  }
 }

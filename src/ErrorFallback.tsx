@@ -1,8 +1,10 @@
 import { type FallbackProps } from 'react-error-boundary'
 import { Button, Result } from 'antd'
 import { useNavigateFn } from './Hooks/useNavigateFn'
+import { useTranslation } from 'react-i18next'
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+  const { t } = useTranslation()
   const navigate = useNavigateFn()
   const goHome = () => {
     resetErrorBoundary()
@@ -11,11 +13,11 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <Result
       status="error"
-      title="发生错误"
-      subTitle="请检查并修改以下信息。"
+      title={t('system.errorFallback.title')}
+      subTitle={t('system.errorFallback.subTitle')}
       extra={[
-        <Button type="primary" key="console" onClick={goHome}>首页</Button>,
-        <Button key="buy" onClick={resetErrorBoundary}>重试</Button>,
+        <Button type="primary" key="console" onClick={goHome}>{t('system.Home', { defaultValue: '首页' })}</Button>,
+        <Button key="buy" onClick={resetErrorBoundary}>{t('system.Retry', { defaultValue: '重试' })}</Button>,
       ]}
     >
       <div className="desc">
