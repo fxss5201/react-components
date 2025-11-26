@@ -1,7 +1,7 @@
 import type { MiddlewareFunction } from 'react-router'
 import { redirect } from 'react-router'
-import config from '@/config'
 import { routersList } from '@/router'
+import store from '@/store'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -20,9 +20,8 @@ export const authorizedMiddleware: MiddlewareFunction = async ({ request }, next
     currentPath = currentPath.slice(1)
   }
 
-  const userInfo = localStorage.getItem(config.loginLocalStorageKey)
-  const userObj = JSON.parse(userInfo || '{}')
-  const permissionList = userObj?.permissionList || []
+  const userInfo = store.getState().user.value
+  const permissionList = userInfo.permissionList || []
 
   const pathList = currentPath.split('/')
   for (let idx = 0; idx < pathList.length; idx++) {

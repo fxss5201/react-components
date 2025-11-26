@@ -2,6 +2,8 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 export type UserState = {
   value: {
+    // 用户ID
+    id: string | number
     // 用户名
     name: string
     // 头像
@@ -15,6 +17,7 @@ export type UserState = {
 
 const initialState: UserState = {
   value: {
+    id: '',
     name: '',
     img: '',
     badge: 0,

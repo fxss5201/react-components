@@ -1,6 +1,8 @@
 import type { MiddlewareFunction } from 'react-router'
 import { redirect } from 'react-router'
 import config from '@/config'
+import store from '@/store'
+import { changeUserInfo } from '@/store/userSlice'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -18,23 +20,28 @@ export const loginMiddleware: MiddlewareFunction = async ({ request }, next) => 
   if (!currentPath.startsWith('/')) {
     currentPath = '/' + currentPath
   }
-  
-  // 检查登录状态
-  const isLogin = localStorage.getItem(config.loginLocalStorageKey) !== null
-  
-  // 如果是登录页面
-  if (config.whiteList.includes(currentPath)) {
-    // if (!isLogin && config.isNeedLogin) {
-    //   return true
-    // } else {
-    //   throw redirect('/')
-    // }
-    return await next()
-  }
-  
-  // 如果需要登录且未登录，则重定向到登录页面
-  if (!isLogin && config.isNeedLogin) {
-    throw redirect(`/login`)
+
+  if (config.isNeedLogin) {
+    const userInfo = store.getState().user.value
+    let isLogin = !!userInfo.id
+    if (!isLogin) {
+      const userLocal = localStorage.getItem(config.loginLocalStorageKey)
+      if (userLocal) {
+        const userObj = JSON.parse(userLocal)
+        store.dispatch(changeUserInfo(userObj))
+        isLogin = true
+      }
+    }
+    
+    if (!isLogin) {
+      if (config.whiteList.includes(currentPath)) {
+        return await next()
+      } else {
+        throw redirect('/login')
+      }
+    } else {
+      return await next()
+    }
   } else {
     return await next()
   }

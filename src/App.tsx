@@ -19,7 +19,6 @@ import { routersList } from './router'
 import config from './config'
 import { useActivitys } from './storeHooks/useActivitys'
 import { useLayoutTabs } from './storeHooks/useLayoutTabs'
-import { useUser } from './storeHooks/useUser'
 
 function App() {
   const { theme } = useTheme()
@@ -31,7 +30,6 @@ function App() {
   const { addActivitys } = useActivitys()
   const { addLayoutTabs } = useLayoutTabs()
   const [searchParams] = useSearchParams()
-  const { changeUserInfo } = useUser()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -40,16 +38,6 @@ function App() {
   const matchedRoute = useMemo(() => {
     return routersList.find(item => item.path === pathname)
   }, [pathname])
-
-  useEffect(() => {
-    if (config.isNeedLogin) {
-      const userInfo = localStorage.getItem(config.loginLocalStorageKey)
-      if (userInfo) {
-        const userObj = JSON.parse(userInfo)
-        changeUserInfo(userObj)
-      }
-    }
-  }, [changeUserInfo])
 
   useEffect(() => {
     if (matchedRoute) {

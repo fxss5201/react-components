@@ -301,7 +301,6 @@ const whiteList = config.whiteList.map(item => item.slice(1))
 let lastRouters = routers
 if (config.isNeedLogin) {
   lastRouters = addAuthorizedMiddleware(lastRouters)
-  console.log('lastRouters', lastRouters)
 }
 const innerRouters = lastRouters.filter(item => !item.path || !whiteList.includes(item.path)) as RoutersBaseType[]
 const outerRouters = lastRouters.filter(item => item.path && whiteList.includes(item.path)) as RoutersBaseType[]
