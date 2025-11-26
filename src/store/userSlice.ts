@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import config from '@/config'
 
 export type UserState = {
   value: {
@@ -31,12 +32,15 @@ export const userSlice = createSlice({
   reducers: {
     changeUserInfo: (state, action: PayloadAction<UserState['value']>) => {
       state.value = action.payload
+      localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(state.value))
     },
     changeBadge: (state, action: PayloadAction<number>) => {
       state.value.badge = action.payload
+      localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(state.value))
     },
     changePermissionList: (state, action: PayloadAction<string[]>) => {
       state.value.permissionList = action.payload
+      localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(state.value))
     }
   }
 })

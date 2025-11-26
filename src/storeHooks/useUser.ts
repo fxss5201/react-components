@@ -11,6 +11,7 @@ export function useUser() {
   const changePermissionListCallback = (value: string[]) => dispatch(changePermissionList(value))
 
   return {
+    id: user.id,
     name: user.name,
     img: user.img,
     badge: user.badge,

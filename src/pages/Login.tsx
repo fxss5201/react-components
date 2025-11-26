@@ -100,7 +100,7 @@ function Login() {
             }
           }
           const userInfo = {
-            id: values.username || values.mobile || '',
+            id: 888,
             name: values.username || values.mobile || '',
             img: config.logoImg,
             badge: 10,

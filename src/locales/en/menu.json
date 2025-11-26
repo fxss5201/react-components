@@ -24,5 +24,6 @@
   "echarts-block": "Echarts Block",
   "not-authorized": "403 Not Authorized",
   "login": "Login",
-  "reset-password": "Reset Password"
+  "reset-password": "Reset Password",
+  "userInfo": "User Info"
 }

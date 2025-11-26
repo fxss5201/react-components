@@ -1,6 +1,6 @@
 import { Avatar, Badge, Popover } from 'antd'
 import cn from 'classnames'
-import { LogoutOutlined } from '@ant-design/icons'
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { useUser } from '@/storeHooks/useUser'
 import { useNavigateFn } from '@/Hooks/useNavigateFn'
 import config from '@/config'
@@ -16,6 +16,8 @@ function LayoutUser({ className }: { className?: string }) {
   const clickFn = (type: string) => {
     if (type === 'logout') {
       logoutFn()
+    } else if (type === 'userInfo') {
+      navigate('/userInfo')
     }
   }
 
@@ -28,6 +30,7 @@ function LayoutUser({ className }: { className?: string }) {
   return (
     <Popover content={
       [
+        { type: 'userInfo', label: t('system.UserInfo', { defaultValue: '用户信息' }), icon: <UserOutlined /> },
         { type: 'logout', label: t('system.Logout', { defaultValue: '退出登录' }), icon: <LogoutOutlined /> }
       ].map(item => (
         <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm')}

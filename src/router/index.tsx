@@ -43,6 +43,7 @@ const SearchParamsPage = lazy(() => import('@/pages/SearchParamsPage'))
 const JsonRenderPage = lazy(() => import('@/pages/json/JsonRenderPage'))
 const JsonEditorPage = lazy(() => import('@/pages/json/JsonEditorPage'))
 const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
+const UserInfoPage = lazy(() => import('@/pages/UserInfoPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -256,6 +257,14 @@ export const routers = [
       // hideBreadcrumb: true,
       // hideTabs: true,
       permission: '09',
+    }
+  },
+  {
+    path: 'userInfo',
+    element: <UserInfoPage />,
+    meta: {
+      label: '用户信息',
+      hideInMenu: true,
     }
   },
   {
