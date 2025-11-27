@@ -318,7 +318,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    middleware: [loginMiddleware],
+    middleware: config.isNeedLogin ? [loginMiddleware] : [],
     children: [
       {
         path: '/',

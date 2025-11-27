@@ -7,40 +7,33 @@ import { changeUserInfo } from '@/store/userSlice'
 const BASE_URL = import.meta.env.BASE_URL
 
 export const loginMiddleware: MiddlewareFunction = async ({ request }, next) => {
-  // 获取当前路径，避免登录页面无限重定向
-  const url = new URL(request.url)
-  let currentPath = url.pathname
-  
-  // 处理 BASE_URL
-  if (BASE_URL && currentPath.startsWith(BASE_URL)) {
-    currentPath = currentPath.slice(BASE_URL.length)
+  const userInfo = store.getState().user.value
+  let isLogin = !!userInfo.id
+  if (!isLogin) {
+    const userLocal = localStorage.getItem(config.loginLocalStorageKey)
+    if (userLocal) {
+      const userObj = JSON.parse(userLocal)
+      store.dispatch(changeUserInfo(userObj))
+      isLogin = true
+    }
   }
   
-  // 确保路径以 / 开头
-  if (!currentPath.startsWith('/')) {
-    currentPath = '/' + currentPath
-  }
-
-  if (config.isNeedLogin) {
-    const userInfo = store.getState().user.value
-    let isLogin = !!userInfo.id
-    if (!isLogin) {
-      const userLocal = localStorage.getItem(config.loginLocalStorageKey)
-      if (userLocal) {
-        const userObj = JSON.parse(userLocal)
-        store.dispatch(changeUserInfo(userObj))
-        isLogin = true
-      }
+  if (!isLogin) {
+    const url = new URL(request.url)
+    let currentPath = url.pathname
+    // 处理 BASE_URL
+    if (BASE_URL && currentPath.startsWith(BASE_URL)) {
+      currentPath = currentPath.slice(BASE_URL.length)
+    }
+    // 确保路径以 / 开头
+    if (!currentPath.startsWith('/')) {
+      currentPath = '/' + currentPath
     }
     
-    if (!isLogin) {
-      if (config.whiteList.includes(currentPath)) {
-        return await next()
-      } else {
-        throw redirect('/login')
-      }
-    } else {
+    if (config.whiteList.includes(currentPath)) {
       return await next()
+    } else {
+      throw redirect('/login')
     }
   } else {
     return await next()

@@ -42,7 +42,7 @@ function addAuthorizedMiddleware(routers: RoutersBaseType[]): RoutersBaseType[] 
       ...item,
       ...(
         item.meta?.permission ? {
-          middleware: [authorizedMiddleware]
+          middleware: [...(item.middleware || []), authorizedMiddleware]
         } : {}
       ),
       ...(

@@ -6,7 +6,6 @@ import store from '@/store'
 const BASE_URL = import.meta.env.BASE_URL
 
 export const authorizedMiddleware: MiddlewareFunction = async ({ request }, next) => {
-  // 获取当前路径，避免登录页面无限重定向
   const url = new URL(request.url)
   let currentPath = url.pathname
   
