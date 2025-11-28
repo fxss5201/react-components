@@ -4,6 +4,8 @@ import FileTreeRaw from './FileTree.tsx?raw'
 import FileList from './FileList'
 import FileListRaw from './FileList.tsx?raw'
 import Playground from '@/components/Playground'
+import FileSelectAndDropTree from './FileSelectAndDropTree'
+import FileSelectAndDropTreeRaw from './FileSelectAndDropTree?raw'
 
 # DropElement
 
@@ -74,4 +76,10 @@ export type DropElementProps<T extends TargetType> = {
 
 <Playground code={FileListRaw} title='File List' description='Drag and drop files/folders to upload directly.'>
   <FileList />
+</Playground>
+
+### File Select and Drop Tree
+
+<Playground code={FileSelectAndDropTreeRaw} title='File Select and Drop Tree' description='Select and drag files, and view the results.'>
+  <FileSelectAndDropTree />
 </Playground>
