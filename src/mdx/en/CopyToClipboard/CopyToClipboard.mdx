@@ -2,6 +2,8 @@ import React from 'react'
 import CopyToClipboardDemo from './CopyToClipboardDemo'
 import CopyToClipboardDemoRaw from './CopyToClipboardDemo.tsx?raw'
 import Playground from '@/components/Playground'
+import CopyToClipboardChildren from './CopyToClipboardChildren'
+import CopyToClipboardChildrenRaw from './CopyToClipboardChildren.tsx?raw'
 
 # Copy to Clipboard
 
@@ -62,6 +64,14 @@ copied ? (
 
 Copy to clipboard is used to copy text, code, or other content to the clipboard for use in other applications or documents.
 
+### Basic Usage
+
 <Playground code={CopyToClipboardDemoRaw} title='Copy to Clipboard' description='Enter content in the text box and click the copy button to copy to the clipboard.'>
   <CopyToClipboardDemo />
+</Playground>
+
+### Custom Copy Button
+
+<Playground code={CopyToClipboardChildrenRaw} title='Custom Copy Button' description='Enter content in the text box and click the custom copy button to copy to the clipboard.'>
+  <CopyToClipboardChildren />
 </Playground>

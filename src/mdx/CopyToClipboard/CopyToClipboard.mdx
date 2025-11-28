@@ -2,6 +2,8 @@ import React from 'react'
 import CopyToClipboardDemo from './CopyToClipboardDemo'
 import CopyToClipboardDemoRaw from './CopyToClipboardDemo.tsx?raw'
 import Playground from '@/components/Playground'
+import CopyToClipboardChildren from './CopyToClipboardChildren'
+import CopyToClipboardChildrenRaw from './CopyToClipboardChildren.tsx?raw'
 
 # 复制到剪贴板
 
@@ -62,6 +64,14 @@ copied ? (
 
 复制到剪贴板 用于将文本、代码或其他内容复制到剪贴板，以便在其他应用程序或文档中使用。
 
+### 基本用法
+
 <Playground code={CopyToClipboardDemoRaw} title='复制到剪贴板' description='在文本框中输入内容，点击复制按钮即可复制到剪贴板。'>
   <CopyToClipboardDemo />
+</Playground>
+
+### 自定义复制按钮
+
+<Playground code={CopyToClipboardChildrenRaw} title='自定义复制按钮' description='在文本框中输入内容，点击自定义复制按钮即可复制到剪贴板。'>
+  <CopyToClipboardChildren />
 </Playground>
