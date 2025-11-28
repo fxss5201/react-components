@@ -1,6 +1,6 @@
 import { Flex } from 'antd'
 import { GithubOutlined } from '@ant-design/icons'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import cn from 'classnames'
 import config from '@/config'
 import LayoutTheme from './LayoutTheme'
@@ -8,7 +8,7 @@ import LayoutLocale from './LayoutLocale'
 import LayoutUser from './LayoutUser'
 
 function LayoutHead({ className }: { className?: string }) {
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
 
   return (
     <Flex justify='space-between' align='center' className={cn(className, 'h-full')}>

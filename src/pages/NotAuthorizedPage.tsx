@@ -1,11 +1,11 @@
 import { Button, Result } from 'antd'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 
 function NotAuthorizedPage() {
   const { t } = useTranslation()
 
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const goHome = () => {
     navigate('/')
   }

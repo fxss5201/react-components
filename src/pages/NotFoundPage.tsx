@@ -1,14 +1,20 @@
 import { Button, Result } from 'antd'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
+import config from '@/config'
 
 function NotFoundPage() {
   const { t } = useTranslation()
 
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const goHome = () => {
     navigate('/')
   }
+
+  useEffect(() => {
+    document.title = `${t('system.NotFoundPage.title')} | ${config.logoText}`
+  }, [t])
 
   return (
     <Result

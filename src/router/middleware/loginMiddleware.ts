@@ -31,11 +31,11 @@ export const loginMiddleware: MiddlewareFunction = async ({ request }, next) => 
     }
     
     if (config.whiteList.includes(currentPath)) {
-      return await next()
+      await next()
     } else {
       throw redirect('/login')
     }
   } else {
-    return await next()
+    await next()
   }
 }

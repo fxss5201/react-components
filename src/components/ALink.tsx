@@ -1,4 +1,4 @@
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import OutLinkIcon from './OutLinkIcon'
 import cn from 'classnames'
 
@@ -11,7 +11,7 @@ function ALink({
   children: React.ReactNode
   className?: string
 }) {
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   
   const isExternal = /^https?:\/\//.test(href)
   const lastHref = isExternal

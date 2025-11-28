@@ -2,7 +2,7 @@ import { Avatar, Badge, Popover } from 'antd'
 import cn from 'classnames'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { useUser } from '@/storeHooks/useUser'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import config from '@/config'
 import { useTheme } from '@/storeHooks/useTheme'
 import { useTranslation } from 'react-i18next'
@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next'
 function LayoutUser({ className }: { className?: string }) {
   const { name, img, badge, changeUserInfo } = useUser()
   const { theme } = useTheme()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const { t } = useTranslation()
 
   const clickFn = (type: string) => {

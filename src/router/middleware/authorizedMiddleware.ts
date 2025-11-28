@@ -8,13 +8,10 @@ const BASE_URL = import.meta.env.BASE_URL
 export const authorizedMiddleware: MiddlewareFunction = async ({ request }, next) => {
   const url = new URL(request.url)
   let currentPath = url.pathname
-  
   // 处理 BASE_URL
   if (BASE_URL && currentPath.startsWith(BASE_URL)) {
     currentPath = currentPath.slice(BASE_URL.length)
   }
-  
-  // 确保路径以 / 开头
   if (currentPath.startsWith('/')) {
     currentPath = currentPath.slice(1)
   }
@@ -31,5 +28,5 @@ export const authorizedMiddleware: MiddlewareFunction = async ({ request }, next
     }
   }
   
-  return await next()
+  await next()
 }

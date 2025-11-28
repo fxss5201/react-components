@@ -13,7 +13,7 @@ import { Tabs } from 'antd'
 import { useLayoutTabs } from '@/storeHooks/useLayoutTabs'
 import { routersList } from '@/router'
 import { useTranslation } from 'react-i18next'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import { Menu, Item, useContextMenu } from 'react-contexify'
 import { type ItemParams } from 'react-contexify'
 import 'react-contexify/dist/ReactContexify.css'
@@ -55,7 +55,7 @@ const DraggableTabNode: React.FC<Readonly<DraggableTabPaneProps>> = ({ ...props 
 function LayoutTabs({ className }: { className?: string }) {
   const { layoutTabs, layoutActiveTab, removeLayoutTabs, clearLayoutTabs, setLayoutTabs } = useLayoutTabs()
   const { t } = useTranslation()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const { theme } = useTheme()
 
   function getItems(tabs: string[]) {

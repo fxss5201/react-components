@@ -2,13 +2,13 @@ import { useMatches } from 'react-router'
 import { Breadcrumb } from 'antd'
 import { routersList } from '@/router'
 import { useTranslation } from 'react-i18next'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import cn from 'classnames'
 
 function LayoutBreadcrumb({ className }: { className?: string }) {
   const { t } = useTranslation()
   const matches = useMatches()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
 
   const routes = [...new Set(matches.map(item => item.pathname))]
 

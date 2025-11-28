@@ -9,7 +9,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components'
 import { App, theme as antdTheme, Form, Button } from 'antd'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import LayoutTheme from '@/layout/LayoutTheme'
 import LayoutLocale from '@/layout/LayoutLocale'
 import config from '@/config'
@@ -33,7 +33,7 @@ const waitTime = (time: number = 100) => {
 
 function ResetPassword() {
   const { t } = useTranslation()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
   const [loading, setLoading] = useState(false)

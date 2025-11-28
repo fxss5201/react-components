@@ -18,6 +18,7 @@ import Login from '@/pages/Login'
 import ResetPassword from '@/pages/ResetPassword'
 import Home from '@/pages/Home'
 import { loginMiddleware } from './middleware/loginMiddleware'
+import { commonMiddleware } from './middleware/commonMiddleware'
 import IconFont from '@/components/IconFont'
 import config from '@/config'
 import type { RoutersBaseType, RoutersType } from './types'
@@ -318,7 +319,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    middleware: config.isNeedLogin ? [loginMiddleware] : [],
+    middleware: [commonMiddleware, ...(config.isNeedLogin ? [loginMiddleware] : [])],
     children: [
       {
         path: '/',
@@ -330,7 +331,7 @@ const router = createBrowserRouter([
   },
   {
     path: `/*`,
-    element: <NotFoundPage />
+    element: <NotFoundPage />,
   }
 ] as RouteObject[], {
   basename: BASE_URL

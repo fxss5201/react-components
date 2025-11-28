@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import { Menu } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@/storeHooks/useTheme'
@@ -15,7 +15,7 @@ type MenuItem = Required<MenuProps>['items'][number]
 
 function LayoutSider({ className }: { className?: string }) {
   const { theme } = useTheme()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const { pathname } = useLocation()
   const { t } = useTranslation()
   const { permissionList } = useUser()

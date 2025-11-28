@@ -16,7 +16,7 @@ import {
 import { Space, Tabs, App, theme as antdTheme } from 'antd'
 import type { CSSProperties } from 'react'
 import { useState, Activity } from 'react'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 import LayoutTheme from '@/layout/LayoutTheme'
 import LayoutLocale from '@/layout/LayoutLocale'
 import config from '@/config'
@@ -42,7 +42,7 @@ const waitTime = (time: number = 100) => {
 
 function Login() {
   const { t } = useTranslation()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
   const [loginType, setLoginType] = useState<LoginType>('account')

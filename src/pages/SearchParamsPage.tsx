@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Button } from 'antd'
-import { useNavigateFn } from '@/Hooks/useNavigateFn'
+import { useNavigate } from 'react-router'
 
 function SearchParamsPage() {
   const { i18n } = useTranslation()
-  const navigate = useNavigateFn()
+  const navigate = useNavigate()
   
   return (
     <div className='px-4 pb-4'>
