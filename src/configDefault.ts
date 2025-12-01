@@ -59,7 +59,7 @@ export const configDefault = {
       {
         key: 'footer.md',
         label: 'Markdown',
-        link: 'md-page'
+        link: 'markdown/md-demo-page'
       }
     ],
     // recordInfo 备案信息配置
@@ -89,7 +89,7 @@ export const configDefault = {
       textAlign: 'center'
     }
   },
-  watermarkLayout: 'page'
+  watermarkLayout: 'layout'
 } as ConfigDefaultType
 
 export type ConfigDefaultType = {
