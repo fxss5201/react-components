@@ -1,10 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-type activitysInitialState = {
+type ActivitysInitialState = {
   value: string[]
 }
 
-const initialState: activitysInitialState = {
+const initialState: ActivitysInitialState = {
   value: []
 }
 

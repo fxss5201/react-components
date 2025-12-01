@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-type activitysInitialState = {
+type LayoutTabsSliceInitialState = {
   value: {
     layoutTabs: string[]
     layoutActiveTab: string
@@ -12,7 +12,7 @@ export type ChangeLayoutTabsPayloadAction = string | {
   activeTab: string
 }
 
-const initialState: activitysInitialState = {
+const initialState: LayoutTabsSliceInitialState = {
   value: {
     layoutTabs: [],
     layoutActiveTab: ''

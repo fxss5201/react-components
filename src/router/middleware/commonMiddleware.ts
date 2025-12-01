@@ -6,7 +6,10 @@ import config from '@/config'
 import { addActivitys } from '@/store/activitysSlice'
 import { addLayoutTabs } from '@/store/layoutTabsSlice'
 import { changeHeadShow, changeMenuShow, changeMenuCollapsed, changeFooterShow, changeBreadcrumbShow, changeTabsShow } from '@/store/layoutStateSlice'
+import { setWatermarkEnabled, setWatermarkProps } from '@/store/watermarkSlice'
 import i18n from '@/locales'
+import { replaceWatermarkContent } from '@/router/utils'
+import merge from 'lodash.merge'
 
 const BASE_URL = import.meta.env.BASE_URL
 
@@ -49,6 +52,25 @@ export const commonMiddleware: MiddlewareFunction = async ({ request }, next) =>
 
     if (config.layoutTabs) {
       store.dispatch(changeTabsShow(!(matchedRoute.meta?.hideTabs || !!searchParams.get('hideTabs'))))
+    }
+
+    if (config.watermark) {
+      const watermarkEnabled = !!matchedRoute.meta.watermark
+      if (watermarkEnabled) {
+        const watermarkProps = matchedRoute.meta.watermark || {}
+        if (watermarkProps.content) {
+          const userValue = store.getState().user.value
+          if (typeof watermarkProps.content === 'string') {
+            watermarkProps.content = replaceWatermarkContent(watermarkProps.content, userValue)
+          } else if (typeof watermarkProps.content === 'object') {
+            watermarkProps.content =  watermarkProps.content.map(item => replaceWatermarkContent(item, userValue))
+          }
+        }
+        store.dispatch(setWatermarkProps(merge(config.watermark, watermarkProps)))
+        store.dispatch(setWatermarkEnabled(true))
+      } else {
+        store.dispatch(setWatermarkEnabled(false))
+      }
     }
   } else {
     document.title = config.logoText

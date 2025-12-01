@@ -2,7 +2,7 @@ import type { ThemeType, LocaleType } from './config'
 import type { GetProps } from 'antd'
 import { Watermark } from 'antd'
 
-type WatermarkProps = GetProps<typeof Watermark>
+export type WatermarkProps = GetProps<typeof Watermark>
 
 // 默认配置，可以用自定义配置覆盖（仅浅层覆盖）
 export const configDefault = {
@@ -71,10 +71,25 @@ export const configDefault = {
     }
   },
 
+  // 水印默认配置
   watermark: {
-    // 水印内容
-    content: 'react-components'
-  }
+    width: 120,
+    height: 64,
+    inherit: true,
+    rotate: -22,
+    zIndex: 99999,
+    content: 'react-components',
+    gap: [100, 100],
+    font: {
+      color: 'rgba(0, 0, 0, 0.15)',
+      fontSize: 16,
+      fontWeight: 'normal',
+      fontFamily: 'sans-serif',
+      fontStyle: 'normal',
+      textAlign: 'center'
+    }
+  },
+  watermarkLayout: 'page'
 } as ConfigDefaultType
 
 export type ConfigDefaultType = {
@@ -105,5 +120,6 @@ export type ConfigDefaultType = {
     }
   }
   watermark: WatermarkProps | null
+  watermarkLayout: 'layout' | 'page'
 }
 export type ConfigType = Partial<ConfigDefaultType>

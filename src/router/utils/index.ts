@@ -1,5 +1,6 @@
 import type { RoutersBaseType, RoutersType } from '@/router/types'
 import { authorizedMiddleware } from '@/router/middleware/authorizedMiddleware'
+import dayjs from 'dayjs'
 
 function createRoutersTree(routers: RoutersBaseType[] | RoutersType[], parentPath: string = '',): RoutersType[] {
   return routers.map(item => {
@@ -54,8 +55,25 @@ function addAuthorizedMiddleware(routers: RoutersBaseType[]): RoutersBaseType[] 
   })
 }
 
+function replaceWatermarkContent(content: string, config: Record<string, any>) {
+  return content.replace(/\$\{(\w+)\}/g, (match, key) => {
+    const value = key.split('.').reduce((obj: Record<string, any>, key: string) => obj && obj[key], config) || match
+    if (value !== match) {
+      return value
+    } else {
+      if (key === 'date') {
+        return dayjs().format('YYYY-MM-DD')
+      } else if (key === 'dateTime') {
+        return dayjs().format('YYYY-MM-DD HH:mm:ss')
+      }
+      return match
+    }
+  })
+}
+
 export {
   createRoutersTree,
   createRoutersList,
-  addAuthorizedMiddleware
+  addAuthorizedMiddleware,
+  replaceWatermarkContent
 }

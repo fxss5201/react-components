@@ -4,7 +4,7 @@ import enUS from 'antd/es/locale/en_US'
 import 'dayjs/locale/zh-cn'
 import 'dayjs/locale/en'
 import { StyleProvider } from '@ant-design/cssinjs'
-import { ConfigProvider, App as AntdApp, theme as antdTheme } from 'antd'
+import { ConfigProvider, App as AntdApp, theme as antdTheme, Watermark } from 'antd'
 import { useTheme } from './storeHooks/useTheme'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { useLocale } from './Hooks/useLocale'
@@ -17,6 +17,7 @@ import i18n from '@/locales'
 import { useTranslation } from 'react-i18next'
 import { routersList } from './router'
 import config from './config'
+import { useWatermark } from './storeHooks/useWatermark'
 
 function App() {
   const { theme } = useTheme()
@@ -24,6 +25,7 @@ function App() {
   const { pathname } = useLocation()
   const { isRouteLoading, changeRouteLoading } = useRouteLoading()
   const { t } = useTranslation()
+  const { watermarkEnabled, watermarkProps } = useWatermark()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -55,9 +57,13 @@ function App() {
           >
           <LocaleContext value={locale}>
             <AntdApp>
-              <NProgressUI isAnimating={isRouteLoading} />
-              <ScrollRestoration getKey={location => location.pathname} />
-              <Outlet />
+              <Watermark {...watermarkProps}
+                content={(config.watermark && config.watermarkLayout === 'layout' && watermarkEnabled) ? watermarkProps.content : ''}
+                style={{ overflow: 'visible' }}>
+                <NProgressUI isAnimating={isRouteLoading} />
+                <ScrollRestoration getKey={location => location.pathname} />
+                <Outlet />
+              </Watermark>
             </AntdApp>
           </LocaleContext>
         </ConfigProvider>

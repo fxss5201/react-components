@@ -1,5 +1,5 @@
 import { useRef, Activity } from 'react'
-import { Layout, FloatButton, Button, Tooltip } from 'antd'
+import { Layout, FloatButton, Button, Tooltip, Watermark } from 'antd'
 import { useTheme } from '@/storeHooks/useTheme'
 import { Outlet, useLocation } from 'react-router'
 import cn from 'classnames'
@@ -16,6 +16,7 @@ import LayoutFooter from '@/layout/LayoutFooter'
 import { useActivitys } from '@/storeHooks/useActivitys'
 import { routersList } from '@/router'
 import LayoutTabs from '@/layout/LayoutTabs'
+import { useWatermark } from '@/storeHooks/useWatermark'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -26,6 +27,7 @@ function PageLayout() {
   const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, tabsShow, changeMenuCollapsed } = useLayoutState()
   const { t } = useTranslation()
   const { activitys } = useActivitys()
+  const { watermarkEnabled, watermarkProps } = useWatermark()
 
   const bgClassName = theme === 'dark' ? 'bg-[#002140]' : 'bg-white'
 
@@ -62,12 +64,20 @@ function PageLayout() {
                 </Activity>
                 <div className='flex-auto'>
                   {!activitys.includes(pathname) && <ErrorBoundary key={pathname} FallbackComponent={ErrorFallback}>
-                    <Outlet />
+                    <Watermark {...watermarkProps}
+                      content={(config.watermark && config.watermarkLayout === 'page' && watermarkEnabled) ? watermarkProps.content : ''}
+                      style={{ overflow: 'visible' }}>
+                      <Outlet />
+                    </Watermark>
                   </ErrorBoundary>}
                   {activitys.map(item => (
                     <Activity key={item} mode={item === pathname ? 'visible' : 'hidden'}>
                       <ErrorBoundary key={item} FallbackComponent={ErrorFallback}>
-                        {routersList.find(router => router.path === item)?.element}
+                        <Watermark {...watermarkProps}
+                          content={(config.watermark && config.watermarkLayout === 'page' && watermarkEnabled) ? watermarkProps.content : ''}
+                          style={{ overflow: 'visible' }}>
+                          {routersList.find(router => router.path === item)?.element}
+                        </Watermark>
                       </ErrorBoundary>
                     </Activity>
                   ))}

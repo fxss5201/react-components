@@ -91,7 +91,7 @@ function LayoutSider({ className }: { className?: string }) {
       onClick={menuClickFn}
       onOpenChange={onOpenChange}
       mode='inline'
-      className={cn(className)}
+      className={cn(className, 'layout-sider-menu')}
     />
   )
 }

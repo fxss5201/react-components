@@ -1,4 +1,5 @@
 import type { RouteObject } from 'react-router'
+import type { WatermarkProps } from '@/configDefault'
 
 // RoutersBaseType 是路由配置的基础类型，用于规范 routers 配置
 export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'> & {
@@ -30,6 +31,8 @@ export type RoutersBaseType = Omit<RouteObject, 'meta' | 'Component' | 'element'
     hideInTabs?: boolean
     // 路由权限，不设置的时候默认所有用户都可以访问，设置的时候根据用户的权限判断是否显示该路由
     permission?: string
+    // 水印配置
+    watermark?: WatermarkProps
   },
   children?: RoutersBaseType[]
 }

@@ -266,6 +266,11 @@ export const routers = [
     meta: {
       label: '用户信息',
       hideInMenu: true,
+      watermark: {
+        content: '${name} ${date}',
+        width: 200,
+        height: 100
+      }
     }
   },
   {
