@@ -1,11 +1,10 @@
-import { useRef, useContext } from 'react'
+import { useRef } from 'react'
 import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '@/types/files'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, Space, App } from 'antd'
-import { type LocaleType } from '@/config'
 import cn from 'classnames'
-import LocaleContext from '@/context/LocaleContext'
+import { useTranslation } from 'react-i18next'
 
 export type FileTreeItem = FileItemType & {
   children?: FileTreeItem[]
@@ -16,7 +15,6 @@ export type FilesSelectProps<T extends TargetType> = {
   onSelect: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
   isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
-  locale?: LocaleType
   className?: string
   children?: React.ReactNode
 }
@@ -26,27 +24,25 @@ function FilesSelect<T extends TargetType>({
   onSelect,
   isUpload = false,
   isIgnoreFolder = false,
-  locale,
   className = '',
   children
 }: FilesSelectProps<T>) {
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
+  const { t } = useTranslation()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const { message } = App.useApp()
 
   const dropdownItems: MenuProps['items'] = [
     {
-      label: currentLocale === 'zh' ? (isUpload ? '上传文件' : '选择文件') : (isUpload ? 'Upload File' : 'Select File'),
+      label: isUpload ? t('system.FilesSelect.upload', { defaultValue: '上传文件' }) : t('system.FilesSelect.select', { defaultValue: '选择文件' }),
       key: 'upload-file'
     },
     {
-      label: currentLocale === 'zh' ? (isUpload ? '上传文件夹（含根目录）' : '选择文件夹（含根目录）') : (isUpload ? 'Upload Folder (Include Root)' : 'Select Folder (Include Root)'),
+      label: isUpload ? t('system.FilesSelect.uploadFolder', { defaultValue: '上传文件夹（含根目录）' }) : t('system.FilesSelect.selectFolder', { defaultValue: '选择文件夹（含根目录）' }),
       key: 'upload-folder-include-root'
     },
     {
-      label: currentLocale === 'zh' ? (isUpload ? '上传文件夹（不含根目录）' : '选择文件夹（不含根目录）') : (isUpload ? 'Upload Folder (Exclude Root)' : 'Select Folder (Exclude Root)'),
+      label: isUpload ? t('system.FilesSelect.uploadFolderExcludeRoot', { defaultValue: '上传文件夹（不含根目录）' }) : t('system.FilesSelect.selectFolderExcludeRoot', { defaultValue: '选择文件夹（不含根目录）' }),
       key: 'upload-folder-exclude-root'
     }
   ]
@@ -66,7 +62,7 @@ function FilesSelect<T extends TargetType>({
 
   async function selectDirectoryStoreFn(type: 'upload-folder-include-root' | 'upload-folder-exclude-root') {
     if (!window.showDirectoryPicker) {
-      message.warning('当前浏览器不支持')
+      message.warning(t('system.FilesSelect.noSupport', { defaultValue: '当前浏览器不支持' }))
       return
     }
     let dirHandle: FileSystemDirectoryHandle | null = null
@@ -101,7 +97,7 @@ function FilesSelect<T extends TargetType>({
       }
     } catch (error) {
       if (error instanceof Error && error.message.includes('aborted')) {
-        message.warning('请选择文件夹')
+        message.warning(t('system.FilesSelect.chooseFolder', { defaultValue: '请选择文件夹' }))
       } else {
         console.log("🚀 ~ selectDirectoryStoreFn ~ error:", error)
       }
@@ -130,7 +126,7 @@ function FilesSelect<T extends TargetType>({
         {children || (
           <Button>
             <Space>
-              {currentLocale === 'zh' ? (isUpload ? '上传文件/文件夹' : '选择文件/文件夹') : (isUpload ? 'Upload File/Folder' : 'Select File/Folder')}
+              {isUpload ? t('system.FilesSelect.uploadTitle', { defaultValue: '上传文件/文件夹' }) : t('system.FilesSelect.selectTitle', { defaultValue: '选择文件/文件夹' })}
               <DownOutlined />
             </Space>
           </Button>

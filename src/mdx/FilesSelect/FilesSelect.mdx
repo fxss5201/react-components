@@ -58,7 +58,6 @@ export type FilesSelectProps<T extends TargetType> = {
   onSelect: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
   isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
-  locale?: LocaleType
   className?: string
   children?: React.ReactNode
 }
@@ -70,7 +69,6 @@ export type FilesSelectProps<T extends TargetType> = {
 | `onSelect` | 选择文件/文件夹后的回调函数 | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
 | `isUpload` | 是否上传文件/文件夹，仅用于更换 选择 或 上传 文件文本 | `boolean` | `false` |
 | `isIgnoreFolder` | 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹 | `boolean` | `false` |
-| `locale` | 语言 | `'zh' \| 'en'` | `'zh'` |
 | `className` | 自定义class类名 | `string` | - |
 | `children` | 子元素 | `React.ReactNode` | - |
 
