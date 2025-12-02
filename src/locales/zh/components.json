@@ -1,0 +1,17 @@
+{
+  "FilesSelect": {
+    "upload": "上传文件",
+    "select": "选择文件",
+    "uploadFolder": "上传文件夹（含根目录）",
+    "selectFolder": "选择文件夹（含根目录）",
+    "uploadFolderExcludeRoot": "上传文件夹（不含根目录）",
+    "selectFolderExcludeRoot": "选择文件夹（不含根目录）",
+    "noSupport": "当前浏览器不支持",
+    "chooseFolder": "请选择文件夹",
+    "uploadTitle": "上传文件/文件夹",
+    "selectTitle": "选择文件/文件夹"
+  },
+  "DropElement": {
+    "dropArea": "请拖放文件或文件夹到这里"
+  }
+}

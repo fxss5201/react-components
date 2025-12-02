@@ -1,9 +1,9 @@
-import { useRef, useContext } from 'react'
+import { useRef } from 'react'
 import { useEventListener } from 'ahooks'
 import cn from 'classnames'
-import LocaleContext from '@/context/LocaleContext'
 import { type LocaleType } from '@/config'
 import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
+import { useTranslation } from 'react-i18next'
 
 export type DropElementProps<T extends TargetType> = {
   className?: string
@@ -15,13 +15,11 @@ export type DropElementProps<T extends TargetType> = {
 
 function DropElement<T extends TargetType>({
   className = '',
-  locale,
   targetType = 'tree' as T,
   onDrop,
   children
 }: DropElementProps<T>) {
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
+  const { t } = useTranslation()
 
   async function handleDrop(e: DragEvent) {
     try {
@@ -203,7 +201,7 @@ function DropElement<T extends TargetType>({
         cn('border-2 border-dashed border-gray-300 rounded-md p-4 text-gray-400 h-50 flex items-center justify-center', className)
       }
     >{children || (
-      <div className='text-2xl'>{currentLocale === 'zh' ? '请拖放文件或文件夹到这里' : 'Please drag and drop files or folders here'}</div>
+      <div className='text-2xl'>{t('components.DropElement.dropArea', { defaultValue: '请拖放文件或文件夹到这里' })}</div>
     )}</div>
   )
 }

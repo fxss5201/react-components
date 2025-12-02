@@ -5,7 +5,8 @@ import menu from './menu.json'
 import userInfo from './userInfo.json'
 import login from './login.json'
 import resetPassword from './resetPassword.json'
+import components from './components.json'
 
 // Language is split into modules, each module corresponds to a json file, and each json file contains unique keys
 // default.json contains global keys, while other module json files contain module-level keys
-export default { ...defaultJson, userInfo, login, resetPassword, menu, system }
+export default { ...defaultJson, userInfo, login, resetPassword, menu, components, system }

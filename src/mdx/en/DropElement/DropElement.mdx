@@ -49,7 +49,6 @@ import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
 
 export type DropElementProps<T extends TargetType> = {
   className?: string
-  locale?: LocaleType
   targetType: T // Target type, tree for file tree, list for file list
   onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
   children?: React.ReactNode
@@ -59,7 +58,6 @@ export type DropElementProps<T extends TargetType> = {
 | Parameter | Description | Type | Default |
 | --------- | ----------- | ---- | ------- |
 | className | Custom class name | `string` | - |
-| locale | Locale type | `'zh' \| 'en'` | `zh` |
 | type | Execution parameter type of onDrop, tree for file tree, list for file list | `'tree' \| 'list'` | `tree` |
 | onDrop | Callback function when files/folders are dropped | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
 | children | Custom children | `React.ReactNode` | - |

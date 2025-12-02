@@ -29,17 +29,5 @@
   "footer": {
     "blog": "Author Blog",
     "author": "Author Github"
-  },
-  "FilesSelect": {
-    "upload": "Upload File",
-    "select": "Select File",
-    "uploadFolder": "Upload Folder (Include Root)",
-    "selectFolder": "Select Folder (Include Root)",
-    "uploadFolderExcludeRoot": "Upload Folder (Exclude Root)",
-    "selectFolderExcludeRoot": "Select Folder (Exclude Root)",
-    "noSupport": "Current browser does not support",
-    "chooseFolder": "Please choose a folder",
-    "uploadTitle": "Upload File/Folder",
-    "selectTitle": "Select File/Folder"
   }
 }

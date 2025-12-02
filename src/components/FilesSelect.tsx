@@ -34,15 +34,15 @@ function FilesSelect<T extends TargetType>({
 
   const dropdownItems: MenuProps['items'] = [
     {
-      label: isUpload ? t('system.FilesSelect.upload', { defaultValue: '上传文件' }) : t('system.FilesSelect.select', { defaultValue: '选择文件' }),
+      label: isUpload ? t('components.FilesSelect.upload', { defaultValue: '上传文件' }) : t('components.FilesSelect.select', { defaultValue: '选择文件' }),
       key: 'upload-file'
     },
     {
-      label: isUpload ? t('system.FilesSelect.uploadFolder', { defaultValue: '上传文件夹（含根目录）' }) : t('system.FilesSelect.selectFolder', { defaultValue: '选择文件夹（含根目录）' }),
+      label: isUpload ? t('components.FilesSelect.uploadFolder', { defaultValue: '上传文件夹（含根目录）' }) : t('components.FilesSelect.selectFolder', { defaultValue: '选择文件夹（含根目录）' }),
       key: 'upload-folder-include-root'
     },
     {
-      label: isUpload ? t('system.FilesSelect.uploadFolderExcludeRoot', { defaultValue: '上传文件夹（不含根目录）' }) : t('system.FilesSelect.selectFolderExcludeRoot', { defaultValue: '选择文件夹（不含根目录）' }),
+      label: isUpload ? t('components.FilesSelect.uploadFolderExcludeRoot', { defaultValue: '上传文件夹（不含根目录）' }) : t('components.FilesSelect.selectFolderExcludeRoot', { defaultValue: '选择文件夹（不含根目录）' }),
       key: 'upload-folder-exclude-root'
     }
   ]
@@ -62,7 +62,7 @@ function FilesSelect<T extends TargetType>({
 
   async function selectDirectoryStoreFn(type: 'upload-folder-include-root' | 'upload-folder-exclude-root') {
     if (!window.showDirectoryPicker) {
-      message.warning(t('system.FilesSelect.noSupport', { defaultValue: '当前浏览器不支持' }))
+      message.warning(t('components.FilesSelect.noSupport', { defaultValue: '当前浏览器不支持' }))
       return
     }
     let dirHandle: FileSystemDirectoryHandle | null = null
@@ -97,7 +97,7 @@ function FilesSelect<T extends TargetType>({
       }
     } catch (error) {
       if (error instanceof Error && error.message.includes('aborted')) {
-        message.warning(t('system.FilesSelect.chooseFolder', { defaultValue: '请选择文件夹' }))
+        message.warning(t('components.FilesSelect.chooseFolder', { defaultValue: '请选择文件夹' }))
       } else {
         console.log("🚀 ~ selectDirectoryStoreFn ~ error:", error)
       }
@@ -126,7 +126,7 @@ function FilesSelect<T extends TargetType>({
         {children || (
           <Button>
             <Space>
-              {isUpload ? t('system.FilesSelect.uploadTitle', { defaultValue: '上传文件/文件夹' }) : t('system.FilesSelect.selectTitle', { defaultValue: '选择文件/文件夹' })}
+              {isUpload ? t('components.FilesSelect.uploadTitle', { defaultValue: '上传文件/文件夹' }) : t('components.FilesSelect.selectTitle', { defaultValue: '选择文件/文件夹' })}
               <DownOutlined />
             </Space>
           </Button>
