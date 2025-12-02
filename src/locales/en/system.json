@@ -26,6 +26,10 @@
     "title": "Oops! Something went wrong.",
     "subTitle": "Please review and modify the following information."
   },
+  "footer": {
+    "blog": "Author Blog",
+    "author": "Author Github"
+  },
   "FilesSelect": {
     "upload": "Upload File",
     "select": "Select File",

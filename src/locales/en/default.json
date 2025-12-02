@@ -1,8 +1,4 @@
 {
-  "footer": {
-    "blog": "Author Blog",
-    "author": "Author Github"
-  },
   "ActivityIndex": {
     "no-activity": "No Activity",
     "uncontrolled": "Uncontrolled",

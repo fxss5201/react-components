@@ -5,7 +5,7 @@
   "Phone login": "手机号登录",
   "Username: admin or user": "用户名：admin 或 user",
   "Please input username!": "请输入用户名！",
-  "Password should contain numbers, letters and special characters, at least 8 characters long.": "密码必须包含数字、字母和特殊字符，至少8个字符长。",
+  "Password should contain numbers, letters and special characters, at least 8 characters long": "密码必须包含数字、字母和特殊字符，至少8个字符长。",
   "Strength: medium": "强度：中等",
   "Strength: strong": "强度：强",
   "Strength: weak": "强度：弱",

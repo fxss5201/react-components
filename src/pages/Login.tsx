@@ -150,7 +150,7 @@ function Login() {
               fieldProps={{
                 size: 'large',
                 prefix: <LockOutlined />,
-                strengthText: t('login.Password should contain numbers, letters and special characters, at least 8 characters long.', { defaultValue: '密码必须包含数字、字母和特殊字符，至少8个字符长。' }),
+                strengthText: t('login.Password should contain numbers, letters and special characters, at least 8 characters long', { defaultValue: '密码必须包含数字、字母和特殊字符，至少8个字符长。' }),
                 statusRender: (value) => {
                   const getStatus = () => {
                     if (value && value.length > 12) {

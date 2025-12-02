@@ -26,6 +26,10 @@
     "title": "发生错误",
     "subTitle": "请检查并修改以下信息。"
   },
+  "footer": {
+    "blog": "个人博客",
+    "author": "作者 Github"
+  },
   "FilesSelect": {
     "upload": "上传文件",
     "select": "选择文件",

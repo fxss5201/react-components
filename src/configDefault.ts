@@ -47,17 +47,17 @@ export const configDefault = {
     // links 数组中每个对象的 key 用于唯一标识，防止重复，并且作为多语言配置的 key，label 用于多语言的默认显示或标题，link 用于链接跳转，支持站内和外部链接区分
     links: [
       {
-        key: 'footer.blog',
+        key: 'system.footer.blog',
         label: '个人博客',
         link: 'https://blog.fxss.work/'
       },
       {
-        key: 'footer.author',
+        key: 'system.footer.author',
         label: '作者github',
         link: 'https://github.com/fxss5201'
       },
       {
-        key: 'footer.md',
+        key: 'system.footer.md',
         label: 'Markdown',
         link: 'markdown/md-demo-page'
       }
