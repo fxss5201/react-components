@@ -8,17 +8,8 @@ export type FileItemType = {
   folderPath: string
 }
 
-export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
-  type: 'file'
+export type FileTreeItem = FileItemType & {
+  children?: FileTreeItem[]
 }
-
-export type FolderItemType = {
-  type: 'folder'
-  name: string
-  filePath: string
-  folderPath: string
-  children: FileTreeItem[]
-}
-export type FileTreeItem = FileTreeFileItem | FolderItemType
 
 export type TargetType = 'tree' | 'list'

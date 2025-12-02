@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import FilesSelect, { type FileTreeItem } from '@/components/FilesSelect'
+import FilesSelect from '@/components/FilesSelect'
+import { type FileTreeItem } from '@/types/files'
 import JsonView from '@/components/JsonView'
 
 function FileSelectTree() {

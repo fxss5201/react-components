@@ -28,29 +28,19 @@ export type FileItemType = {
   folderPath: string
 }
 
-export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
-  type: 'file'
+export type FileTreeItem = FileItemType & {
+  children?: FileTreeItem[]
 }
-
-export type FolderItemType = {
-  type: 'folder'
-  name: string
-  filePath: string
-  folderPath: string
-  children: FileTreeItem[]
-}
-export type FileTreeItem = FileTreeFileItem | FolderItemType
 
 export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
-
-export type DropElementProps<T extends TargetType> = {
+export type DropElementProps = {
   className?: string
-  targetType: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
-  onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+  targetType: TargetType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  onDrop: (fileTrees: FileTreeItem[]) => void
   children?: React.ReactNode
 }
 ```
@@ -58,8 +48,9 @@ export type DropElementProps<T extends TargetType> = {
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | `className` | 自定义class类名 | `string` | - |
-| `type` | 回调函数参数类型 | `'tree' \| 'list'` | `'tree'` |
-| `onDrop` | 拖拽结束后的回调函数 | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+| `targetType` | 回调函数参数类型 | `'tree' \| 'list'` | `'tree'` |
+| `isIgnoreFolder` | 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹 | `boolean` | `false` |
+| `onDrop` | 拖拽结束后的回调函数 | `(fileTrees: FileTreeItem[]) => void` | - |
 | `children` | 自定义内容 | `React.ReactNode` | - |
 
 ## 演示示例

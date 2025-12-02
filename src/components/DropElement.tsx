@@ -1,24 +1,24 @@
 import { useRef } from 'react'
 import { useEventListener } from 'ahooks'
 import cn from 'classnames'
-import { type LocaleType } from '@/config'
-import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
+import type { TargetType, FileTreeItem } from '@/types/files'
 import { useTranslation } from 'react-i18next'
 
-export type DropElementProps<T extends TargetType> = {
+export type DropElementProps = {
   className?: string
-  locale?: LocaleType
-  targetType: T // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
-  onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+  targetType: TargetType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  onDrop: (fileTrees: FileTreeItem[]) => void
   children?: React.ReactNode
 }
 
-function DropElement<T extends TargetType>({
+function DropElement({
   className = '',
-  targetType = 'tree' as T,
+  targetType = 'tree',
+  isIgnoreFolder = false,
   onDrop,
   children
-}: DropElementProps<T>) {
+}: DropElementProps) {
   const { t } = useTranslation()
 
   async function handleDrop(e: DragEvent) {
@@ -57,7 +57,7 @@ function DropElement<T extends TargetType>({
         }
       }
       // console.log("🚀 ~ handleDropItems ~ fileTrees:", fileTrees)
-      onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
+      onDrop(fileTrees)
     }
   }
 
@@ -90,8 +90,8 @@ function DropElement<T extends TargetType>({
   }
 
   // 读取 e.dataTransfer.items 中的文件和文件夹，以文件列表的形式返回
-  async function readerFileList (entry: FileSystemEntry): Promise<FileTreeFileItem[]> {
-    const fileList: FileTreeFileItem[] = []
+  async function readerFileList (entry: FileSystemEntry): Promise<FileTreeItem[]> {
+    const fileList: FileTreeItem[] = []
     if (entry.isFile) {
       const file = await syncFile(entry as FileSystemFileEntry)
       fileList.push({
@@ -103,6 +103,14 @@ function DropElement<T extends TargetType>({
         type: 'file'
       })
     } else if (entry.isDirectory) {
+      if (!isIgnoreFolder) {
+        fileList.push({
+          type: 'folder',
+          filePath: entry.fullPath,
+          folderPath: entry.fullPath.split('/').slice(0, -1).join('/'),
+          name: entry.name,
+        })
+      }
       const directoryReader = (entry as FileSystemDirectoryEntry).createReader()
       const entries = await syncReadEntries(directoryReader)
       const promises = entries.map(entry => readerFileList(entry))
@@ -160,7 +168,7 @@ function DropElement<T extends TargetType>({
         type: 'file'
       }))
       // console.log("🚀 ~ handleDropFiles ~ fileTrees:", fileTrees)
-      onDrop(fileTrees as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
+      onDrop(fileTrees)
     }
   }
 

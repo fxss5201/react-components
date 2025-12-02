@@ -30,32 +30,17 @@ export type FileItemType = {
   folderPath: string
 }
 
-export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
-  type: 'file'
+export type FileTreeItem = FileItemType & {
+  children?: FileTreeItem[]
 }
-
-export type FolderItemType = {
-  type: 'folder'
-  name: string
-  filePath: string
-  folderPath: string
-  children: FileTreeItem[]
-}
-export type FileTreeItem = FileTreeFileItem | FolderItemType
 
 export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '@/types/files'
-
-export type FileTreeItem = FileItemType & {
-  children?: FileTreeItem[]
-}
-
-export type FilesSelectProps<T extends TargetType> = {
-  targetType: T,
-  onSelect: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+export type FilesSelectProps = {
+  targetType: TargetType,
+  onSelect: (fileTrees: FileTreeItem[]) => void
   isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
   className?: string
@@ -66,7 +51,7 @@ export type FilesSelectProps<T extends TargetType> = {
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | `targetType` | 执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表 | `'tree' \| 'list'` | `'tree'` |
-| `onSelect` | 选择文件/文件夹后的回调函数 | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+| `onSelect` | 选择文件/文件夹后的回调函数 | `(fileTrees: FileTreeItem[]) => void` | - |
 | `isUpload` | 是否上传文件/文件夹，仅用于更换 选择 或 上传 文件文本 | `boolean` | `false` |
 | `isIgnoreFolder` | 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹 | `boolean` | `false` |
 | `className` | 自定义class类名 | `string` | - |

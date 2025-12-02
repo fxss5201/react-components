@@ -33,6 +33,7 @@
     "classnames": "^2.5.1",
     "copy-to-clipboard": "^3.3.3",
     "echarts": "^6.0.0",
+    "file-type": "^21.1.1",
     "i18next": "^25.5.2",
     "json-edit-react": "^1.29.0",
     "lodash.clonedeep": "^4.5.0",

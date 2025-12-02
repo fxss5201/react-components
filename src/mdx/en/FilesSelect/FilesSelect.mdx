@@ -30,32 +30,17 @@ export type FileItemType = {
   folderPath: string
 }
 
-export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
-  type: 'file'
+export type FileTreeItem = FileItemType & {
+  children?: FileTreeItem[]
 }
-
-export type FolderItemType = {
-  type: 'folder'
-  name: string
-  filePath: string
-  folderPath: string
-  children: FileTreeItem[]
-}
-export type FileTreeItem = FileTreeFileItem | FolderItemType
 
 export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '@/types/files'
-
-export type FileTreeItem = FileItemType & {
-  children?: FileTreeItem[]
-}
-
-export type FilesSelectProps<T extends TargetType> = {
-  targetType: T,
-  onSelect: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+export type FilesSelectProps = {
+  targetType: TargetType,
+  onSelect: (fileTrees: FileTreeItem[]) => void
   isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
   className?: string
@@ -66,7 +51,7 @@ export type FilesSelectProps<T extends TargetType> = {
 | Parameter | Description | Type | Default |
 | --- | --- | --- | --- |
 | `targetType` | Execution parameter type of onSelect, tree for file tree, list for file list | `'tree' \| 'list'` | `'tree'` |
-| `onSelect` | Callback function after file/folder selection | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
+| `onSelect` | Callback function after file/folder selection | `(fileTrees: FileTreeItem[]) => void` | - |
 | `isUpload` | Whether to upload files/folders, only used to change the text of the select/upload button | `boolean` | `false` |
 | `isIgnoreFolder` | Whether to ignore folders when targetType is 'list', for example, when uploading files, only files need to be uploaded, not folders | `boolean` | `false` |
 | `className` | Custom class name | `string` | - |

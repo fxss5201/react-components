@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import FilesSelect from '@/components/FilesSelect'
-import type { FileTreeFileItem } from '@/types/files'
+import type { FileTreeItem } from '@/types/files'
 import JsonView from '@/components/JsonView'
 
 function FileSelectList() {
-  const [listData, setListData] = useState<FileTreeFileItem[]>([])
+  const [listData, setListData] = useState<FileTreeItem[]>([])
 
-  function onSelect(fileList: FileTreeFileItem[]) {
+  function onSelect(fileList: FileTreeItem[]) {
     setListData(fileList)
   }
 

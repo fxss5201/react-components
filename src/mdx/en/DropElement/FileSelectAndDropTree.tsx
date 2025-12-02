@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
-import FilesSelect, { type FileTreeItem } from '@/components/FilesSelect'
+import FilesSelect from '@/components/FilesSelect'
+import type { FileTreeItem } from '@/types/files'
 import DropElement from '@/components/DropElement'
 import JsonView from '@/components/JsonView'
 import LocaleContext from '@/context/LocaleContext'

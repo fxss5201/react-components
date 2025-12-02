@@ -1,32 +1,28 @@
 import { useRef } from 'react'
-import type { FileType, FileItemType, TargetType, FileTreeFileItem } from '@/types/files'
+import type { FileType, FileItemType, TargetType, FileTreeItem } from '@/types/files'
 import { DownOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { Button, Dropdown, Space, App } from 'antd'
 import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
 
-export type FileTreeItem = FileItemType & {
-  children?: FileTreeItem[]
-}
-
-export type FilesSelectProps<T extends TargetType> = {
-  targetType: T,
-  onSelect: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+export type FilesSelectProps = {
+  targetType: TargetType,
+  onSelect: (fileTrees: FileTreeItem[]) => void
   isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
   className?: string
   children?: React.ReactNode
 }
 
-function FilesSelect<T extends TargetType>({
-  targetType = 'tree' as T,
+function FilesSelect({
+  targetType = 'tree',
   onSelect,
   isUpload = false,
   isIgnoreFolder = false,
   className = '',
   children
-}: FilesSelectProps<T>) {
+}: FilesSelectProps) {
   const { t } = useTranslation()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -90,10 +86,10 @@ function FilesSelect<T extends TargetType>({
         rootFiles = await getFileList(dirHandle as FileSystemDirectoryHandle, '/')
       }
       if (targetType === 'tree') {
-        onSelect(rootFiles as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
+        onSelect(rootFiles)
       } else {
         const roorFileList = flattenFileTree(rootFiles, isIgnoreFolder)
-        onSelect(roorFileList as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
+        onSelect(roorFileList)
       }
     } catch (error) {
       if (error instanceof Error && error.message.includes('aborted')) {
@@ -115,7 +111,7 @@ function FilesSelect<T extends TargetType>({
         folderPath: '/',
       }))
       if (roorFileList.length > 0) {
-        onSelect(roorFileList as T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[])
+        onSelect(roorFileList)
       }
     }
   }

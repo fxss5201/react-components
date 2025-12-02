@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import DropElement from '@/components/DropElement'
-import type { FileTreeFileItem, FileItemType } from '@/types/files'
+import type { FileItemType, FileTreeItem } from '@/types/files'
 import FilesUploadDrawer from '@/components/FilesUploadDrawer'
 import JsonView from '@/components/JsonView'
 
@@ -8,11 +8,11 @@ function FileList() {
   const [listData, setListData] = useState<FileItemType[]>([])
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  function onDropList(fileList: FileTreeFileItem[]) {
+  function onDropList(fileList: FileTreeItem[]) {
     setListData(changeFileTreeItemToFileItemType(fileList))
     setDrawerOpen(true)
   }
-  function changeFileTreeItemToFileItemType(fileList: FileTreeFileItem[]): FileItemType[] {
+  function changeFileTreeItemToFileItemType(fileList: FileTreeItem[]): FileItemType[] {
     return fileList.map(item => ({
       type: item.type,
       file: item.file,

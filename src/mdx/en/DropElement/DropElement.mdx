@@ -28,39 +28,30 @@ export type FileItemType = {
   folderPath: string
 }
 
-export type FileTreeFileItem = Omit<FileItemType, 'type'> & {
-  type: 'file'
+export type FileTreeItem = FileItemType & {
+  children?: FileTreeItem[]
 }
-
-export type FolderItemType = {
-  type: 'folder'
-  name: string
-  filePath: string
-  folderPath: string
-  children: FileTreeItem[]
-}
-export type FileTreeItem = FileTreeFileItem | FolderItemType
 
 export type TargetType = 'tree' | 'list'
 ```
 
 ``` ts
-import type { TargetType, FileTreeFileItem, FileTreeItem } from '@/types/files'
-
-export type DropElementProps<T extends TargetType> = {
+export type DropElementProps = {
   className?: string
-  targetType: T // Target type, tree for file tree, list for file list
-  onDrop: (fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void
+  targetType: TargetType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  onDrop: (fileTrees: FileTreeItem[]) => void
   children?: React.ReactNode
 }
 ```
 
 | Parameter | Description | Type | Default |
 | --------- | ----------- | ---- | ------- |
-| className | Custom class name | `string` | - |
-| type | Execution parameter type of onDrop, tree for file tree, list for file list | `'tree' \| 'list'` | `tree` |
-| onDrop | Callback function when files/folders are dropped | `(fileTrees: T extends 'tree' ? FileTreeItem[] : FileTreeFileItem[]) => void` | - |
-| children | Custom children | `React.ReactNode` | - |
+| `className` | Custom class name | `string` | - |
+| `targetType` | Execution parameter type of onDrop, tree for file tree, list for file list | `'tree' \| 'list'` | `tree` |
+| `isIgnoreFolder` | Whether to ignore folders when targetType is 'list', for example, when uploading files, only files need to be uploaded, not folders | `boolean` | `false` |
+| `onDrop` | Callback function when files/folders are dropped | `(fileTrees: FileTreeItem[]) => void` | - |
+| `children` | Custom children | `React.ReactNode` | - |
 
 ## Demos
 
