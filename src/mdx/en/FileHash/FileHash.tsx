@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Select, Spin } from 'antd'
 import DropElement from '@/components/DropElement'
-import type { FileTreeFileItem, FileItemType } from '@/types/files'
+import type { FileTreeItem, FileItemType } from '@/types/files'
 import JsonView from '@/components/JsonView'
 import { calculateFileHashHex, type AlgorithmType } from '@/utils/calculateFileHashHex'
 
@@ -14,12 +14,12 @@ function FileHashDemo() {
   const [algorithm, setAlgorithm] = useState<AlgorithmType>('SHA-256')
   const [loading, setLoading] = useState<boolean>(false)
 
-  async function onDropList(fileList: FileTreeFileItem[]) {
+  async function onDropList(fileList: FileTreeItem[]) {
     setLoading(true)
     setListData(await changeFileTreeItemToFileItemType(fileList))
     setLoading(false)
   }
-  async function changeFileTreeItemToFileItemType(fileList: FileTreeFileItem[]): Promise<FileHashItemType[]> {
+  async function changeFileTreeItemToFileItemType(fileList: FileTreeItem[]): Promise<FileHashItemType[]> {
     const fileHashItemList: FileHashItemType[] = []
     for (let index = 0; index < fileList.length; index++) {
       const item = fileList[index]
@@ -47,7 +47,7 @@ function FileHashDemo() {
           className='w-30'
         />
       </div>
-      <DropElement targetType='list' onDrop={onDropList} className='mt-4'>
+      <DropElement targetType='list' isIgnoreFolder={true} onDrop={onDropList} className='mt-4'>
         <div className='text-center'>
           <div className='text-2xl'>File Hash Calculator</div>
           <div className='text-sm mt-4'>Drag files/folders to here, and you can calculate the hash value of the files.</div>
