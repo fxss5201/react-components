@@ -13,5 +13,8 @@
   },
   "DropElement": {
     "dropArea": "Please drag and drop files or folders here"
+  },
+  "FilesDropSelect": {
+    "dropArea": "Please drag and drop files or folders here, or click to select files"
   }
 }
