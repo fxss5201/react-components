@@ -17,6 +17,6 @@ export const config: ScriptsConfig = {
     // 合并相同文件名，仅在 format 为 excel 时有效
     merge: true,
     // 是否使用配置文件
-    config: true,
+    config: false,
   },
 }

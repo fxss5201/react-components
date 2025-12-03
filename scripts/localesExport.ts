@@ -14,7 +14,9 @@ import { config } from './config'
 
 /**
  * 导出本地语言文件
- * npx tsx scripts/localesExport.ts
+ * npm run localesExport -- <参数>
+ * 或
+ * npx tsx scripts/localesExport.ts -- <参数>
  * 
  * -c, --config Use config file | 使用配置文件，默认 false
  * -s, --source <path> Language file directory | 语言文件目录，默认 ./src/locales
