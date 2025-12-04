@@ -25,5 +25,6 @@
   "not-authorized": "403 Not Authorized",
   "login": "Login",
   "reset-password": "Reset Password",
-  "userInfo": "User Info"
+  "userInfo": "User Info",
+  "files-drop-select": "Files Drop Select"
 }

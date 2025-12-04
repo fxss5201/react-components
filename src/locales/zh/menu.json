@@ -25,5 +25,6 @@
   "not-authorized": "403 权限不足",
   "login": "登录",
   "reset-password": "重置密码",
-  "userInfo": "用户信息"
+  "userInfo": "用户信息",
+  "files-drop-select": "文件拖拽选择"
 }

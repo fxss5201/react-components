@@ -29,6 +29,7 @@ const BASE_URL = import.meta.env.BASE_URL
 const FilesUpload = lazy(() => import('@/pages/file-related/FilesUpload'))
 const FilesSelect = lazy(() => import('@/pages/file-related/FilesSelect'))
 const DropUpload = lazy(() => import('@/pages/file-related/DropUpload'))
+const FilesDropSelect = lazy(() => import('@/pages/file-related/FilesDropSelect'))
 const FileHash = lazy(() => import('@/pages/file-related/FileHash'))
 const MdDemoPage = lazy(() => import('@/pages/markdown/MdDemoPage'))
 const MdRenderPage = lazy(() => import('@/pages/markdown/MdRenderPage'))
@@ -86,6 +87,13 @@ export const routers = [
         element: <DropUpload />,
         meta: {
           label: '拖拽上传',
+        }
+      },
+      {
+        path: 'files-drop-select',
+        element: <FilesDropSelect />,
+        meta: {
+          label: '文件拖拽选择',
         }
       },
       {

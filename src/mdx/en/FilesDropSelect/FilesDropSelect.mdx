@@ -1,13 +1,11 @@
 import React from 'react'
-import FileTree from './FileTree'
-import FileTreeRaw from './FileTree.tsx?raw'
-import FileList from './FileList'
-import FileListRaw from './FileList.tsx?raw'
 import Playground from '@/components/Playground'
+import FilesDropSelectDemo from './FilesDropSelectDemo'
+import FilesDropSelectDemoRaw from './FilesDropSelectDemo?raw'
 
-# DropElement
+# FilesDropSelect
 
-DropElement is a drag and drop component, which supports dragging multiple files/folders, and can specify whether the parameter type of the callback function is a file tree or a file list.
+Drag and select files/folders, is a combination component of `DropElement` and `FilesSelect`.
 
 ## TOC
 
@@ -39,10 +37,17 @@ export type DropElementProps = {
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
   isUpload?: boolean
   onSelect: (fileTrees: FileTreeItem[]) => void
-  className?: string
-  children?: React.ReactNode
+  classNames?: {
+    dropElement?: string
+    filesSelect?: string
+  }
+  childrens?: {
+    dropElement?: React.ReactNode
+    filesSelect?: React.ReactNode
+  }
 }
 ```
+
 
 | Parameter | Description | Type | Default |
 | --------- | ----------- | ---- | ------- |
@@ -50,19 +55,13 @@ export type DropElementProps = {
 | `isIgnoreFolder` | Whether to ignore folders when targetType is 'list', for example, when uploading files, only files need to be uploaded, not folders | `boolean` | `false` |
 | `isUpload` | Whether to upload files/folders, only used to change the text of the select/upload button | `boolean` | `false` |
 | `onSelect` | Callback function when files/folders are dropped | `(fileTrees: FileTreeItem[]) => void` | - |
-| `className` | Custom class name | `string` | - |
-| `children` | Custom children | `React.ReactNode` | - |
+| `classNames` | Custom class names, respectively corresponding to `DropElement` and `FilesSelect` | `{ dropElement?: string, filesSelect?: string }` | - |
+| `childrens` | Custom content, respectively corresponding to `DropElement` and `FilesSelect`, setting will override default content | `{ dropElement?: React.ReactNode, filesSelect?: React.ReactNode }` | - |
 
 ## Demos
 
-### File Tree
+### Drop and Select Files/Folders
 
-<Playground code={FileTreeRaw} title='File Tree' description='Drag and drop files/folders to view the file structure.'>
-  <FileTree />
-</Playground>
-
-### File List
-
-<Playground code={FileListRaw} title='File List' description='Drag and drop files/folders to upload directly.'>
-  <FileList />
+<Playground code={FilesDropSelectDemoRaw} title='Drag and Select Files/Folders' description='Drag and select files/folders, and view the results.'>
+  <FilesDropSelectDemo />
 </Playground>

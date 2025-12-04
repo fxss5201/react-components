@@ -12,13 +12,7 @@ function FileSelectAndDropTree() {
 
   return (
     <>
-      <FilesDropSelect
-        targetType='tree'
-        onSelect={onSelect}
-        classNames={{
-          dropElement: 'h-30!'
-        }}>
-      </FilesDropSelect>
+      <FilesDropSelect onSelect={onSelect}></FilesDropSelect>
       <JsonView className='mt-4!' jsonClassName='max-h-100 overflow-auto'>
         {listData}
       </JsonView>
