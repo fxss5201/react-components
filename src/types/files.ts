@@ -6,6 +6,7 @@ export type FileItemType = {
   size?: number
   filePath: string
   folderPath: string
+  url?: string
 }
 
 export type FileTreeItem = FileItemType & {

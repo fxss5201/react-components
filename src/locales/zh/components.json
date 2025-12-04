@@ -26,5 +26,9 @@
     "total": "总数",
     "success": "成功",
     "failed": "失败"
+  },
+  "FilesDownloadDrawer": {
+    "noSupport": "当前浏览器不支持",
+    "chooseFolder": "请选择文件夹"
   }
 }

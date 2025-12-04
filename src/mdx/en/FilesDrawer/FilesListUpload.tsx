@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import FilesUploadDrawer from '@/components/FilesUploadDrawer'
 import { type DrawerFileItemType } from '@/components/FilesDrawer'
-import FilesSelect from '@/components/FilesSelect'
+import FilesDropSelect from '@/components/FilesDropSelect'
 import type { FileItemType } from '@/types/files'
 import JsonView from '@/components/JsonView'
 
@@ -21,7 +21,7 @@ function FilesListUpload() {
 
   return (
     <div className='px-4 pb-4'>
-      <FilesSelect targetType='list' isUpload={true} onSelect={onSelectFn} />
+      <FilesDropSelect targetType='list' isUpload={true} onSelect={onSelectFn} />
 
       <FilesUploadDrawer
         targetType='list'

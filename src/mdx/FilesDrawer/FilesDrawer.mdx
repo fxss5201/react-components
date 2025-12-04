@@ -5,6 +5,8 @@ import FilesListUploadRaw from './FilesListUpload.tsx?raw'
 import FilesListUploadTree from './FilesListUploadTree'
 import FilesListUploadTreeRaw from './FilesListUploadTree.tsx?raw'
 import FilesDrawerImg from '@/assets/FilesDrawer.png'
+import FilesDownload from './FilesDownload'
+import FilesDownloadRaw from './FilesDownload.tsx?raw'
 
 # FilesDrawer
 
@@ -125,4 +127,147 @@ export default FilesUploadDrawer
 
 <Playground code={FilesListUploadTreeRaw} title='上传文件/文件夹（树结构）' description='选择之后直接上传文件/文件夹，上传成功之后返回文件/文件夹的树结构。'>
   <FilesListUploadTree />
+</Playground>
+
+### FilesDownloadDrawer
+
+#### 参数 Props
+
+``` ts
+export type FilesDownloadDrawerProps = Omit<FilesDrawerProps, 'title' | 'doneFile'> & {
+  title?: string
+}
+```
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| `targetType` | 成功回调函数的参数类型 | `tree \| list` | `list` |
+| `title` | 抽屉标题 | `string` | - |
+| `open` | 是否打开抽屉 | `boolean` | `false` |
+| `setOpen` | 打开/关闭抽屉的回调函数 | `(open: boolean) => void` | - |
+| `list` | 文件/文件夹列表 | `FileItemType[]` | [] |
+| `onSuccess` | 上传成功回调函数 | `(fileTrees: DrawerResultFileTreeItemType[]) => void` | - |
+
+**注意：下载的时候，每个文件必须有对应的 `url` 属性，否则会跳过。会根据文件/文件夹的路径，在用户选择的文件夹下创建对应的文件/文件夹。**
+
+#### 源代码
+
+``` tsx
+import FilesDrawer, { type FilesDrawerProps, type DrawerFileItemType } from '@/components/FilesDrawer'
+import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { App } from 'antd'
+
+export type FilesDownloadDrawerProps = Omit<FilesDrawerProps, 'title' | 'doneFile'> & {
+  title?: string
+}
+
+function FilesDownloadDrawer({
+  targetType = 'list',
+  title = '下载文件/文件夹',
+  open = false,
+  setOpen,
+  list = [],
+  onSuccess
+}: FilesDownloadDrawerProps) {
+  const { t } = useTranslation()
+  const { message } = App.useApp()
+  const [drawerOpen, setDrawerOpen] = useState(open)
+
+  const directoryHandle = useRef<FileSystemDirectoryHandle>(null)
+  useEffect(() => {
+    const getDirectoryHandle = async () => {
+      if (!window.showDirectoryPicker) {
+        message.warning(t('components.FilesDownloadDrawer.noSupport', { defaultValue: '当前浏览器不支持' }))
+        return
+      }
+      try {
+        const dirHandle = await window.showDirectoryPicker({
+          mode: 'readwrite',
+          id: 'FilesDownloadDrawer',
+        })
+        if (!dirHandle) {
+          return
+        }
+        directoryHandle.current = dirHandle
+        setDrawerOpen(true)
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('aborted')) {
+          message.warning(t('components.FilesDownloadDrawer.chooseFolder', { defaultValue: '请选择文件夹' }))
+        } else {
+          console.log("🚀 ~ selectDirectoryStoreFn ~ error:", error)
+        }
+      }
+    }
+
+    if (open) {
+      getDirectoryHandle()
+    } else {
+      setDrawerOpen(false)
+    }
+    return () => {
+      directoryHandle.current = null
+    }
+  }, [open, t, message])
+
+  const downloadResourceAsBlob = async (url: string) => {
+      try {
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error(`网络请求失败：${response.status} ${response.statusText}`)
+        }
+        return await response.blob()
+      } catch (error) {
+        throw new Error(`下载资源失败：${error}`)
+      }
+    }
+
+  const writeFile = async (item: DrawerFileItemType) => {
+    if (!directoryHandle.current) {
+      return
+    }
+    if (item.folderPath === '/') {
+      const fileHandle = await directoryHandle.current.getFileHandle(item.name, { create: true })
+      const writable = await fileHandle.createWritable()
+      await writable.write(await downloadResourceAsBlob(item.url!))
+      await writable.close()
+    } else {
+      const folderPath = item.folderPath.split('/').filter(x => x !== '')
+      let currentDirHandle = directoryHandle.current
+      for (const folder of folderPath) {
+        currentDirHandle = await currentDirHandle.getDirectoryHandle(folder, { create: true })
+      }
+      const fileHandle = await currentDirHandle.getFileHandle(item.name, { create: true })
+      const writable = await fileHandle.createWritable()
+      await writable.write(await downloadResourceAsBlob(item.url!))
+      await writable.close()
+    }
+  }
+
+  const doneFile = async (item: DrawerFileItemType) => {
+    if (item.url) {
+      await writeFile(item)
+    }
+  }
+
+  return (
+    <FilesDrawer
+      targetType={targetType}
+      title={title}
+      open={drawerOpen}
+      setOpen={setOpen}
+      list={list}
+      doneFile={doneFile}
+      onSuccess={onSuccess}
+    />
+  )
+}
+
+export default FilesDownloadDrawer
+```
+
+#### 下载文件/文件夹
+
+<Playground code={FilesDownloadRaw} title='下载文件/文件夹' description='直接下载文件/文件夹，下载成功之后返回文件/文件夹的列表结构。'>
+  <FilesDownload />
 </Playground>
