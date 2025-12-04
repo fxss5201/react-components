@@ -82,17 +82,17 @@ export const routers = [
         }
       },
       {
-        path: 'files-upload',
-        element: <FilesUpload />,
-        meta: {
-          label: '多文件上传',
-        }
-      },
-      {
         path: 'drop-upload',
         element: <DropUpload />,
         meta: {
           label: '拖拽上传',
+        }
+      },
+      {
+        path: 'files-upload',
+        element: <FilesUpload />,
+        meta: {
+          label: '多文件上传',
         }
       },
       {

@@ -39,10 +39,10 @@ export type TargetType = 'tree' | 'list'
 
 ``` ts
 export type FilesSelectProps = {
-  targetType: TargetType,
+  targetType?: TargetType,
   onSelect: (fileTrees: FileTreeItem[]) => void
-  isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  isUpload?: boolean
   className?: string
   children?: React.ReactNode
 }
@@ -52,8 +52,8 @@ export type FilesSelectProps = {
 | --- | --- | --- | --- |
 | `targetType` | 执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表 | `'tree' \| 'list'` | `'tree'` |
 | `onSelect` | 选择文件/文件夹后的回调函数 | `(fileTrees: FileTreeItem[]) => void` | - |
-| `isUpload` | 是否上传文件/文件夹，仅用于更换 选择 或 上传 文件文本 | `boolean` | `false` |
 | `isIgnoreFolder` | 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹 | `boolean` | `false` |
+| `isUpload` | 是否上传文件/文件夹，仅用于更换 选择 或 上传 文件文案 | `boolean` | `false` |
 | `className` | 自定义class类名 | `string` | - |
 | `children` | 子元素 | `React.ReactNode` | - |
 

@@ -7,10 +7,10 @@ import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 export type FilesSelectProps = {
-  targetType: TargetType,
+  targetType?: TargetType,
   onSelect: (fileTrees: FileTreeItem[]) => void
-  isUpload?: boolean
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  isUpload?: boolean
   className?: string
   children?: React.ReactNode
 }
@@ -18,8 +18,8 @@ export type FilesSelectProps = {
 function FilesSelect({
   targetType = 'tree',
   onSelect,
-  isUpload = false,
   isIgnoreFolder = false,
+  isUpload = false,
   className = '',
   children
 }: FilesSelectProps) {

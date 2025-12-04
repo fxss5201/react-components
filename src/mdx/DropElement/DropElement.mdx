@@ -37,20 +37,22 @@ export type TargetType = 'tree' | 'list'
 
 ``` ts
 export type DropElementProps = {
-  className?: string
-  targetType: TargetType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  targetType?: TargetType // 执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
-  onDrop: (fileTrees: FileTreeItem[]) => void
+  isUpload?: boolean
+  onSelect: (fileTrees: FileTreeItem[]) => void
+  className?: string
   children?: React.ReactNode
 }
 ```
 
 | 属性 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| `className` | 自定义class类名 | `string` | - |
 | `targetType` | 回调函数参数类型 | `'tree' \| 'list'` | `'tree'` |
 | `isIgnoreFolder` | 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹 | `boolean` | `false` |
-| `onDrop` | 拖拽结束后的回调函数 | `(fileTrees: FileTreeItem[]) => void` | - |
+| `isUpload` | 是否上传文件/文件夹，仅用于文案 | `boolean` | `false` |
+| `onSelect` | 拖拽结束后的回调函数 | `(fileTrees: FileTreeItem[]) => void` | - |
+| `className` | 自定义class类名 | `string` | - |
 | `children` | 自定义内容 | `React.ReactNode` | - |
 
 ## 演示示例

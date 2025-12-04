@@ -12,7 +12,8 @@
     "selectTitle": "Select File/Folder"
   },
   "DropElement": {
-    "dropArea": "Please drag and drop files or folders here"
+    "dropArea": "Please drag and drop files or folders here to select",
+    "uploadArea": "Please drag and drop files or folders here to upload"
   },
   "FilesDropSelect": {
     "dropArea": "Please drag and drop files or folders here, or click to select files"

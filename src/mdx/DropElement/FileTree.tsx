@@ -14,7 +14,7 @@ function DropUpload() {
 
   return (
     <>
-      <DropElement targetType='tree' onDrop={onDropTree} className='h-30!'></DropElement>
+      <DropElement targetType='tree' onSelect={onDropTree} className='h-30!'></DropElement>
       {treeData.length > 0 && (
         <Tree
           fieldNames={{

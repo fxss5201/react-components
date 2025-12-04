@@ -37,20 +37,22 @@ export type TargetType = 'tree' | 'list'
 
 ``` ts
 export type DropElementProps = {
-  className?: string
-  targetType: TargetType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  targetType?: TargetType // 执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
-  onDrop: (fileTrees: FileTreeItem[]) => void
+  isUpload?: boolean
+  onSelect: (fileTrees: FileTreeItem[]) => void
+  className?: string
   children?: React.ReactNode
 }
 ```
 
 | Parameter | Description | Type | Default |
 | --------- | ----------- | ---- | ------- |
-| `className` | Custom class name | `string` | - |
-| `targetType` | Execution parameter type of onDrop, tree for file tree, list for file list | `'tree' \| 'list'` | `tree` |
+| `targetType` | Execution parameter type of onSelect, tree for file tree, list for file list | `'tree' \| 'list'` | `tree` |
 | `isIgnoreFolder` | Whether to ignore folders when targetType is 'list', for example, when uploading files, only files need to be uploaded, not folders | `boolean` | `false` |
-| `onDrop` | Callback function when files/folders are dropped | `(fileTrees: FileTreeItem[]) => void` | - |
+| `isUpload` | Whether to upload files/folders, only used to change the text of the select/upload button | `boolean` | `false` |
+| `onSelect` | Callback function when files/folders are dropped | `(fileTrees: FileTreeItem[]) => void` | - |
+| `className` | Custom class name | `string` | - |
 | `children` | Custom children | `React.ReactNode` | - |
 
 ## Demos

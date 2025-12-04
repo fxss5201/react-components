@@ -12,7 +12,8 @@
     "selectTitle": "选择文件/文件夹"
   },
   "DropElement": {
-    "dropArea": "请拖放文件或文件夹到这里"
+    "dropArea": "请拖放文件/文件夹到这里进行选择",
+    "uploadArea": "请拖放文件/文件夹到这里进行上传"
   },
   "FilesDropSelect": {
     "dropArea": "请拖放文件/文件夹到这里，或点击选择文件/文件夹"

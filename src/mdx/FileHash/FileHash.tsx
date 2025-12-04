@@ -47,7 +47,7 @@ function FileHashDemo() {
           className='w-30'
         />
       </div>
-      <DropElement targetType='list' isIgnoreFolder={true} onDrop={onDropList} className='mt-4'>
+      <DropElement targetType='list' isIgnoreFolder={true} onSelect={onDropList} className='mt-4'>
         <div className='text-center'>
           <div className='text-2xl'>文件哈希计算器</div>
           <div className='text-sm mt-4'>拖拽文件/文件夹到此处，即可计算文件的哈希值。</div>

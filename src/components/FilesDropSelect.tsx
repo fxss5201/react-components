@@ -31,17 +31,18 @@ function FilesDropSelect({
 
   return (
     <DropElement
-      isIgnoreFolder={isIgnoreFolder}
       targetType={targetType}
-      onDrop={onSelect}
+      isIgnoreFolder={isIgnoreFolder}
+      isUpload={isUpload}
+      onSelect={onSelect}
       className={classNames.dropElement}>
       {childrens.dropElement || (
         <div className='flex align-center'>
           <div className='text-2xl'>{t('components.FilesDropSelect.dropArea', { defaultValue: '请拖放文件/文件夹到这里，或点击选择文件/文件夹' })}</div>
           <FilesSelect
-            isUpload={isUpload}
-            isIgnoreFolder={isIgnoreFolder}
             targetType={targetType}
+            isIgnoreFolder={isIgnoreFolder}
+            isUpload={isUpload}
             onSelect={onSelect}
             className={cn('ml-4', classNames.filesSelect)}
             children={childrens.filesSelect}></FilesSelect>

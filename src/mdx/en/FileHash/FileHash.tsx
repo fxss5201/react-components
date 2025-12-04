@@ -47,7 +47,7 @@ function FileHashDemo() {
           className='w-30'
         />
       </div>
-      <DropElement targetType='list' isIgnoreFolder={true} onDrop={onDropList} className='mt-4'>
+      <DropElement targetType='list' isIgnoreFolder={true} onSelect={onDropList} className='mt-4'>
         <div className='text-center'>
           <div className='text-2xl'>File Hash Calculator</div>
           <div className='text-sm mt-4'>Drag files/folders to here, and you can calculate the hash value of the files.</div>

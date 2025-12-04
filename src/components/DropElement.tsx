@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next'
 
 export type DropElementProps = {
   className?: string
-  targetType: TargetType // 执行 onDrop 时，参数的类型， tree 时为文件树，list 时为文件列表
+  targetType?: TargetType // 执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表
   isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
-  onDrop: (fileTrees: FileTreeItem[]) => void
+  isUpload?: boolean
+  onSelect: (fileTrees: FileTreeItem[]) => void
   children?: React.ReactNode
 }
 
@@ -16,7 +17,8 @@ function DropElement({
   className = '',
   targetType = 'tree',
   isIgnoreFolder = false,
-  onDrop,
+  isUpload = false,
+  onSelect,
   children
 }: DropElementProps) {
   const { t } = useTranslation()
@@ -57,7 +59,7 @@ function DropElement({
         }
       }
       // console.log("🚀 ~ handleDropItems ~ fileTrees:", fileTrees)
-      onDrop(fileTrees)
+      onSelect(fileTrees)
     }
   }
 
@@ -168,7 +170,7 @@ function DropElement({
         type: 'file'
       }))
       // console.log("🚀 ~ handleDropFiles ~ fileTrees:", fileTrees)
-      onDrop(fileTrees)
+      onSelect(fileTrees)
     }
   }
 
@@ -209,7 +211,11 @@ function DropElement({
         cn('border-2 border-dashed border-gray-300 rounded-md p-4 text-gray-400 h-50 flex items-center justify-center', className)
       }
     >{children || (
-      <div className='text-2xl'>{t('components.DropElement.dropArea', { defaultValue: '请拖放文件或文件夹到这里' })}</div>
+      <div className='text-2xl'>{
+        isUpload
+          ? t('components.DropElement.uploadArea', { defaultValue: '请拖放文件/文件夹到这里进行上传' })
+          : t('components.DropElement.dropArea', { defaultValue: '请拖放文件/文件夹到这里进行选择' })
+      }</div>
     )}</div>
   )
 }
