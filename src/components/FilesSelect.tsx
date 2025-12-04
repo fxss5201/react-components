@@ -77,7 +77,7 @@ function FilesSelect({
           {
             type: 'folder',
             name: dirHandle.name,
-            filePath: `${dirHandle.name}`,
+            filePath: `/${dirHandle.name}`,
             folderPath: '/',
             children: await getFileList(dirHandle as FileSystemDirectoryHandle, `/${dirHandle.name}`)
           }
@@ -107,7 +107,8 @@ function FilesSelect({
         type: 'file' as FileType,
         file,
         name: file.name,
-        filePath: file.name,
+        size: file.size,
+        filePath: `/${file.name}`,
         folderPath: '/',
       }))
       if (roorFileList.length > 0) {

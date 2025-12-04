@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import FilesUploadDrawer, { type UploadFileItemType } from '@/components/FilesUploadDrawer'
+import FilesUploadDrawer from '@/components/FilesUploadDrawer'
+import { type DrawerFileItemType } from '@/components/FilesDrawer'
 import FilesSelect from '@/components/FilesSelect'
 import type { FileItemType } from '@/types/files'
 import JsonView from '@/components/JsonView'
@@ -7,13 +8,13 @@ import JsonView from '@/components/JsonView'
 function FilesListUpload() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileItemType[]>([])
-  const [listData, setListData] = useState<UploadFileItemType[]>([])
+  const [listData, setListData] = useState<DrawerFileItemType[]>([])
 
   const onSelectFn = (files: FileItemType[]) => {
     setFileList(files)
     setDrawerOpen(true)
   }
-  const onSuccessFn = (list: UploadFileItemType[]) => {
+  const onSuccessFn = (list: DrawerFileItemType[]) => {
     console.log('success', list)
     setListData(list)
   }
@@ -24,6 +25,7 @@ function FilesListUpload() {
 
       <FilesUploadDrawer
         targetType='list'
+        title='上传文件/文件夹'
         open={drawerOpen}
         list={fileList}
         setOpen={setDrawerOpen}

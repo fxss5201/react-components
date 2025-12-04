@@ -3,7 +3,7 @@ import FilesDropSelect from '@/components/FilesDropSelect'
 import type { FileTreeItem } from '@/types/files'
 import JsonView from '@/components/JsonView'
 
-function FileSelectAndDropTree() {
+function FilesDropSelectDemo() {
   const [listData, setListData] = useState<FileTreeItem[]>([])
 
   function onSelect(fileList: FileTreeItem[]) {
@@ -20,4 +20,4 @@ function FileSelectAndDropTree() {
   )
 }
 
-export default FileSelectAndDropTree
+export default FilesDropSelectDemo

@@ -17,5 +17,14 @@
   },
   "FilesDropSelect": {
     "dropArea": "Please drag and drop files or folders here, or click to select files"
+  },
+  "FilesDrawer": {
+    "closePrompt": "Close Prompt",
+    "closePromptContent": "After closing, it will stop. Are you sure you want to close it?",
+    "retryFailed": "Retry Failed",
+    "ignoreErrors": "Ignore Errors",
+    "total": "Total",
+    "success": "Success",
+    "failed": "Failed"
   }
 }

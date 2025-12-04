@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import FilesUploadDrawer, { type UploadResultFileTreeItemType } from '@/components/FilesUploadDrawer'
+import FilesUploadDrawer from '@/components/FilesUploadDrawer'
+import { type DrawerResultFileTreeItemType } from '@/components/FilesDrawer'
 import FilesSelect from '@/components/FilesSelect'
 import type { FileItemType } from '@/types/files'
 import JsonView from '@/components/JsonView'
@@ -7,13 +8,13 @@ import JsonView from '@/components/JsonView'
 function FilesListUploadTree() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileItemType[]>([])
-    const [treeData, setTreeData] = useState<UploadResultFileTreeItemType[]>([])
+  const [treeData, setTreeData] = useState<DrawerResultFileTreeItemType[]>([])
 
   const onSelectFn = (files: FileItemType[]) => {
     setFileList(files)
     setDrawerOpen(true)
   }
-  const onSuccessFn = (tree: UploadResultFileTreeItemType[]) => {
+  const onSuccessFn = (tree: DrawerResultFileTreeItemType[]) => {
     console.log('success', tree)
     setTreeData(tree)
   }
@@ -24,6 +25,7 @@ function FilesListUploadTree() {
 
       <FilesUploadDrawer
         targetType='tree'
+        title='上传文件/文件夹'
         open={drawerOpen}
         list={fileList}
         setOpen={setDrawerOpen}

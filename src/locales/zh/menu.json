@@ -16,7 +16,7 @@
   "no-activity1": "路由不保状态（受控）",
   "search-params-page": "路由搜索参数",
   "files-select": "文件选择",
-  "files-upload": "文件上传",
+  "files-drawer": "文件抽屉",
   "file-hash": "文件哈希",
   "drop-upload": "拖拽上传",
   "json-editor": "Json 编辑器",

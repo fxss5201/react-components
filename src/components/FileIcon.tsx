@@ -9,13 +9,14 @@ function FileIcon({ fileName = '', type = 'file', size = 24, className }: { file
   const defaultFileIcon = `${BASE_URL}/icons/${getIconForFile('default')}`
   const defaultFolderIcon = `${BASE_URL}/icons/${getIconForFolder('default')}`
   const fileIcon = `${BASE_URL}/icons/${getIconForFile(fileName.split('.').pop() || 'default')}`
+  const folderIcon = `${BASE_URL}/icons/${getIconForFolder(fileName)}`
   return (
     <Image
       width={size}
       height={size}
-      src={type === 'file' ? fileIcon : defaultFolderIcon}
+      src={type === 'file' ? fileIcon : folderIcon}
       preview={false}
-      fallback={defaultFileIcon}
+      fallback={type === 'file' ? defaultFileIcon : defaultFolderIcon}
       className={cn(className)}
     />
   )

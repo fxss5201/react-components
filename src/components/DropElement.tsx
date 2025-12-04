@@ -65,12 +65,13 @@ function DropElement({
 
   // 读取 e.dataTransfer.items 中的文件和文件夹，以文件树的形式返回
   async function readerFileTree (entry: FileSystemEntry, parentList: FileTreeItem[]) {
+    const folderPath = entry.fullPath.split('/').slice(0, -1).join('/') || '/'
     if (entry.isFile) {
       const file = await syncFile(entry as FileSystemFileEntry)
       parentList.push({
         file,
         filePath: entry.fullPath,
-        folderPath: entry.fullPath.split('/').slice(0, -1).join('/'),
+        folderPath: folderPath,
         name: file.name,
         size: file.size,
         type: 'file'
@@ -81,7 +82,7 @@ function DropElement({
       const childrenList: FileTreeItem[] = []
       parentList.push({
         filePath: entry.fullPath,
-        folderPath: entry.fullPath.split('/').slice(0, -1).join('/'),
+        folderPath: folderPath,
         name: entry.name,
         type: 'folder',
         children: childrenList
@@ -94,12 +95,13 @@ function DropElement({
   // 读取 e.dataTransfer.items 中的文件和文件夹，以文件列表的形式返回
   async function readerFileList (entry: FileSystemEntry): Promise<FileTreeItem[]> {
     const fileList: FileTreeItem[] = []
+    const folderPath = entry.fullPath.split('/').slice(0, -1).join('/') || '/'
     if (entry.isFile) {
       const file = await syncFile(entry as FileSystemFileEntry)
       fileList.push({
         file,
         filePath: entry.fullPath,
-        folderPath: entry.fullPath.split('/').slice(0, -1).join('/'),
+        folderPath: folderPath,
         name: file.name,
         size: file.size,
         type: 'file'
@@ -109,7 +111,7 @@ function DropElement({
         fileList.push({
           type: 'folder',
           filePath: entry.fullPath,
-          folderPath: entry.fullPath.split('/').slice(0, -1).join('/'),
+          folderPath: folderPath,
           name: entry.name,
         })
       }
@@ -163,8 +165,8 @@ function DropElement({
       const fileList = Array.from(files).filter(item => item.name.includes('.') || item.type !== '' || item.size > 0)
       const fileTrees: FileTreeItem[] = fileList.map(item => ({
         file: item,
-        filePath: item.name,
-        folderPath: '',
+        filePath: `/${item.name}`,
+        folderPath: '/',
         name: item.name,
         size: item.size,
         type: 'file'

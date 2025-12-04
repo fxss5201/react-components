@@ -17,5 +17,14 @@
   },
   "FilesDropSelect": {
     "dropArea": "请拖放文件/文件夹到这里，或点击选择文件/文件夹"
+  },
+  "FilesDrawer": {
+    "closePrompt": "关闭提示",
+    "closePromptContent": "关闭后将停止，是否确认关闭吗？",
+    "retryFailed": "失败重试",
+    "ignoreErrors": "忽略错误",
+    "total": "总数",
+    "success": "成功",
+    "failed": "失败"
   }
 }

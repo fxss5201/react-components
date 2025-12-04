@@ -26,7 +26,7 @@ import { createRoutersTree, createRoutersList, addAuthorizedMiddleware } from '.
 
 const BASE_URL = import.meta.env.BASE_URL
 
-const FilesUpload = lazy(() => import('@/pages/file-related/FilesUpload'))
+const FilesDrawer = lazy(() => import('@/pages/file-related/FilesDrawer'))
 const FilesSelect = lazy(() => import('@/pages/file-related/FilesSelect'))
 const DropUpload = lazy(() => import('@/pages/file-related/DropUpload'))
 const FilesDropSelect = lazy(() => import('@/pages/file-related/FilesDropSelect'))
@@ -97,8 +97,8 @@ export const routers = [
         }
       },
       {
-        path: 'files-upload',
-        element: <FilesUpload />,
+        path: 'files-drawer',
+        element: <FilesDrawer />,
         meta: {
           label: '多文件上传',
         }

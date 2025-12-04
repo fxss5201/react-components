@@ -1,4 +1,4 @@
-import { useRef, Activity } from 'react'
+import { Activity } from 'react'
 import { Layout, FloatButton, Button, Tooltip, Watermark } from 'antd'
 import { useTheme } from '@/storeHooks/useTheme'
 import { Outlet, useLocation } from 'react-router'
@@ -22,7 +22,6 @@ const { Header, Footer, Sider, Content } = Layout
 
 function PageLayout() {
   const { theme } = useTheme()
-  const contentRef = useRef<HTMLDivElement>(null)
   const { pathname } = useLocation()
   const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, tabsShow, changeMenuCollapsed } = useLayoutState()
   const { t } = useTranslation()
@@ -53,7 +52,7 @@ function PageLayout() {
             </Sider>
           </Activity>
           <Layout className='border-l border-gray-200 dark:border-gray-700'>
-            <Content className={cn(bgClassName)} ref={contentRef}>
+            <Content className={cn(bgClassName)}>
               <div className='flex flex-col items-stretch h-full'>
                 <Activity mode={config.layoutTabs && tabsShow ? 'visible' : 'hidden'}>
                   <LayoutTabs className={cn('flex-shrink-0 sticky z-999', bgClassName, headShow ? 'top-[64px]' : 'top-0')} />
@@ -83,7 +82,7 @@ function PageLayout() {
                   ))}
                 </div>
               </div>
-              <FloatButton.BackTop target={() => contentRef.current!} />
+              <FloatButton.BackTop />
             </Content>
             <Activity mode={config.footer && footerShow ? 'visible' : 'hidden'}>
               <Footer className={cn('border-t border-gray-200 dark:border-gray-700 p-4', bgClassName)}>

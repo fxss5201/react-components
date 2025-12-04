@@ -1,21 +1,22 @@
 import { useState } from 'react'
-import FilesUploadDrawer, { type UploadFileItemType } from '@/components/FilesUploadDrawer'
+import FilesUploadDrawer from '@/components/FilesUploadDrawer'
+import { type DrawerResultFileTreeItemType } from '@/components/FilesDrawer'
 import FilesSelect from '@/components/FilesSelect'
 import type { FileItemType } from '@/types/files'
 import JsonView from '@/components/JsonView'
 
-function FilesListUpload() {
+function FilesListUploadTree() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileItemType[]>([])
-  const [listData, setListData] = useState<UploadFileItemType[]>([])
+  const [treeData, setTreeData] = useState<DrawerResultFileTreeItemType[]>([])
 
   const onSelectFn = (files: FileItemType[]) => {
     setFileList(files)
     setDrawerOpen(true)
   }
-  const onSuccessFn = (list: UploadFileItemType[]) => {
-    console.log('success', list)
-    setListData(list)
+  const onSuccessFn = (tree: DrawerResultFileTreeItemType[]) => {
+    console.log('success', tree)
+    setTreeData(tree)
   }
 
   return (
@@ -23,7 +24,8 @@ function FilesListUpload() {
       <FilesSelect targetType='list' isUpload={true} onSelect={onSelectFn} />
 
       <FilesUploadDrawer
-        targetType='list'
+        targetType='tree'
+        title='Upload Files/Folders'
         open={drawerOpen}
         list={fileList}
         setOpen={setDrawerOpen}
@@ -31,10 +33,10 @@ function FilesListUpload() {
       />
 
       <JsonView className='mt-4!' jsonClassName='max-h-100 overflow-auto'>
-        {listData}
+        {treeData}
       </JsonView>
     </div>
   )
 }
 
-export default FilesListUpload
+export default FilesListUploadTree
