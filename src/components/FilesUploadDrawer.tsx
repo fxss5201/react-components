@@ -1,5 +1,6 @@
 import FilesDrawer, { type FilesDrawerProps, type DrawerFileItemType } from '@/components/FilesDrawer'
 import fileUploadMock from '@/common/fileUploadMock'
+import { useCallback } from 'react'
 
 export type FilesUploadDrawerProps = Omit<FilesDrawerProps, 'title' | 'doneFile'> & {
   title?: string,
@@ -13,13 +14,13 @@ function FilesUploadDrawer({
   list = [],
   onSuccess
 }: FilesUploadDrawerProps) {
-  const doneFile = async (item: DrawerFileItemType) => {
+  const doneFile = useCallback(async (item: DrawerFileItemType) => {
     if (item.type === 'file') {
       await fileUploadMock()
     } else {
       await fileUploadMock()
     }
-  }
+  }, [])
 
   return (
     <FilesDrawer

@@ -28,7 +28,7 @@
     "failed": "Failed"
   },
   "FilesDownloadDrawer": {
-    "noSupport": "Current browser does not support",
+    "noSupport": "Current browser does not support folder selection, will use normal download",
     "chooseFolder": "Please choose a folder"
   }
 }

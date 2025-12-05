@@ -14,3 +14,7 @@ export type FileTreeItem = FileItemType & {
 }
 
 export type TargetType = 'tree' | 'list'
+
+export type FileDownloadItemType = Omit<FileItemType, 'file' | 'url'> & {
+  url: string
+}

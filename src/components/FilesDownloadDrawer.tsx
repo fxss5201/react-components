@@ -1,10 +1,14 @@
 import FilesDrawer, { type FilesDrawerProps, type DrawerFileItemType } from '@/components/FilesDrawer'
-import { useEffect, useRef, useState } from 'react'
+import type { FileDownloadItemType } from '@/types/files'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { App } from 'antd'
+import { isCrossOrigin } from '@/utils'
 
-export type FilesDownloadDrawerProps = Omit<FilesDrawerProps, 'title' | 'doneFile'> & {
+export type FilesDownloadDrawerProps = Omit<FilesDrawerProps, 'title' | 'doneFile' | 'list'> & {
   title?: string
+  list: FileDownloadItemType[]
+  isSelectFolder?: boolean
 }
 
 function FilesDownloadDrawer({
@@ -13,17 +17,24 @@ function FilesDownloadDrawer({
   open = false,
   setOpen,
   list = [],
-  onSuccess
+  onSuccess,
+  isSelectFolder = true
 }: FilesDownloadDrawerProps) {
   const { t } = useTranslation()
   const { message } = App.useApp()
   const [drawerOpen, setDrawerOpen] = useState(open)
+  const [canSelectFolder, setCanSelectFolder] = useState(isSelectFolder)
+  useEffect(() => {
+    setCanSelectFolder(isSelectFolder)
+  }, [isSelectFolder])
 
   const directoryHandle = useRef<FileSystemDirectoryHandle>(null)
   useEffect(() => {
     const getDirectoryHandle = async () => {
       if (!window.showDirectoryPicker) {
-        message.warning(t('components.FilesDownloadDrawer.noSupport', { defaultValue: '当前浏览器不支持' }))
+        message.warning(t('components.FilesDownloadDrawer.noSupport', { defaultValue: '当前浏览器不支持选择文件夹，将使用普通下载' }))
+        setCanSelectFolder(false)
+        setDrawerOpen(true)
         return
       }
       try {
@@ -37,6 +48,7 @@ function FilesDownloadDrawer({
         directoryHandle.current = dirHandle
         setDrawerOpen(true)
       } catch (error) {
+        setOpen(false)
         if (error instanceof Error && error.message.includes('aborted')) {
           message.warning(t('components.FilesDownloadDrawer.chooseFolder', { defaultValue: '请选择文件夹' }))
         } else {
@@ -46,54 +58,79 @@ function FilesDownloadDrawer({
     }
 
     if (open) {
-      getDirectoryHandle()
+      if (isSelectFolder) {
+        getDirectoryHandle()
+      } else {
+        setDrawerOpen(true)
+      }
     } else {
       setDrawerOpen(false)
     }
     return () => {
       directoryHandle.current = null
     }
-  }, [open, t, message])
+  }, [open, isSelectFolder, t, message, setOpen])
 
-  const downloadResourceAsBlob = async (url: string) => {
+  const doneFile = useCallback(async (item: DrawerFileItemType) => {
+    const downloadResourceAsBlob = async (url: string) => {
       try {
         const response = await fetch(url)
         if (!response.ok) {
-          throw new Error(`网络请求失败：${response.status} ${response.statusText}`)
+          throw new Error(`error: ${response.status} ${response.statusText}`)
         }
         return await response.blob()
       } catch (error) {
-        throw new Error(`下载资源失败：${error}`)
+        throw new Error(`download error: ${error}`)
       }
     }
 
-  const writeFile = async (item: DrawerFileItemType) => {
-    if (!directoryHandle.current) {
-      return
-    }
-    if (item.folderPath === '/') {
-      const fileHandle = await directoryHandle.current.getFileHandle(item.name, { create: true })
-      const writable = await fileHandle.createWritable()
-      await writable.write(await downloadResourceAsBlob(item.url!))
-      await writable.close()
-    } else {
-      const folderPath = item.folderPath.split('/').filter(x => x !== '')
-      let currentDirHandle = directoryHandle.current
-      for (const folder of folderPath) {
-        currentDirHandle = await currentDirHandle.getDirectoryHandle(folder, { create: true })
+    const writeFile = async (item: DrawerFileItemType) => {
+      if (!directoryHandle.current) {
+        return
       }
-      const fileHandle = await currentDirHandle.getFileHandle(item.name, { create: true })
-      const writable = await fileHandle.createWritable()
-      await writable.write(await downloadResourceAsBlob(item.url!))
-      await writable.close()
+      if (item.folderPath === '/') {
+        const fileHandle = await directoryHandle.current.getFileHandle(item.name, { create: true })
+        const writable = await fileHandle.createWritable()
+        await writable.write(await downloadResourceAsBlob(item.url!))
+        await writable.close()
+      } else {
+        const folderPath = item.folderPath.split('/').filter(x => x !== '')
+        let currentDirHandle = directoryHandle.current
+        for (const folder of folderPath) {
+          currentDirHandle = await currentDirHandle.getDirectoryHandle(folder, { create: true })
+        }
+        const fileHandle = await currentDirHandle.getFileHandle(item.name, { create: true })
+        const writable = await fileHandle.createWritable()
+        await writable.write(await downloadResourceAsBlob(item.url!))
+        await writable.close()
+      }
     }
-  }
 
-  const doneFile = async (item: DrawerFileItemType) => {
+    const downloadFile = async (item: DrawerFileItemType) => {
+      console.log('downloadFile', item)
+      const isCross = isCrossOrigin(item.url!)
+      let url = item.url!
+      if (isCross) {
+        const blob = await downloadResourceAsBlob(item.url!)
+        url = URL.createObjectURL(blob)
+      }
+      const a = document.createElement('a')
+      a.href = url
+      a.target = '_blank'
+      a.download = item.name
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      if (isCross) URL.revokeObjectURL(url)
+    }
     if (item.url) {
-      await writeFile(item)
+      if (canSelectFolder) {
+        await writeFile(item)
+      } else {
+        await downloadFile(item)
+      }
     }
-  }
+  }, [canSelectFolder])
 
   return (
     <FilesDrawer
