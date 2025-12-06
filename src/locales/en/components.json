@@ -30,5 +30,11 @@
   "FilesDownloadDrawer": {
     "noSupport": "Current browser does not support",
     "chooseFolder": "Please choose a folder"
+  },
+  "CopyToClipboard": {
+    "text is empty": "Text is empty",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copy failed": "Copy failed"
   }
 }
