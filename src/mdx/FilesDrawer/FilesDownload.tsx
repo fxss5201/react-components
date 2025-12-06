@@ -1,19 +1,26 @@
 import { useState } from 'react'
 import FilesDownloadDrawer from '@/components/FilesDownloadDrawer'
 import { type DrawerFileItemType } from '@/components/FilesDrawer'
-import type { FileItemType } from '@/types/files'
+import type { FileDownloadItemType } from '@/types/files'
 import JsonView from '@/components/JsonView'
-import { Button } from 'antd'
+import { Button, Switch } from 'antd'
 
 function FilesDownload() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [fileList] = useState<FileItemType[]>([
+  const [fileList] = useState<FileDownloadItemType[]>([
     {
-      name: 'default.jpg',
+      name: 'vite.svg',
       type: 'file',
-      filePath: '/default.jpg',
+      filePath: '/vite.svg',
       folderPath: '/',
-      url: 'https://theme-hope-assets.vuejs.press/hero/default.jpg',
+      url: '/react-components/vite.svg',
+    },
+    {
+      name: 'logo123.png',
+      type: 'file',
+      filePath: '/logo123.png',
+      folderPath: '/',
+      url: 'https://blog.fxss.work/logo123.png',
     },
     {
       name: 'logo.png',
@@ -30,6 +37,7 @@ function FilesDownload() {
       url: 'https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f80fb055-eaa7-4008-b0c3-05194e370800/26671f33-7f69-40e8-af57-cc66a8d437cf.png',
     },
   ])
+  const [isSelectFolder, setIsSelectFolder] = useState(true)
   const [listData, setListData] = useState<DrawerFileItemType[]>([])
   const onSuccessFn = (list: DrawerFileItemType[]) => {
     console.log('success', list)
@@ -42,7 +50,10 @@ function FilesDownload() {
       <JsonView className='mb-4!' jsonClassName='max-h-100 overflow-auto'>
         {fileList}
       </JsonView>
-      <Button onClick={() => setDrawerOpen(true)}>下载文件/文件夹</Button>
+      <div className='flex items-center'>
+        <Switch checkedChildren="文件夹下载" unCheckedChildren="普通下载" checked={isSelectFolder} onChange={setIsSelectFolder} />
+        <Button onClick={() => setDrawerOpen(true)} className='ml-4'>下载文件/文件夹</Button>
+      </div>
       <FilesDownloadDrawer
         targetType='list'
         title='下载文件/文件夹'
@@ -50,6 +61,7 @@ function FilesDownload() {
         list={fileList}
         setOpen={setDrawerOpen}
         onSuccess={onSuccessFn}
+        isSelectFolder={isSelectFolder}
       />
       <JsonView className='mt-4!' jsonClassName='max-h-100 overflow-auto'>
         {listData}

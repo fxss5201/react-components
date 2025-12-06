@@ -39,7 +39,6 @@ function FilesDrawer({
   const { modal } = App.useApp()
   const { t } = useTranslation()
   const fileListRef = useRef<HTMLUListElement>(null)
-  const intervalPercentMax = 80
   const [fileList, updateFileList] = useImmer<DrawerFileItemType[]>([])
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -49,7 +48,7 @@ function FilesDrawer({
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {
-          draft[index].percent = Math.min(intervalPercentMax, draft[index].percent! + (draft[index].percent! < 50 ? 8 : 4))
+          draft[index].percent = Math.min(98, draft[index].percent! + (draft[index].percent! < 50 ? 10 : draft[index].percent! < 75 ? 5 : 1))
           draft[index].percentStatus = 'active'
         }
       })
@@ -63,8 +62,8 @@ function FilesDrawer({
           draft[index].percentStatus = 'success'
         }
       })
-    }).catch(() => {
-      if (import.meta.env.DEV) console.log('error', item)
+    }).catch((error) => {
+      if (import.meta.env.DEV) console.log('error', error, item)
       updateFileList((draft) => {
         const index = draft.findIndex((i) => i.filePath === item.filePath)
         if (index !== -1) {

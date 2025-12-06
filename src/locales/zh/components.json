@@ -28,7 +28,7 @@
     "failed": "失败"
   },
   "FilesDownloadDrawer": {
-    "noSupport": "当前浏览器不支持",
+    "noSupport": "当前浏览器不支持选择文件夹，将使用普通下载",
     "chooseFolder": "请选择文件夹"
   },
   "CopyToClipboard": {
