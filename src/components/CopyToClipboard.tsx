@@ -1,19 +1,17 @@
-import { useState, useCallback, useEffect, useContext } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import copy from 'copy-to-clipboard'
 import { Button, Tooltip } from 'antd'
 import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
-import LocaleContext from '@/context/LocaleContext'
-import { type LocaleType } from '@/config'
+import { useTranslation } from 'react-i18next'
 
 export type CopyToClipboardProps = {
-  text?: string,
-  getText?: () => string,
-  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
-  disabled?: boolean,
-  timeout?: number,
-  onCopy?: (text: string) => void,
-  onError?: (error: Error) => void,
-  locale?: LocaleType
+  text?: string
+  getText?: () => string
+  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)
+  disabled?: boolean
+  timeout?: number
+  onCopy?: (text: string) => void
+  onError?: (error: Error) => void
 }
 
 function CopyToClipboard({
@@ -23,13 +21,11 @@ function CopyToClipboard({
   disabled = false,
   timeout = 2000,
   onCopy,
-  onError,
-  locale
+  onError
 }: CopyToClipboardProps) {
   const [copied, setCopied] = useState<boolean>(false)
   const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timeout | null>(null)
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
+  const { t } = useTranslation()
 
   const clearPreviousTimeout = useCallback(() => {
     if (timeoutRef) {
@@ -43,8 +39,8 @@ function CopyToClipboard({
 
     const copyText = getText ? getText() : text
     if (!copyText) {
-      console.error(new Error(currentLocale === 'zh' ? '文本为空' : 'text is empty'))
-      onError?.(new Error(currentLocale === 'zh' ? '文本为空' : 'text is empty'))
+      console.error(new Error(t('components.CopyToClipboard.text is empty', { defaultValue: '文本为空' })))
+      onError?.(new Error(t('components.CopyToClipboard.text is empty', { defaultValue: '文本为空' })))
       return
     }
 
@@ -61,10 +57,10 @@ function CopyToClipboard({
       }
     } else {
       setCopied(false)
-      console.error(new Error(currentLocale === 'zh' ? '复制失败' : 'copy failed'))
-      onError?.(new Error(currentLocale === 'zh' ? '复制失败' : 'copy failed'))
+      console.error(new Error(t('components.CopyToClipboard.copy failed', { defaultValue: '复制失败' })))
+      onError?.(new Error(t('components.CopyToClipboard.copy failed', { defaultValue: '复制失败' })))
     }
-  }, [disabled, getText, text, timeout, onCopy, onError, currentLocale])
+  }, [disabled, getText, text, timeout, onCopy, onError, t])
 
   useEffect(() => {
     return () => {
@@ -78,15 +74,15 @@ function CopyToClipboard({
     }
     return copied ? (
       <>
-        <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
+        <span className='mr-2 text-[14px] font-medium font-mono'>{t('components.CopyToClipboard.copied', { defaultValue: '复制成功' })}</span>
         <Button type="text" icon={<CheckOutlined />} />
       </>
     ) : (
-      <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
+      <Tooltip title={t('components.CopyToClipboard.copy', { defaultValue: '复制' })}>
         <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
       </Tooltip>
     )
-  }, [children, copied, copyToClipboard, currentLocale])
+  }, [children, copied, copyToClipboard, t])
 
   return renderContent()
 }

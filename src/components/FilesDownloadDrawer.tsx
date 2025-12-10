@@ -88,21 +88,26 @@ function FilesDownloadDrawer({
       if (!directoryHandle.current) {
         return
       }
-      if (item.folderPath === '/') {
-        const fileHandle = await directoryHandle.current.getFileHandle(item.name, { create: true })
-        const writable = await fileHandle.createWritable()
-        await writable.write(await downloadResourceAsBlob(item.url!))
-        await writable.close()
-      } else {
-        const folderPath = item.folderPath.split('/').filter(x => x !== '')
-        let currentDirHandle = directoryHandle.current
-        for (const folder of folderPath) {
-          currentDirHandle = await currentDirHandle.getDirectoryHandle(folder, { create: true })
+      try {
+        const fileBlob = await downloadResourceAsBlob(item.url!)
+        if (item.folderPath === '/') {
+          const fileHandle = await directoryHandle.current.getFileHandle(item.name, { create: true })
+          const writable = await fileHandle.createWritable()
+          await writable.write(fileBlob)
+          await writable.close()
+        } else {
+          const folderPath = item.folderPath.split('/').filter(x => x !== '')
+          let currentDirHandle = directoryHandle.current
+          for (const folder of folderPath) {
+            currentDirHandle = await currentDirHandle.getDirectoryHandle(folder, { create: true })
+          }
+          const fileHandle = await currentDirHandle.getFileHandle(item.name, { create: true })
+          const writable = await fileHandle.createWritable()
+          await writable.write(fileBlob)
+          await writable.close()
         }
-        const fileHandle = await currentDirHandle.getFileHandle(item.name, { create: true })
-        const writable = await fileHandle.createWritable()
-        await writable.write(await downloadResourceAsBlob(item.url!))
-        await writable.close()
+      } catch (error) {
+        throw new Error(`error: ${error}`)
       }
     }
 

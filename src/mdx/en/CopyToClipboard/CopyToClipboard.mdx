@@ -17,14 +17,13 @@ Project uses `"react": "^19.2.0"` version, and originally used [react-copy-to-cl
 
 ``` ts
 export type CopyToClipboardProps = {
-  text?: string,
-  getText?: () => string,
-  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode),
-  disabled?: boolean,
-  timeout?: number,
-  onCopy?: (text: string) => void,
-  onError?: (error: Error) => void,
-  locale?: 'zh' | 'en'
+  text?: string
+  getText?: () => string
+  children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)
+  disabled?: boolean
+  timeout?: number
+  onCopy?: (text: string) => void
+  onError?: (error: Error) => void
 }
 ```
 
@@ -37,7 +36,6 @@ export type CopyToClipboardProps = {
 | `timeout` | Prompt display time after successful copy (milliseconds) | `number` | `2000` |
 | `onCopy` | Callback function after successful copy | `(text: string) => void` | - |
 | `onError` | Callback function after copy failure | `(error: Error) => void` | - |
-| `locale` | Language | `'zh' \| 'en'` | `'zh'` |
 
 #### children description
 
@@ -50,11 +48,11 @@ export type CopyToClipboardProps = {
 ``` tsx
 copied ? (
   <>
-    <span className='mr-2 text-[14px] font-medium font-mono'>{currentLocale === 'zh' ? '复制成功' : 'copy success'}</span>
+    <span className='mr-2 text-[14px] font-medium font-mono'>{t('components.CopyToClipboard.copied', { defaultValue: '复制成功' })}</span>
     <Button type="text" icon={<CheckOutlined />} />
   </>
 ) : (
-  <Tooltip title={currentLocale === 'zh' ? '复制' : 'copy'}>
+  <Tooltip title={t('components.CopyToClipboard.copy', { defaultValue: '复制' })}>
     <Button type="text" icon={<CopyOutlined />} onClick={copyToClipboard} />
   </Tooltip>
 )
