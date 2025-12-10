@@ -1,20 +1,5 @@
-import {
-  AlipayCircleOutlined,
-  LockOutlined,
-  MobileOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WechatOutlined,
-} from '@ant-design/icons'
-import {
-  LoginForm,
-  ProFormCaptcha,
-  ProFormCheckbox,
-  ProFormText,
-  setAlpha,
-} from '@ant-design/pro-components'
-import { Space, Tabs, App, theme as antdTheme } from 'antd'
-import type { CSSProperties } from 'react'
+import { MobileOutlined, UserOutlined } from '@ant-design/icons'
+import { Button, Form, Checkbox, Input, Tabs, App, theme as antdTheme } from 'antd'
 import { useState, Activity } from 'react'
 import { useNavigate } from 'react-router'
 import LayoutTheme from '@/layout/LayoutTheme'
@@ -22,6 +7,8 @@ import LayoutLocale from '@/layout/LayoutLocale'
 import config from '@/config'
 import { useUser } from '@/storeHooks/useUser'
 import { useTranslation } from 'react-i18next'
+import FormPassword from '@/components/FormPassword'
+import FormCaptcha from '@/components/FormCaptcha'
 
 type LoginType = 'phone' | 'account'
 interface LoginFormValues {
@@ -45,15 +32,20 @@ function Login() {
   const navigate = useNavigate()
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
-  const [loginType, setLoginType] = useState<LoginType>('account')
+  const [ loginType, setLoginType ] = useState<LoginType>('account')
   const { changeUserInfo } = useUser()
-
-  const iconStyles: CSSProperties = {
-    marginInlineStart: '16px',
-    color: setAlpha(token.colorTextBase, 0.2),
-    fontSize: '24px',
-    verticalAlign: 'middle',
-    cursor: 'pointer',
+  const [ form ] = Form.useForm()
+  const rememberLogin = localStorage.getItem('rememberLogin')
+  const formValues: LoginFormValues = {
+    ...(rememberLogin
+      ? JSON.parse(rememberLogin)
+      : {
+        username: '',
+        password: '',
+        rememberPassword: false,
+      }),
+    mobile: '',
+    captcha: '',
   }
 
   return (
@@ -62,34 +54,16 @@ function Login() {
         <LayoutTheme />
         <LayoutLocale className='ml-8' />
       </div>
-      <LoginForm<LoginFormValues>
-        logo={config.logoImg}
-        title={config.logoText}
-        actions={
-          <Space>
-            {t('login.Other login methods', { defaultValue: '其他登录方式' })}
-            <AlipayCircleOutlined style={iconStyles} />
-            <TaobaoCircleOutlined style={iconStyles} />
-            <WechatOutlined style={iconStyles} />
-          </Space>
-        }
-        request={async () => {
-          const rememberLogin = localStorage.getItem('rememberLogin')
-          if (rememberLogin) {
-            return {
-              ...JSON.parse(rememberLogin),
-              mobile: '',
-              captcha: '',
-            }
-          }
-          return {
-            username: '',
-            password: '',
-            rememberPassword: false,
-            mobile: '',
-            captcha: '',
-          }
-        }}
+      <div className='flex items-center justify-center'>
+        <div className='flex items-center'>
+          <img src={config.logoImg} alt={config.logoText} className='w-11 h-11 mr-4' />
+          <div className='text-3xl font-bold'>{config.logoText}</div>
+        </div>
+      </div>
+
+      <Form<LoginFormValues>
+        initialValues={formValues}
+        form={form}
         onFinish={async (values: LoginFormValues) => {
           console.log(values)
           if (loginType === 'account') {
@@ -112,6 +86,11 @@ function Login() {
           message.success(t('login.Login success', { defaultValue: '登录成功' }))
           navigate('/')
         }}
+        size='large'
+        style={{
+          width: '360px',
+          margin: '0 auto'
+        }}
       >
         <Tabs
           centered
@@ -131,70 +110,42 @@ function Login() {
         ></Tabs>
         <Activity mode={loginType === 'account' ? 'visible' : 'hidden'}>
           <>
-            <ProFormText
+            <Form.Item
               name='username'
-              fieldProps={{
-                size: 'large',
-                prefix: <UserOutlined />,
-              }}
-              placeholder={t('login.Username: admin or user', { defaultValue: '用户名：admin 或 user' })}
+              label={null}
               rules={[
                 {
                   required: true,
                   message: t('login.Please input username!', { defaultValue: '请输入用户名！' }),
                 },
               ]}
-            />
-            <ProFormText.Password
+            >
+              <Input
+                placeholder={t('login.Username: admin or user', { defaultValue: '用户名：admin 或 user' })}
+                prefix={<UserOutlined />}
+                allowClear={true}
+              />
+            </Form.Item>
+            <Form.Item
               name='password'
-              fieldProps={{
-                size: 'large',
-                prefix: <LockOutlined />,
-                strengthText: t('login.Password should contain numbers, letters and special characters, at least 8 characters long', { defaultValue: '密码必须包含数字、字母和特殊字符，至少8个字符长。' }),
-                statusRender: (value) => {
-                  const getStatus = () => {
-                    if (value && value.length > 12) {
-                      return 'ok'
-                    }
-                    if (value && value.length > 6) {
-                      return 'pass'
-                    }
-                    return 'poor'
-                  }
-                  const status = getStatus()
-                  if (status === 'pass') {
-                    return (
-                      <div style={{ color: token.colorWarning }}>
-                        {t('login.Strength: medium', { defaultValue: '强度：中等' })}
-                      </div>
-                    )
-                  }
-                  if (status === 'ok') {
-                    return (
-                      <div style={{ color: token.colorSuccess }}>
-                        {t('login.Strength: strong', { defaultValue: '强度：强' })}
-                      </div>
-                    )
-                  }
-                  return (
-                    <div style={{ color: token.colorError }}>
-                      {t('login.Strength: weak', { defaultValue: '强度：弱' })}
-                    </div>
-                  )
-                },
-              }}
-              placeholder={t('login.Password', { defaultValue: '密码' })}
+              label={null}
               rules={[
                 {
                   required: true,
                   message: t('login.Please input password!', { defaultValue: '请输入密码！' }),
                 },
               ]}
-            />
+            >
+              <FormPassword />
+            </Form.Item>
             <div className='flex items-center justify-between mb-6'>
-              <ProFormCheckbox noStyle name='rememberPassword'>
-                {t('login.Remember password', { defaultValue: '记住密码' })}
-              </ProFormCheckbox>
+              <Form.Item
+                name='rememberPassword'
+                label={null}
+                valuePropName='checked'
+                noStyle>
+                <Checkbox>{t('login.Remember password', { defaultValue: '记住密码' })}</Checkbox>
+              </Form.Item>
               <a onClick={(e) => {
                 e.preventDefault()
                 navigate('/reset-password')
@@ -206,13 +157,9 @@ function Login() {
         </Activity>
         <Activity mode={loginType === 'phone' ? 'visible' : 'hidden'}>
           <>
-            <ProFormText
-              fieldProps={{
-                size: 'large',
-                prefix: <MobileOutlined />,
-              }}
+            <Form.Item
               name='mobile'
-              placeholder={t('login.Mobile', { defaultValue: '手机号' })}
+              label={null}
               rules={[
                 {
                   required: true,
@@ -223,36 +170,42 @@ function Login() {
                   message: t('login.Mobile format error!', { defaultValue: '手机号格式错误！' }),
                 },
               ]}
-            />
-            <ProFormCaptcha
-              fieldProps={{
-                size: 'large',
-                prefix: <LockOutlined />,
-              }}
-              captchaProps={{
-                size: 'large',
-              }}
-              placeholder={t('login.Please input captcha', { defaultValue: '请输入验证码！' })}
-              captchaTextRender={(timing, count) => {
-                if (timing) {
-                  return `${count} ${t('login.seconds later', { defaultValue: '秒后重新获取' })}`
-                }
-                return t('login.Get captcha', { defaultValue: '获取验证码' })
-              }}
-              name='captcha'
-              rules={[
-                {
-                  required: true,
-                  message: t('login.Please input captcha!', { defaultValue: '请输入验证码！' }),
-                },
-              ]}
+            >
+              <Input
+                placeholder={t('login.Mobile', { defaultValue: '手机号' })}
+                prefix={<MobileOutlined />}
+                allowClear={true}
+              />
+            </Form.Item>
+            <FormCaptcha
               onGetCaptcha={async () => {
-                message.success(t('login.Get captcha success!', { defaultValue: '获取验证码成功！' }));
+                return new Promise((resolve, reject) => {
+                  const { mobile } = form.getFieldsValue()
+                  if (!mobile) {
+                    message.error(t('login.Please input mobile!', { defaultValue: '请输入手机号！' }))
+                    reject()
+                  } else {
+                    if (!/^1\d{10}$/.test(mobile)) {
+                      message.error(t('login.Mobile format error!', { defaultValue: '手机号格式错误！' }))
+                      reject()
+                    } else {
+                      setTimeout(() => {
+                        message.success(t('login.Get captcha success!', { defaultValue: '获取验证码成功！' }))
+                        resolve()
+                      }, 2000)
+                    }
+                  }
+                })
               }}
             />
           </>
         </Activity>
-      </LoginForm>
+        <Form.Item label={null}>
+          <Button type='primary' htmlType='submit' block>
+            {t('login.Login', { defaultValue: '登录' })}
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   )
 }

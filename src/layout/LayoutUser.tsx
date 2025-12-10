@@ -23,7 +23,7 @@ function LayoutUser({ className }: { className?: string }) {
 
   const logoutFn = () => {
     localStorage.removeItem(config.loginLocalStorageKey)
-    changeUserInfo({ id: '', name: '', img: '', badge: 0, permissionList: [] })
+    changeUserInfo({ id: '', name: '', img: undefined, badge: 0, permissionList: [] })
     navigate('/login')
   }
 

@@ -35,7 +35,6 @@ const MdDemoPage = lazy(() => import('@/pages/markdown/MdDemoPage'))
 const MdRenderPage = lazy(() => import('@/pages/markdown/MdRenderPage'))
 const CopyToClipboardPage = lazy(() => import('@/pages/CopyToClipboardPage'))
 const ErrorPage = lazy(() => import('@/pages/ErrorPage'))
-const SkeletonPage = lazy(() => import('@/pages/pro-components/SkeletonPage'))
 const ActivityIndex = lazy(() => import('@/pages/activitys/ActivityIndex'))
 const AddActivity = lazy(() => import('@/pages/activitys/AddActivity'))
 const AddActivity1 = lazy(() => import('@/pages/activitys/AddActivity1'))
@@ -233,22 +232,6 @@ export const routers = [
             }
           },
         ]
-      }
-    ]
-  },
-  {
-    path: 'pro-components',
-    meta: {
-      label: '专业组件',
-    },
-    children: [
-      {
-        path: 'skeleton',
-        element: <SkeletonPage />,
-        meta: {
-          label: '骨架屏',
-          // hideInMenu: true,
-        }
       }
     ]
   },
