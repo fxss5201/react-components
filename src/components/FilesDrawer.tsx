@@ -6,6 +6,7 @@ import { type ProgressProps } from 'antd'
 import cn from 'classnames'
 import FileIcon from './FileIcon'
 import { useTranslation } from 'react-i18next'
+import { theme as antdTheme } from 'antd'
 
 export type DrawerFileItemType = FileItemType & {
   icon?: React.ReactNode,
@@ -36,6 +37,7 @@ function FilesDrawer({
   doneFile,
   onSuccess
 }: FilesDrawerProps) {
+  const { token } = antdTheme.useToken()
   const { modal } = App.useApp()
   const { t } = useTranslation()
   const fileListRef = useRef<HTMLUListElement>(null)
@@ -221,11 +223,14 @@ function FilesDrawer({
         <div className='flex-shrink-0 flex justify-between text-[16px] mb-2 px-6'>
           <div>{t('components.FilesDrawer.total', { defaultValue: '总数' })}: {fileList.length}</div>
           <div>{t('components.FilesDrawer.success', { defaultValue: '成功' })}: {fileList.filter((item) => item.percentStatus === 'success').length}</div>
-          <div className='text-red-500'>{t('components.FilesDrawer.failed', { defaultValue: '失败' })}: {fileList.filter((item) => item.percentStatus === 'exception').length}</div>
+          <div style={{ color: token.colorError }}>{t('components.FilesDrawer.failed', { defaultValue: '失败' })}: {fileList.filter((item) => item.percentStatus === 'exception').length}</div>
         </div>
         <ul className='flex-auto overflow-x-hidden overflow-y-auto px-6' ref={fileListRef}>
           {fileList.map((item, index) => (
-            <li key={item.filePath} className={cn('py-2', { 'border-t border-zinc-300': index > 0 })}>
+            <li
+              key={item.filePath}
+              className={cn('py-2', { 'border-t border-solid': index > 0 })}
+              style={{ borderColor: token.colorBorder }}>
               <div className='flex items-center overflow-hidden'>
                 <div className='flex-shrink-0 leading-[24px] h-[24px]'>{item.icon}</div>
                 <span className='ml-2 flex-auto overflow-hidden overflow-ellipsis whitespace-nowrap leading-[24px]' title={item.name}>{item.name}</span>

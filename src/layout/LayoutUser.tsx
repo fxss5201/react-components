@@ -6,12 +6,15 @@ import { useNavigate } from 'react-router'
 import config from '@/config'
 import { useTheme } from '@/storeHooks/useTheme'
 import { useTranslation } from 'react-i18next'
+import { useAClassStyles, usePopoverItemStyles } from '@/Hooks/useStyles'
 
 function LayoutUser({ className }: { className?: string }) {
   const { name, img, badge, changeUserInfo } = useUser()
   const { theme } = useTheme()
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { styles: aClassStyles } = useAClassStyles()
+  const { styles: popoverItemStyles } = usePopoverItemStyles()
 
   const clickFn = (type: string) => {
     if (type === 'logout') {
@@ -33,7 +36,7 @@ function LayoutUser({ className }: { className?: string }) {
         { type: 'userInfo', label: t('system.UserInfo', { defaultValue: '用户信息' }), icon: <UserOutlined /> },
         { type: 'logout', label: t('system.Logout', { defaultValue: '退出登录' }), icon: <LogoutOutlined /> }
       ].map(item => (
-        <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm')}
+        <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 rounded-sm', popoverItemStyles.popoverItem)}
           key={item.type} onClick={() => clickFn(item.type)}>
           {item.icon}
           <span className='ml-2'>{item.label}</span>
@@ -42,7 +45,7 @@ function LayoutUser({ className }: { className?: string }) {
     } classNames={{
       container: 'p-2'
     }}>
-      <div className={cn('cursor-pointer hover:text-[#1677ff]', className)}>
+      <div className={cn('cursor-pointer', aClassStyles.aClass, className)}>
         <Badge count={badge} size="small">
           <Avatar
             src={img || undefined}

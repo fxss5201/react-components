@@ -14,10 +14,10 @@
 .markdown-body {
   /* light */
   color-scheme: light;
-  --focus-outlineColor: #0969da;
+  --focus-outlineColor: #1677ff;
   --fgColor-default: inherit;
   --fgColor-muted: #59636e;
-  --fgColor-accent: #0969da;
+  --fgColor-accent: #1677ff;
   --fgColor-success: #1a7f37;
   --fgColor-attention: #9a6700;
   --fgColor-danger: #d1242f;
@@ -29,7 +29,7 @@
   --borderColor-default: #d1d9e0;
   --borderColor-muted: #d1d9e0b3;
   --borderColor-neutral-muted: #d1d9e0b3;
-  --borderColor-accent-emphasis: #0969da;
+  --borderColor-accent-emphasis: #1677ff;
   --borderColor-success-emphasis: #1a7f37;
   --borderColor-attention-emphasis: #9a6700;
   --borderColor-danger-emphasis: #cf222e;

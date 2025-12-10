@@ -3,6 +3,7 @@ import { useEventListener } from 'ahooks'
 import cn from 'classnames'
 import type { TargetType, FileTreeItem } from '@/types/files'
 import { useTranslation } from 'react-i18next'
+import { theme as antdTheme } from 'antd'
 
 export type DropElementProps = {
   className?: string
@@ -22,6 +23,7 @@ function DropElement({
   children
 }: DropElementProps) {
   const { t } = useTranslation()
+  const { token } = antdTheme.useToken()
 
   async function handleDrop(e: DragEvent) {
     try {
@@ -188,14 +190,14 @@ function DropElement({
   useEventListener(
     ['dragover', 'dragenter'],
     () => {
-      dropAreaRef.current!.style.borderColor = '#2b7fff'
+      dropAreaRef.current!.style.borderColor = token.colorPrimary
     },
     { target: dropAreaRef }
   )
   useEventListener(
     ['dragleave', 'drop'],
     () => {
-      dropAreaRef.current!.style.borderColor = '#d1d5dc'
+      dropAreaRef.current!.style.borderColor = token.colorBorder
     },
     { target: dropAreaRef }
   )
@@ -212,6 +214,10 @@ function DropElement({
       className={
         cn('border-2 border-dashed border-gray-300 rounded-md p-4 text-gray-400 h-50 flex items-center justify-center', className)
       }
+      style={{
+        borderColor: token.colorBorder,
+        color: token.colorTextTertiary
+      }}
     >{children || (
       <div className='text-2xl'>{
         isUpload

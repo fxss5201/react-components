@@ -6,9 +6,11 @@ import config from '@/config'
 import LayoutTheme from './LayoutTheme'
 import LayoutLocale from './LayoutLocale'
 import LayoutUser from './LayoutUser'
+import { useAClassStyles } from '@/Hooks/useStyles'
 
 function LayoutHead({ className }: { className?: string }) {
   const navigate = useNavigate()
+  const { styles: aClassStyles } = useAClassStyles()
 
   return (
     <Flex justify='space-between' align='center' className={cn(className, 'h-full')}>
@@ -21,7 +23,7 @@ function LayoutHead({ className }: { className?: string }) {
         <LayoutLocale className='ml-8' />
         {config.githubLink && (
           <a href={config.githubLink} target='_blank' rel='noopener noreferrer'
-            className='text-[24px] ml-8 text-[#000000e0]! dark:text-[#ffffffd9]! hover:text-[#1677ff]!'>
+            className={cn('text-[24px] ml-8', aClassStyles.aClass)}>
             <GithubOutlined />
           </a>
         )}

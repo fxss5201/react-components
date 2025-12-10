@@ -11,14 +11,15 @@ import CodeRender from './CodeRender'
 export type MdRenderProps = {
   children: string
   className?: string
+  style?: React.CSSProperties
   codeClassName?: string
   enableCopy?: boolean
 }
-function MdRender({children, className, codeClassName, enableCopy = true}: MdRenderProps) {
+function MdRender({children, className, style, codeClassName, enableCopy = true}: MdRenderProps) {
   const { theme } = useTheme()
 
   return (
-    <div className={cn('markdown-body', className)}>
+    <div className={cn('markdown-body', className)} style={style}>
       <Markdown
         remarkPlugins={[remarkFrontmatter, remarkGfm, [remarkToc, { heading: 'TOC|目录' }]]}
         rehypePlugins={[rehypeSlug]}

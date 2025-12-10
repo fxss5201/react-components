@@ -8,6 +8,7 @@ import LocaleContext from '@/context/LocaleContext'
 import { type LocaleType } from '@/config'
 import { useFullscreen } from 'ahooks'
 import cn from 'classnames'
+import { theme as antdTheme } from 'antd'
 
 export type EchartsPlaygroundProps = {
   children: EchartsBlockProps
@@ -20,6 +21,7 @@ function EchartsPlayground ({
   locale,
   live = true,
 }: EchartsPlaygroundProps) {
+  const { token } = antdTheme.useToken()
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
   const [
@@ -39,7 +41,7 @@ function EchartsPlayground ({
   const [echartsBlockProps, setEchartsBlockProps] = useState<EchartsBlockProps>(children)
 
   return (
-    <div ref={echartsPlaygroundRef} className='bg-white dark:bg-black'>
+    <div ref={echartsPlaygroundRef} style={{ backgroundColor: token.colorBgContainer }}>
       <Splitter style={{ height: isFullscreen ? screen.height : 400, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <Splitter.Panel defaultSize='50%' min='30%' max='70%' collapsible>
           <div className='flex flex-col items-stretch h-full'>
@@ -98,7 +100,8 @@ function EchartsPlayground ({
             <CodeEditor
               value={JSON.stringify(echartsData, null, 2)}
               onChange={onChangeFn}
-              className='border flex-auto border-gray-300 dark:border-gray-700 overflow-auto' />
+              className='border flex-auto overflow-auto'
+              style={{ borderColor: token.colorBorder }} />
           </div>
         </Splitter.Panel>
         <Splitter.Panel defaultSize='50%' min='30%' max='70%' collapsible>

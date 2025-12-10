@@ -4,10 +4,13 @@ import { useTheme } from '@/storeHooks/useTheme'
 import cn from 'classnames'
 import config, { themeList, type ThemeType } from '@/config'
 import { useTranslation } from 'react-i18next'
+import { useAClassStyles, usePopoverItemStyles } from '@/Hooks/useStyles'
 
 function LayoutTheme({ className }: { className?: string }) {
   const { storeTheme, changeTheme } = useTheme()
   const { t } = useTranslation()
+  const { styles: aClassStyles } = useAClassStyles()
+  const { styles: popoverItemStyles } = usePopoverItemStyles()
   
   const themeMap = {
     system: {
@@ -32,7 +35,7 @@ function LayoutTheme({ className }: { className?: string }) {
   return config.theme && (
     <Popover content={
       themeItems.map(item => (
-        <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 hover:bg-blue-100 dark:hover:bg-gray-600 rounded-sm', { 'text-[#1677ff]': storeTheme === item.type })}
+        <div className={cn('cursor-pointer text-[14px] leading-[32px] px-2 rounded-sm', popoverItemStyles.popoverItem, { [popoverItemStyles.popoverItemActive]: storeTheme === item.type })}
           key={item.type} onClick={() => changeTheme(item.type as ThemeType)}>
           {item.icon}
           <span className='ml-2'>{item.label}</span>
@@ -41,7 +44,7 @@ function LayoutTheme({ className }: { className?: string }) {
     } classNames={{
       container: 'p-2'
     }}>
-      <div className={cn('text-[24px] cursor-pointer hover:text-[#1677ff]', className)}>
+      <div className={cn('text-[24px] cursor-pointer', aClassStyles.aClass, className)}>
         {
           storeTheme === 'dark' ? <MoonOutlined /> : storeTheme === 'light' ? <SunOutlined /> : <SyncOutlined />
         }

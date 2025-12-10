@@ -4,6 +4,7 @@ import { CodeOutlined, UpOutlined } from '@ant-design/icons'
 import { Button, Divider } from 'antd'
 import LocaleContext from '@/context/LocaleContext'
 import { type LocaleType } from '@/config'
+import { theme as antdTheme } from 'antd'
 
 export type PlaygroundProps = {
   code: string
@@ -15,6 +16,7 @@ export type PlaygroundProps = {
 }
 
 function Playground({ code, type = 'tsx', title, description, children, locale }: PlaygroundProps) {
+  const { token } = antdTheme.useToken()
   const localeContext = useContext(LocaleContext)
   const currentLocale = locale || localeContext || 'zh'
   const displayCode = currentLocale === 'zh' ? '显示代码' : 'Show Code'
@@ -26,7 +28,8 @@ function Playground({ code, type = 'tsx', title, description, children, locale }
   }
 
   return (
-    <div className='w-full border border-gray-300 dark:border-gray-600 rounded-md'>
+    <div className='w-full border rounded-md'
+      style={{ borderColor: token.colorBorder }}>
       <div className='px-4 pt-4'>
         {children}
       </div>
@@ -36,16 +39,22 @@ function Playground({ code, type = 'tsx', title, description, children, locale }
       {description && <div className='px-4 pb-4'>
         <MdRender>{description}</MdRender>
       </div>}
-      <div className='h-10 border-t border-gray-300 dark:border-gray-600 flex items-center justify-center'>
+      <div className='h-10 border-t flex items-center justify-center'
+        style={{ borderColor: token.colorBorder }}>
         <Button type='text' onClick={toggleCodeShow} icon={<CodeOutlined />}>
           {codeShow ? collapseCode : displayCode}
         </Button>
       </div>
       <Activity mode={codeShow ? 'visible' : 'hidden'}>
-        <MdRender className='border-t border-gray-300 dark:border-gray-600 pre-no-border-radius'>
+        <MdRender className='border-t pre-no-border-radius'
+          style={{ borderColor: token.colorBorder }}>
           {`\`\`\` ${type}\n${code}\n\`\`\``}
         </MdRender>
-        <div className='h-10 flex items-center justify-center border-t border-gray-300 dark:border-gray-600 sticky left-0 right-0 bottom-0 z-10 bg-white dark:bg-gray-800 rounded-b-md'>
+        <div className='h-10 flex items-center justify-center border-t sticky left-0 right-0 bottom-0 z-10 rounded-b-md'
+          style={{
+            borderColor: token.colorBorder,
+            backgroundColor: token.colorBgContainer
+          }}>
           <Button type='text' onClick={toggleCodeShow} icon={<UpOutlined />}>
             {codeShow ? collapseCode : displayCode}
           </Button>

@@ -17,6 +17,7 @@ import { type LocaleType } from '@/config'
 import CodeEditor from './CodeEditor'
 import JsonRender from './JsonRender'
 import useUndo from 'use-undo'
+import { useBgLayoutStyles } from '@/Hooks/useStyles'
 
 export type JsonEditorProps = {
   children: object
@@ -51,6 +52,7 @@ function JsonEditor({
   onAdd,
   onChange
 }: JsonEditorProps) {
+  const { styles: bgLayoutStyles } = useBgLayoutStyles()
   const { theme } = useTheme()
   const jsonTheme = theme === 'dark' ? githubDarkTheme : githubLightTheme
   const localeContext = useContext(LocaleContext)
@@ -88,8 +90,8 @@ function JsonEditor({
   ] = useUndo(children)
 
   return (
-    <div className={cn('bg-gray-50! dark:bg-gray-950!', className)}>
-      <div className='p-[14px] flex items-center flex-wrap'>
+    <div className={cn(className)}>
+      <div className={cn('p-[14px] flex items-center flex-wrap rounded-t-md', bgLayoutStyles.bgLayout)}>
         {enableSearch && (
           <Input
             value={searchText}
@@ -117,7 +119,7 @@ function JsonEditor({
         data={viewOnly ? children : jsonData}
         setData={setData as (data: unknown) => void}
         theme={jsonTheme}
-        className={cn('w-full bg-gray-50! dark:bg-gray-950! pt-0!', jsonClassName)}
+        className={cn('w-full pt-0! rounded-t-none! rounded-b-md!', bgLayoutStyles.bgLayout, jsonClassName)}
         maxWidth='100%'
         viewOnly={viewOnly}
         searchText={searchText}

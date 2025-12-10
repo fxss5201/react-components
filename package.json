@@ -29,6 +29,7 @@
     "@uiw/react-codemirror": "^4.25.2",
     "ahooks": "^3.9.5",
     "antd": "^6.1.0",
+    "antd-style": "^3.7.1",
     "classnames": "^2.5.1",
     "copy-to-clipboard": "^3.3.3",
     "echarts": "^6.0.0",

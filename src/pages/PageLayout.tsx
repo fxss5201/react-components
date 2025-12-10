@@ -17,10 +17,12 @@ import { useActivitys } from '@/storeHooks/useActivitys'
 import { routersList } from '@/router'
 import LayoutTabs from '@/layout/LayoutTabs'
 import { useWatermark } from '@/storeHooks/useWatermark'
+import { useColorBorderStyles } from '@/Hooks/useStyles'
 
 const { Header, Footer, Sider, Content } = Layout
 
 function PageLayout() {
+  const { styles: colorBorderStyles } = useColorBorderStyles()
   const { theme } = useTheme()
   const { pathname } = useLocation()
   const { headShow, menuShow, menuCollapsed, footerShow, breadcrumbShow, tabsShow, changeMenuCollapsed } = useLayoutState()
@@ -34,7 +36,7 @@ function PageLayout() {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <Layout className='min-h-screen'>
         <Activity mode={headShow ? 'visible' : 'hidden'}>
-          <Header className={cn('border-b border-gray-200 dark:border-gray-700 sticky top-0 z-1000', bgClassName)}>
+          <Header className={cn('border-b sticky top-0 z-1000', colorBorderStyles.colorBorder, bgClassName)}>
             <LayoutHead />
           </Header>
         </Activity>
@@ -51,7 +53,7 @@ function PageLayout() {
               <LayoutSider />
             </Sider>
           </Activity>
-          <Layout className='border-l border-gray-200 dark:border-gray-700'>
+          <Layout className={cn('border-l', colorBorderStyles.colorBorder)}>
             <Content className={cn(bgClassName)}>
               <div className='flex flex-col items-stretch h-full'>
                 <Activity mode={config.layoutTabs && tabsShow ? 'visible' : 'hidden'}>
@@ -85,7 +87,7 @@ function PageLayout() {
               <FloatButton.BackTop />
             </Content>
             <Activity mode={config.footer && footerShow ? 'visible' : 'hidden'}>
-              <Footer className={cn('border-t border-gray-200 dark:border-gray-700 p-4', bgClassName)}>
+              <Footer className={cn('border-t p-4', colorBorderStyles.colorBorder, bgClassName)}>
                 <LayoutFooter />
               </Footer>
             </Activity>

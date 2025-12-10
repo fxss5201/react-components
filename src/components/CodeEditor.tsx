@@ -8,10 +8,11 @@ import { githubLight, githubDark } from '@uiw/codemirror-theme-github'
 import { useTheme } from '@/storeHooks/useTheme'
 
 export type CodeEditorProps = Omit<TextEditorProps, 'onKeyDown'> & {
+  style?: React.CSSProperties
   className?: string
   onKeyDown?: TextEditorProps['onKeyDown']
 }
-function CodeEditor({ value, onChange, onKeyDown, className }: CodeEditorProps) {
+function CodeEditor({ value, onChange, onKeyDown, className, style }: CodeEditorProps) {
   const { theme } = useTheme()
   const codeTheme = theme === 'dark' ? githubDark : githubLight
   return (
@@ -23,6 +24,7 @@ function CodeEditor({ value, onChange, onKeyDown, className }: CodeEditorProps) 
       onChange={onChange}
       onKeyDown={onKeyDown}
       className={className}
+      style={style}
     />
   )
 }

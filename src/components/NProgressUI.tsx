@@ -1,4 +1,5 @@
 import { useNProgress } from '@tanem/react-nprogress'
+import { theme as antdTheme } from 'antd'
 
 const Container = ({ animationDuration, children, isFinished }: {
   animationDuration: number
@@ -16,60 +17,66 @@ const Container = ({ animationDuration, children, isFinished }: {
   </div>
 )
 
-const Bar = ({ animationDuration, progress }: { animationDuration: number; progress: number }) => (
-  <div
-    style={{
-      background: '#29d',
-      height: 2,
-      left: 0,
-      marginLeft: `${(-1 + progress) * 100}%`,
-      position: 'fixed',
-      top: 0,
-      transition: `margin-left ${animationDuration}ms linear`,
-      width: '100%',
-      zIndex: 1031,
-    }}
-  >
+const Bar = ({ animationDuration, progress }: { animationDuration: number; progress: number }) => {
+  const { token } = antdTheme.useToken()
+  return (
     <div
       style={{
-        boxShadow: '0 0 10px #29d, 0 0 5px #29d',
-        display: 'block',
-        height: '100%',
-        opacity: 1,
-        position: 'absolute',
-        right: 0,
-        transform: 'rotate(3deg) translate(0px, -4px)',
-        width: 100,
+        background: token.colorPrimary,
+        height: 2,
+        left: 0,
+        marginLeft: `${(-1 + progress) * 100}%`,
+        position: 'fixed',
+        top: 0,
+        transition: `margin-left ${animationDuration}ms linear`,
+        width: '100%',
+        zIndex: 1031,
       }}
-    />
-  </div>
-)
+    >
+      <div
+        style={{
+          boxShadow: `0 0 10px ${token.colorPrimary}, 0 0 5px ${token.colorPrimary}`,
+          display: 'block',
+          height: '100%',
+          opacity: 1,
+          position: 'absolute',
+          right: 0,
+          transform: 'rotate(3deg) translate(0px, -4px)',
+          width: 100,
+        }}
+      />
+    </div>
+  )
+}
 
-const Spinner = () => (
-  <div
-    style={{
-      display: 'block',
-      position: 'fixed',
-      right: 15,
-      top: 15,
-      zIndex: 1031,
-    }}
-  >
+const Spinner = () => {
+  const { token } = antdTheme.useToken()
+  return (
     <div
       style={{
-        animation: '400ms linear infinite spinner',
-        borderBottom: '2px solid transparent',
-        borderLeft: '2px solid #29d',
-        borderRadius: '50%',
-        borderRight: '2px solid transparent',
-        borderTop: '2px solid #29d',
-        boxSizing: 'border-box',
-        height: 18,
-        width: 18,
+        display: 'block',
+        position: 'fixed',
+        right: 15,
+        top: 15,
+        zIndex: 1031,
       }}
-    />
-  </div>
-)
+    >
+      <div
+        style={{
+          animation: '400ms linear infinite spinner',
+          borderBottom: '2px solid transparent',
+          borderLeft: `2px solid ${token.colorPrimary}`,
+          borderRadius: '50%',
+          borderRight: '2px solid transparent',
+          borderTop: `2px solid ${token.colorPrimary}`,
+          boxSizing: 'border-box',
+          height: 18,
+          width: 18,
+        }}
+      />
+    </div>
+  )
+}
 
 const NProgressUI = ({ isAnimating }: { isAnimating: boolean }) => {
   const { animationDuration, isFinished, progress } = useNProgress({
