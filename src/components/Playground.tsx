@@ -30,7 +30,7 @@ function Playground({ code, type = 'tsx', title, description, children, locale }
       <div className='px-4 pt-4'>
         {children}
       </div>
-      {title && <Divider orientation='left'>
+      {title && <Divider titlePlacement='left'>
         <MdRender>{title}</MdRender>
       </Divider>}
       {description && <div className='px-4 pb-4'>

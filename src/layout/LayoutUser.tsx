@@ -40,7 +40,7 @@ function LayoutUser({ className }: { className?: string }) {
         </div>
       ))
     } classNames={{
-      body: 'p-2'
+      container: 'p-2'
     }}>
       <div className={cn('cursor-pointer hover:text-[#1677ff]', className)}>
         <Badge count={badge} size="small">

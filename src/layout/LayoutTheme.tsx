@@ -39,7 +39,7 @@ function LayoutTheme({ className }: { className?: string }) {
         </div>
       ))
     } classNames={{
-      body: 'p-2'
+      container: 'p-2'
     }}>
       <div className={cn('text-[24px] cursor-pointer hover:text-[#1677ff]', className)}>
         {
