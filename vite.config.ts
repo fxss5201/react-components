@@ -33,4 +33,18 @@ export default defineConfig({
       providerImportSource: '@mdx-js/react'
     }),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          echarts: ['echarts'],
+          '@uiw/react-codemirror': ['@uiw/react-codemirror'],
+          'react-markdown': ['react-markdown'],
+          '@mdx-js/react': ['@mdx-js/react'],
+          'react-syntax-highlighter': ['react-syntax-highlighter'],
+          'markdown-plugins': ['remark-frontmatter', 'remark-gfm', 'remark-toc', 'rehype-slug']
+        }
+      }
+    }
+  }
 })
