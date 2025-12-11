@@ -36,5 +36,33 @@
     "copy": "复制",
     "copied": "复制成功",
     "copy failed": "复制失败"
+  },
+  "EchartsBlock": {
+    "loading": "加载中..."
+  },
+  "EchartsPlayground": {
+    "Undo": "撤销",
+    "Redo": "重做",
+    "Reset": "重置",
+    "Exit Fullscreen": "退出全屏",
+    "Enter Fullscreen": "进入全屏",
+    "Click the play button to apply the changes": "修改代码之后不会直接生效，需要点击执行按钮",
+    "Play": "执行"
+  },
+  "JsonEditor": {
+    "copied to clipboard": "复制成功",
+    "Value": "值",
+    "Path": "路径",
+    "Problem copying to clipboard": "复制失败",
+    "Unknown error": "未知错误",
+    "Search": "搜索",
+    "Undo": "撤销",
+    "Redo": "重做",
+    "Reset": "重置",
+    "Loading code editor": "加载代码编辑器中"
+  },
+  "Playground": {
+    "Show Code": "显示代码",
+    "Collapse Code": "收起代码"
   }
 }

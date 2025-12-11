@@ -22,7 +22,6 @@ import {
   type CopyFunction,
   type OnErrorFunction,
 } from 'json-edit-react'
-import { type LocaleType } from '@/config'
 
 export type JsonEditorProps = {
   children: object
@@ -32,7 +31,6 @@ export type JsonEditorProps = {
   className?: string
   searchClassName?: string
   jsonClassName?: string
-  locale?: LocaleType
   isCodeEditor?: boolean
   onUpdate?: UpdateFunction
   onEdit?: UpdateFunction
@@ -51,7 +49,6 @@ export type JsonEditorProps = {
 | `className` | 自定义类名 | `string` | - |
 | `searchClassName` | 搜索框自定义类名 | `string` | - |
 | `jsonClassName` | JSON显示区域自定义类名 | `string` | - |
-| `locale` | 语言 | `LocaleType` | `zh` |
 | `isCodeEditor` | 是否使用代码编辑器 | `boolean` | `false` |
 | `onUpdate` | 更新回调 | `UpdateFunction` | - |
 | `onEdit` | 编辑回调 | `UpdateFunction` | - |
@@ -79,7 +76,6 @@ export type JsonEditorProps = {
 
 ``` tsx
 import JsonEditor from './JsonEditor'
-import { type LocaleType } from '@/config'
 
 export type JsonViewProps = {
   children: object
@@ -88,7 +84,6 @@ export type JsonViewProps = {
   className?: string
   searchClassName?: string
   jsonClassName?: string
-  locale?: LocaleType
 }
 
 function JsonView({
@@ -108,7 +103,6 @@ function JsonView({
       className={className}
       searchClassName={searchClassName}
       jsonClassName={jsonClassName}
-      locale={locale}
     >{children}</JsonEditor>
   )
 }

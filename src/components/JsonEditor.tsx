@@ -1,4 +1,4 @@
-import { useContext, Suspense, useState } from 'react'
+import { Suspense, useState } from 'react'
 import {
   JsonEditor as JsonEditorReact,
   githubDarkTheme,
@@ -12,8 +12,7 @@ import cn from 'classnames'
 import { App, Spin, Input, Button, Tooltip } from 'antd'
 import { SearchOutlined, RedoOutlined, UndoOutlined, ReloadOutlined } from '@ant-design/icons'
 import { useTheme } from '@/storeHooks/useTheme'
-import LocaleContext from '@/context/LocaleContext'
-import { type LocaleType } from '@/config'
+import { useTranslation } from 'react-i18next'
 import CodeEditor from './CodeEditor'
 import JsonRender from './JsonRender'
 import useUndo from 'use-undo'
@@ -27,7 +26,6 @@ export type JsonEditorProps = {
   className?: string
   searchClassName?: string
   jsonClassName?: string
-  locale?: LocaleType
   isCodeEditor?: boolean
   onUpdate?: UpdateFunction
   onEdit?: UpdateFunction
@@ -44,7 +42,6 @@ function JsonEditor({
   className,
   searchClassName,
   jsonClassName,
-  locale,
   isCodeEditor = false,
   onUpdate,
   onEdit,
@@ -55,23 +52,22 @@ function JsonEditor({
   const { styles: bgLayoutStyles } = useBgLayoutStyles()
   const { theme } = useTheme()
   const jsonTheme = theme === 'dark' ? githubDarkTheme : githubLightTheme
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
+  const { t } = useTranslation()
   const { notification } = App.useApp()
   const onCopyFn: CopyFunction = ({ stringValue, type, success, errorMessage }) => {
     if (success) {
-      const message = currentLocale === 'zh' ? '复制成功' : 'copied to clipboard'
-      const typeMessage = type === 'value' ? (currentLocale === 'zh' ? '值' : 'Value') : (currentLocale === 'zh' ? '路径' : 'Path')
+      const message = t('components.JsonEditor.copied to clipboard', { defaultValue: '复制成功' })
+      const typeMessage = type === 'value' ? t('components.JsonEditor.Value', { defaultValue: '值' }) : t('components.JsonEditor.Path', { defaultValue: '路径' })
       notification.success({
         message: `${typeMessage} ${message}`,
         description: <JsonRender enableCopy={false} codeClassName='max-h-[68vh] overflow-auto'>{stringValue}</JsonRender>,
         duration: 3,
       })
     } else {
-      const message = currentLocale === 'zh' ? '复制失败' : 'Problem copying to clipboard'
+      const message = t('components.JsonEditor.Problem copying to clipboard', { defaultValue: '复制失败' })
       notification.error({
         message,
-        description: errorMessage || (currentLocale === 'zh' ? '未知错误' : 'Unknown error'),
+        description: errorMessage || t('components.JsonEditor.Unknown error', { defaultValue: '未知错误' }),
         duration: 3,
       })
     }
@@ -79,7 +75,7 @@ function JsonEditor({
   const onErrorFn: OnErrorFunction = ({ error }) => {
     notification.error({
       message: error.code,
-      description: error.message || (currentLocale === 'zh' ? '未知错误' : 'Unknown error'),
+      description: error.message || t('components.JsonEditor.Unknown error', { defaultValue: '未知错误' }),
       duration: 3,
     })
   }
@@ -96,20 +92,20 @@ function JsonEditor({
           <Input
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder={currentLocale === 'zh' ? '搜索' : 'Search'}
+            placeholder={t('components.JsonEditor.Search', { defaultValue: '搜索' })}
             prefix={<SearchOutlined />}
             className={cn('w-50', searchClassName)}
           />
         )}
         {!viewOnly && (
           <>
-            <Tooltip placement="bottom" title={currentLocale === 'zh' ? '撤销' : 'Undo'}>
+            <Tooltip placement="bottom" title={t('components.JsonEditor.Undo', { defaultValue: '撤销' })}>
               <Button type="text" onClick={undoData} disabled={!canUndo}><UndoOutlined /></Button>
             </Tooltip>
-            <Tooltip placement="bottom" title={currentLocale === 'zh' ? '重做' : 'Redo'}>
+            <Tooltip placement="bottom" title={t('components.JsonEditor.Redo', { defaultValue: '重做' })}>
               <Button type="text" onClick={redoData} disabled={!canRedo}><RedoOutlined /></Button>
             </Tooltip>
-            <Tooltip placement="bottom" title={currentLocale === 'zh' ? '重置' : 'Reset'}>
+            <Tooltip placement="bottom" title={t('components.JsonEditor.Reset', { defaultValue: '重置' })}>
               <Button type="text" onClick={() => resetData(children)} disabled={!canUndo}><ReloadOutlined /></Button>
             </Tooltip>
           </>
@@ -138,7 +134,7 @@ function JsonEditor({
             ? (props) => (
                 <Suspense
                   fallback={
-                    <Spin tip={currentLocale === 'zh' ? '加载代码编辑器中' : 'Loading code editor'} size="large" />
+                    <Spin tip={t('components.JsonEditor.Loading code editor', { defaultValue: '加载代码编辑器中' })} size="large" />
                   }
                 >
                   <CodeEditor {...props} />

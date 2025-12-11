@@ -1,29 +1,26 @@
-import { useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import EchartsBlock, { type EchartsBlockProps } from '@/components/EchartsBlock'
 import { Splitter, Button, Tooltip } from 'antd'
 import CodeEditor from '@/components/CodeEditor'
 import useUndo from 'use-undo'
 import { RedoOutlined, UndoOutlined, ReloadOutlined, PlayCircleOutlined, FullscreenOutlined, FullscreenExitOutlined, QuestionCircleOutlined } from '@ant-design/icons'
-import LocaleContext from '@/context/LocaleContext'
-import { type LocaleType } from '@/config'
+import { useTranslation } from 'react-i18next'
 import { useFullscreen } from 'ahooks'
 import cn from 'classnames'
 import { theme as antdTheme } from 'antd'
 
 export type EchartsPlaygroundProps = {
   children: EchartsBlockProps
-  locale?: LocaleType
   live?: boolean
 }
 
 function EchartsPlayground ({
   children,
-  locale,
   live = true,
 }: EchartsPlaygroundProps) {
   const { token } = antdTheme.useToken()
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
+  const { t } = useTranslation()
+  
   const [
     { present: echartsData },
     { set: setData, reset: resetData, undo: undoData, redo: redoData, canUndo, canRedo },
@@ -49,21 +46,21 @@ function EchartsPlayground ({
               <div className='flex flex-row items-center'>
                 <Tooltip
                   placement="bottom"
-                  title={currentLocale === 'zh' ? '撤销' : 'Undo'}
+                  title={t('components.EchartsPlayground.Undo', { defaultValue: '撤销'})}
                   getPopupContainer={() => echartsPlaygroundRef.current!}
                 >
                   <Button type="text" onClick={undoData} disabled={!canUndo}><UndoOutlined /></Button>
                 </Tooltip>
                 <Tooltip
                   placement="bottom"
-                  title={currentLocale === 'zh' ? '重做' : 'Redo'}
+                  title={t('components.EchartsPlayground.Redo', { defaultValue: '重做'})}
                   getPopupContainer={() => echartsPlaygroundRef.current!}
                 >
                   <Button type="text" onClick={redoData} disabled={!canRedo}><RedoOutlined /></Button>
                 </Tooltip>
                 <Tooltip
                   placement="bottom"
-                  title={currentLocale === 'zh' ? '重置' : 'Reset'}
+                  title={t('components.EchartsPlayground.Reset', { defaultValue: '重置'})}
                   getPopupContainer={() => echartsPlaygroundRef.current!}
                 >
                   <Button type="text" onClick={() => resetData(children)} disabled={!canUndo}><ReloadOutlined /></Button>
@@ -72,7 +69,7 @@ function EchartsPlayground ({
               <div className='flex flex-row items-center'>
                 <Tooltip
                   placement="bottom"
-                  title={currentLocale === 'zh' ? isFullscreen ? '退出全屏' : '进入全屏' : isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+                  title={isFullscreen ? t('components.EchartsPlayground.ExitFullscreen', { defaultValue: '退出全屏'}) : t('components.EchartsPlayground.EnterFullscreen', { defaultValue: '进入全屏'})}
                   getPopupContainer={() => echartsPlaygroundRef.current!}
                 >
                   <Button type="text" onClick={toggleFullscreen} disabled={!isEnabled}>{ isFullscreen ? <FullscreenExitOutlined /> : <FullscreenOutlined /> }</Button>
@@ -81,14 +78,14 @@ function EchartsPlayground ({
                   <>
                     <Tooltip
                       placement="bottom"
-                      title={currentLocale === 'zh' ? '修改代码之后不会直接生效，需要点击执行按钮' : 'Click the play button to apply the changes'}
+                      title={t('components.EchartsPlayground.ClickToApply', { defaultValue: '修改代码之后不会直接生效，需要点击执行按钮'})}
                       getPopupContainer={() => echartsPlaygroundRef.current!}
                     >
                       <Button type="text"><QuestionCircleOutlined /></Button>
                     </Tooltip>
                     <Tooltip
                       placement="bottom"
-                      title={currentLocale === 'zh' ? '执行' : 'Play'}
+                      title={t('components.EchartsPlayground.Play', { defaultValue: '执行'})}
                       getPopupContainer={() => echartsPlaygroundRef.current!}
                     >
                       <Button type="primary" onClick={() => setEchartsBlockProps(echartsData)}><PlayCircleOutlined /></Button>

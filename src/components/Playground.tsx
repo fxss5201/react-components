@@ -1,9 +1,8 @@
-import { Activity, useState, useContext } from 'react'
+import { Activity, useState } from 'react'
 import MdRender from './MdRender'
 import { CodeOutlined, UpOutlined } from '@ant-design/icons'
 import { Button, Divider } from 'antd'
-import LocaleContext from '@/context/LocaleContext'
-import { type LocaleType } from '@/config'
+import { useTranslation } from 'react-i18next'
 import { theme as antdTheme } from 'antd'
 
 export type PlaygroundProps = {
@@ -11,16 +10,15 @@ export type PlaygroundProps = {
   type?: string
   title?: string
   description?: string
-  children: React.ReactNode,
-  locale?: LocaleType
+  children: React.ReactNode
 }
 
-function Playground({ code, type = 'tsx', title, description, children, locale }: PlaygroundProps) {
+function Playground({ code, type = 'tsx', title, description, children }: PlaygroundProps) {
   const { token } = antdTheme.useToken()
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
-  const displayCode = currentLocale === 'zh' ? '显示代码' : 'Show Code'
-  const collapseCode = currentLocale === 'zh' ? '收起代码' : 'Collapse Code'
+  const { t } = useTranslation()
+  
+  const displayCode = t('components.Playground.Show Code', { defaultValue: '显示代码' })
+  const collapseCode = t('components.Playground.Collapse Code', { defaultValue: '收起代码' })
   
   const [codeShow, setCodeShow] = useState(false)
   function toggleCodeShow() {

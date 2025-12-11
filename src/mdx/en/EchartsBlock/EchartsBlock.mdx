@@ -37,7 +37,6 @@ export type EchartsBlockProps = {
   opts?: echarts.EChartsInitOpts
   option: echarts.EChartsOption
   loading?: boolean
-  locale?: LocaleType
   theme?: 'dark' | 'light'
   ref?: React.Ref<{
     echartsInstance: echarts.ECharts
@@ -62,7 +61,6 @@ export type EchartsBlockProps = {
 | `opts` | Echarts init options | `echarts.EChartsInitOpts` | - |
 | `option` | Echarts chart options | `echarts.EChartsOption` | - |
 | `loading` | ECharts Loading | `boolean` | `false` |
-| `locale` | Locale type | `'zh' \| 'en'` | `'zh'` |
 | `theme` | Theme type | `'dark' \| 'light'` | `'light'` |
 | `ref` | Echarts instance ref | `React.Ref<{ echartsInstance: echarts.ECharts }>` | - |
 | `echartsType` | Chart type, after setting, will overwrite the `series` data in the `option`, providing a method for separating data and `option` settings | `EchartsType` | - |

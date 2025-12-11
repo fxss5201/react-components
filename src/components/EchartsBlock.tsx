@@ -1,11 +1,10 @@
-import { useEffect, useRef, useContext, useImperativeHandle } from 'react'
+import { useEffect, useRef, useImperativeHandle } from 'react'
 import * as echarts from 'echarts'
 import cn from 'classnames'
 import { useSize } from 'ahooks'
-import LocaleContext from '@/context/LocaleContext'
-import { type LocaleType } from '@/config'
 import { useTheme } from '@/storeHooks/useTheme'
 import merge from 'lodash/merge'
+import { useTranslation } from 'react-i18next'
 
 export type EchartsType = 'line' | 'bar' | 'pie'
 export type EchartsDataLeafItem = {
@@ -26,7 +25,6 @@ export type EchartsBlockProps = {
   opts?: echarts.EChartsInitOpts
   option: echarts.EChartsOption
   loading?: boolean
-  locale?: LocaleType
   theme?: 'dark' | 'light'
   ref?: React.Ref<{
     echartsInstance: echarts.ECharts
@@ -49,7 +47,6 @@ function EchartsBlock({
   opts = { renderer: 'svg' },
   option = {},
   loading = false,
-  locale,
   theme,
   ref,
   echartsType,
@@ -57,8 +54,7 @@ function EchartsBlock({
   echartsData,
   autoPlay = false,
 }: EchartsBlockProps) {
-  const localeContext = useContext(LocaleContext)
-  const currentLocale = locale || localeContext || 'zh'
+  const { t } = useTranslation()
   const { theme: parentTheme } = useTheme()
   const currentTheme = theme || parentTheme || 'light'
 
@@ -110,7 +106,7 @@ function EchartsBlock({
   function echartsLoading (loading: boolean) {
     if (loading) {
       echartsInstance.current?.showLoading('default', {
-        text: currentLocale === 'zh' ? '加载中...' : 'Loading...',
+        text: t('components.EchartsBlock.loading', { defaultValue: '加载中...' }),
         fontSize: 14,
       })
     } else {

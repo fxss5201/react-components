@@ -36,5 +36,29 @@
     "copy": "Copy",
     "copied": "Copied",
     "copy failed": "Copy failed"
+  },
+  "EchartsBlock": {
+    "loading": "Loading..."
+  },
+  "EchartsPlayground": {
+    "Undo": "Undo",
+    "Redo": "Redo",
+    "Reset": "Reset",
+    "Exit Fullscreen": "Exit Fullscreen",
+    "Enter Fullscreen": "Enter Fullscreen",
+    "Click the play button to apply the changes": "Click the play button to apply the changes",
+    "Play": "Play"
+  },
+  "JsonEditor": {
+    "copied to clipboard": "Copied to clipboard",
+    "Value": "Value",
+    "Path": "Path",
+    "Problem copying to clipboard": "Problem copying to clipboard",
+    "Unknown error": "Unknown error",
+    "Search": "Search",
+    "Undo": "Undo",
+    "Redo": "Redo",
+    "Reset": "Reset",
+    "Loading code editor": "Loading code editor"
   }
 }

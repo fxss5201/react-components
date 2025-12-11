@@ -1,5 +1,4 @@
 import JsonEditor from './JsonEditor'
-import { type LocaleType } from '@/config'
 
 export type JsonViewProps = {
   children: object
@@ -8,7 +7,6 @@ export type JsonViewProps = {
   className?: string
   searchClassName?: string
   jsonClassName?: string
-  locale?: LocaleType
 }
 
 function JsonView({
@@ -18,7 +16,6 @@ function JsonView({
   className,
   searchClassName,
   jsonClassName,
-  locale
 }: JsonViewProps) {
   return (
     <JsonEditor
@@ -28,7 +25,6 @@ function JsonView({
       className={className}
       searchClassName={searchClassName}
       jsonClassName={jsonClassName}
-      locale={locale}
     >{children}</JsonEditor>
   )
 }

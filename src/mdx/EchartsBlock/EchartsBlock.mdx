@@ -39,7 +39,6 @@ export type EchartsBlockProps = {
   opts?: echarts.EChartsInitOpts
   option: echarts.EChartsOption
   loading?: boolean
-  locale?: LocaleType
   theme?: 'dark' | 'light'
   ref?: React.Ref<{
     echartsInstance: echarts.ECharts
@@ -64,7 +63,6 @@ export type EchartsBlockProps = {
 | `opts` | Echarts 初始化选项 | `echarts.EChartsInitOpts` | - |
 | `option` | Echarts 图表选项 | `echarts.EChartsOption` | - |
 | `loading` | 显示加载状态 | `boolean` | `false` |
-| `locale` | 语言 | `'zh' \| 'en'` | `'zh'` |
 | `theme` | 主题 | `'dark' \| 'light'` | `'light'` |
 | `ref` | 图表实例引用 | `React.Ref<{ echartsInstance: echarts.ECharts }>` | - |
 | `echartsType` | 图表类型，设置之后会覆盖 `option` 中的 `series` 数据，提供数据和 `option` 分离的设置方法 | `EchartsType` | - |
