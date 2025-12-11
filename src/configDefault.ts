@@ -120,6 +120,8 @@ export type ConfigDefaultType = {
     }
   }
   watermark: WatermarkProps | null
-  watermarkLayout: 'layout' | 'page'
+  watermarkLayout: 'layout' | 'page',
+  // 活动最大数量
+  activitysMax: number
 }
 export type ConfigType = Partial<ConfigDefaultType>

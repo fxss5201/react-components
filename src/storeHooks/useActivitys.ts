@@ -3,7 +3,8 @@ import { type RootState, type AppDispatch } from '@/store'
 import { addActivitys, removeActivitys, clearActivitys } from '@/store/activitysSlice'
 
 export function useActivitys() {
-  const activitys = useSelector((state: RootState) => state.activitys.value)
+  const value = useSelector((state: RootState) => state.activitys.value)
+  const activitys = value.map(item => item.value)
 
   const dispatch = useDispatch<AppDispatch>()
   const addActivitysCallback = (value: string) => dispatch(addActivitys(value))
