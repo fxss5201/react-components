@@ -9,6 +9,7 @@ import {
   CloseCircleOutlined,
   QuestionCircleOutlined,
   PieChartOutlined,
+  UserOutlined,
 } from '@ant-design/icons'
 import App from '@/App'
 import PageLayout from '@/pages/PageLayout'
@@ -45,6 +46,7 @@ const JsonRenderPage = lazy(() => import('@/pages/json/JsonRenderPage'))
 const JsonEditorPage = lazy(() => import('@/pages/json/JsonEditorPage'))
 const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
 const UserInfoPage = lazy(() => import('@/pages/UserInfoPage'))
+const StudentsPage = lazy(() => import('@/pages/students/StudentsPage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -234,6 +236,14 @@ export const routers = [
         ]
       }
     ]
+  },
+  {
+    path: 'students',
+    element: <StudentsPage />,
+    meta: {
+      label: '学生管理',
+      icon: <UserOutlined />,
+    }
   },
   {
     path: 'error-page',

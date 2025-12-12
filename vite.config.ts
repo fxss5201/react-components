@@ -6,6 +6,8 @@ import remarkFrontmatter from 'remark-frontmatter'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 import remarkToc from 'remark-toc'
+import { viteMockServe } from 'vite-plugin-mock'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 
 const ReactCompilerConfig = { /* ... */ }
 
@@ -19,6 +21,11 @@ export default defineConfig({
   },
   plugins: [
     tailwindcss(),
+    codeInspectorPlugin({
+      bundler: 'vite',
+      editor: 'code',
+      showSwitch: true,
+    }),
     react({
       babel: {
         plugins: [
@@ -32,7 +39,14 @@ export default defineConfig({
       rehypePlugins: [rehypeSlug],
       providerImportSource: '@mdx-js/react'
     }),
+    viteMockServe({
+      mockPath: 'mock',
+      enable: true,
+    }),
   ],
+  server: {
+    open: true
+  },
   build: {
     rollupOptions: {
       output: {
