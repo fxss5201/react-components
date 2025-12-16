@@ -54,7 +54,10 @@ function App() {
           theme={{
             algorithm: theme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
           }}
-          >
+          tooltip={{ trigger: ['hover', 'focus'] }}
+          popover={{ trigger: ['hover', 'focus'] }}
+          popconfirm={{ trigger: ['hover', 'focus'] }}
+        >
           <LocaleContext value={locale}>
             <AntdApp>
               <Watermark {...watermarkProps}

@@ -14,6 +14,7 @@ export default [
   {
     url: '/api/students',
     method: 'get',
+    timeout: 2000,
     response: () => {
       return resultSuccess(studentList)
     }

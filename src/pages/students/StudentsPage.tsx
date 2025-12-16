@@ -1,55 +1,24 @@
-import { useState } from 'react'
-import { Table, Button, Modal, Form, Input, InputNumber, Popconfirm } from 'antd'
+import { useEffect, useState } from 'react'
+import { Table, Button, Modal, Form, Input, InputNumber, App } from 'antd'
 import type { TableProps } from 'antd'
 import type { StudentType } from '@/types/studentType'
 import { useRequest } from 'ahooks'
 import { studentListHttp, addStudentHttp, putStudentHttp, delStudentHttp } from '@/service/student'
 
 function StudentsPage() {
+const { modal } = App.useApp()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [form] = Form.useForm()
   const [formData, setFormData] = useState<StudentType>()
+  useEffect(() => {
+    if (isModalOpen) {
+      form.setFieldsValue(formData)
+    } else {
+      form.resetFields()
+    }
+  }, [isModalOpen, formData, form])
 
-  const columns: TableProps<StudentType>['columns'] = [
-    {
-      title: 'ID',
-      dataIndex: 'id'
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <>
-          <Button color='primary' variant='text' size='small'
-            onClick={() => {
-              setIsEdit(true)
-              setFormData({
-                ...record
-              })
-              setIsModalOpen(true)
-            }}>编辑</Button>
-          <Popconfirm
-            title="确认删除吗？"
-            description={`确认删除学生 ${record.name} 吗？`}
-            onConfirm={() => {
-              deleteStudentRun(record.id!)
-            }}
-          >
-            <Button color='danger' variant='text' size='small'>删除</Button>
-          </Popconfirm>
-        </>
-      ),
-    },
-  ]
   const { data: tableData, error, loading, refresh } = useRequest(studentListHttp)
   const { run: addStudentRun, loading: addLoading } = useRequest(addStudentHttp, {
     manual: true,
@@ -65,12 +34,56 @@ function StudentsPage() {
       setIsModalOpen(false)
     }
   })
-  const { run: deleteStudentRun } = useRequest(delStudentHttp, {
-    manual: true,
-    onSuccess: () => {
-      refresh()
-    }
+  const { runAsync: deleteStudentRun } = useRequest(delStudentHttp, {
+    manual: true
   })
+  const handleDeleteOk = async (id: number) => {
+    await deleteStudentRun(id)
+    refresh()
+  }
+  
+  const columns: TableProps<StudentType>['columns'] = [
+    {
+      title: 'ID',
+      dataIndex: 'id'
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+    },
+    {
+      title: '年龄',
+      dataIndex: 'age',
+    },
+    {
+      title: '操作',
+      key: 'action',
+      render: (_, record) => (
+        <>
+          <Button color='primary' variant='text' size='small'
+            onClick={() => {
+              setIsEdit(true)
+              setFormData({
+                ...record
+              })
+              setIsModalOpen(true)
+            }}>编辑</Button>
+          <Button color='danger' variant='text' size='small'
+            onClick={() => {
+              modal.confirm({
+                title: '确认删除吗？',
+                content: `确认删除学生 ${record.name} 吗？`,
+                closable: true,
+                onOk() {
+                  return handleDeleteOk(record.id!)
+                }
+              })
+            }}
+          >删除</Button>
+        </>
+      ),
+    },
+  ]
 
   if (error) {
     return <div>错误: {error.message}</div>
@@ -123,7 +136,8 @@ function StudentsPage() {
         title={isEdit ? '编辑学生' : '添加学生'}
         open={isModalOpen}
         onCancel={handleModalCancel}
-        okButtonProps={{ autoFocus: true, htmlType: 'submit', loading: isEdit ? putLoading : addLoading }}
+        okButtonProps={{ autoFocus: true, htmlType: 'submit' }}
+        confirmLoading={isEdit ? putLoading : addLoading}
         modalRender={(dom) => (
           <Form
             form={form}
@@ -132,13 +146,6 @@ function StudentsPage() {
             {dom}
           </Form>
         )}
-        afterOpenChange={(open) => {
-          if (open) {
-            form.setFieldsValue(formData)
-          } else {
-            form.resetFields()
-          }
-        }}
       >
         <Form.Item name='name' label='姓名' rules={[{ required: true }]} className='pt-4'>
           <Input placeholder='请输入姓名' />
