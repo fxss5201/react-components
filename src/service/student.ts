@@ -4,10 +4,15 @@ import type { HttpResponseType } from '@/types/response'
 import type { AxiosResponse } from 'axios'
 
 interface StudentListHttpResponse extends HttpResponseType {
-  data: StudentType[]
+  data: {
+    data: StudentType[],
+    total: number,
+  }
 }
-export function studentListHttp(): Promise<AxiosResponse<StudentListHttpResponse>> {
-  return get('/api/students')
+export function studentListHttp(params: { page: number, pageSize: number, name?: string }): Promise<AxiosResponse<StudentListHttpResponse>> {
+  return get('/api/students', {
+    params
+  })
 }
 
 export function addStudentHttp(data: StudentType): Promise<AxiosResponse<HttpResponseType>> {

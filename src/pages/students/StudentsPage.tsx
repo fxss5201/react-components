@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Table, Button, Modal, Form, Input, InputNumber, App } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import type { StudentType } from '@/types/studentType'
 import { useRequest } from 'ahooks'
@@ -10,7 +11,11 @@ const { modal } = App.useApp()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [form] = Form.useForm()
+  const [queryForm] = Form.useForm()
   const [formData, setFormData] = useState<StudentType>()
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [total, setTotal] = useState(0)
   useEffect(() => {
     if (isModalOpen) {
       form.setFieldsValue(formData)
@@ -19,7 +24,27 @@ const { modal } = App.useApp()
     }
   }, [isModalOpen, formData, form])
 
-  const { data: tableData, error, loading, refresh } = useRequest(studentListHttp)
+  const { data: tableData, error, loading, refresh, run: getStudentListRun } = useRequest(studentListHttp, {
+    defaultParams: [
+      {
+        page,
+        pageSize,
+      }
+    ],
+    onSuccess: (res) => {
+      const data = res?.data?.data
+      setTotal(data.total)
+      if (data.total > 0 && page > 1 && data.data.length === 0) {
+        const newPage = Math.ceil(data.total / pageSize)
+        setPage(newPage)
+        getStudentListRun({
+          page: newPage,
+          pageSize,
+          ...queryForm.getFieldsValue()
+        })
+      }
+    }
+  })
   const { run: addStudentRun, loading: addLoading } = useRequest(addStudentHttp, {
     manual: true,
     onSuccess: () => {
@@ -104,8 +129,23 @@ const { modal } = App.useApp()
   }
 
   return (
-    <div className='px-4 pb-4'>
-      <div className='flex justify-end mb-4'>
+    <div className='px-4'>
+      <div className='flex justify-between mb-4'>
+        <Form form={queryForm} layout='inline' onFinish={(values) => {
+          setPage(1)
+          getStudentListRun({
+            page: 1,
+            pageSize,
+            ...values
+          })
+        }}>
+          <Form.Item name='name'>
+            <Input prefix={<SearchOutlined />} allowClear placeholder='请输入姓名' />
+          </Form.Item>
+          <Form.Item>
+            <Button htmlType='submit' type='primary'>搜索</Button>
+          </Form.Item>
+        </Form>
         <Button color='primary' onClick={() => {
           setIsEdit(false)
           setFormData({
@@ -119,17 +159,28 @@ const { modal } = App.useApp()
         rowKey='id'
         loading={loading}
         columns={columns}
-        dataSource={tableData?.data?.data || []}
+        dataSource={tableData?.data?.data?.data || []}
         bordered
-        pagination={false}
-        // pagination={{
-        //   showSizeChanger: true,
-        //   showQuickJumper: true,
-        //   showTotal: (total) => `共 ${total} 条记录`,
-        // }}
-        // onChange={(pagination) => {
-        //   console.log(pagination)
-        // }}
+        scroll={{
+          scrollToFirstRowOnChange: true,
+          y: document.documentElement.clientHeight - 390
+        }}
+        pagination={{
+          current: page,
+          pageSize,
+          total,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          showTotal: (total) => `共 ${total} 条记录`,
+        }}
+        onChange={(pagination) => {
+          setPage(pagination.current!)
+          setPageSize(pagination.pageSize!)
+          getStudentListRun({
+            page: pagination.current!,
+            pageSize: pagination.pageSize!,
+          })
+        }}
       />
 
       <Modal
