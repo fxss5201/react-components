@@ -28,6 +28,15 @@ function FormBlockLogin() {
       rules: [{ required: true, message: '请输入密码' }]
     },
     {
+      type: 'FormRemember',
+      fieldProps: {
+        children: '记住密码',
+      },
+      label: null,
+      name: 'rememberField',
+      valuePropName: 'checked',
+    },
+    {
       type: 'Button',
       fieldProps: {
         type: 'primary',

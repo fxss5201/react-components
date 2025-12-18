@@ -21,6 +21,7 @@ import {
 } from 'antd'
 import FormPassword from '@/components/FormPassword'
 import FormCaptcha from '@/components/FormCaptcha'
+import FormRemember from '@/components/FormRemember'
 import type { FormCaptchaType } from '@/components/FormCaptcha'
 import type {
   FormProps,
@@ -73,6 +74,7 @@ export type Types =
   | 'Upload'
   | 'FormPassword'
   | 'FormCaptcha'
+  | 'FormRemember'
 
 // 为不同的表单组件类型定义特定的 fieldProps 类型
 export type FieldPropsType<T extends Types> = 
@@ -102,6 +104,7 @@ export type FieldPropsType<T extends Types> =
   T extends 'Upload' ? UploadProps :
   T extends 'FormPassword' ? GetProps<typeof Input.Password> :
   T extends 'FormCaptcha' ? FormCaptchaType :
+  T extends 'FormRemember' ? CheckboxProps :
   never
 
 export type FormItemType<T extends Types> = FormItemProps & {
@@ -136,6 +139,7 @@ export type FormItemsUnion =
   | FormItemType<'Upload'>
   | FormItemType<'FormPassword'>
   | FormItemType<'FormCaptcha'>
+  | FormItemType<'FormRemember'>
 
 export type FormBlockProps = FormProps & {
   items?: FormItemsUnion[]
@@ -168,6 +172,7 @@ const FormAll = {
   Upload,
   FormPassword,
   FormCaptcha,
+  FormRemember,
 }
 
 function FormBlock({ items = [], ...formProps }: FormBlockProps) {
