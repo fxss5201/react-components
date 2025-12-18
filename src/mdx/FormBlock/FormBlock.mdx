@@ -1,0 +1,160 @@
+import React from 'react'
+import Playground from '@/components/Playground'
+import FormBlockDemo from './FormBlockDemo'
+import FormBlockDemoRaw from './FormBlockDemo.tsx?raw'
+import FormBlockPassword from './FormBlockPassword'
+import FormBlockPasswordRaw from './FormBlockPassword.tsx?raw'
+import FormBlockLogin from './FormBlockLogin'
+import FormBlockLoginRaw from './FormBlockLogin.tsx?raw'
+
+# FormBlock
+
+FormBlock 组件用于渲染表单块，支持输入、选择、上传等操作。
+
+## 目录
+
+## API
+
+### 参数 Props
+
+``` ts
+import type { FormCaptchaType } from '@/components/FormCaptcha'
+import type {
+  FormProps,
+  FormItemProps,
+  ButtonProps,
+  CheckboxProps,
+  RadioProps,
+  RadioGroupProps,
+  InputProps,
+  SelectProps,
+  AutoCompleteProps,
+  CascaderProps,
+  ColorPickerProps,
+  DatePickerProps,
+  TimePickerProps,
+  InputNumberProps,
+  MentionsProps,
+  RateProps,
+  SwitchProps,
+  TransferProps,
+  TreeSelectProps,
+  UploadProps,
+} from 'antd'
+import type { GetProps } from 'antd'
+
+export type Types =
+  | 'Button'
+  | 'Checkbox'
+  | 'CheckboxGroup'
+  | 'Radio'
+  | 'RadioGroup'
+  | 'Input'
+  | 'Password'
+  | 'TextArea'
+  | 'Search'
+  | 'OTP'
+  | 'Select'
+  | 'AutoComplete'
+  | 'Cascader'
+  | 'ColorPicker'
+  | 'DatePicker'
+  | 'TimePicker'
+  | 'InputNumber'
+  | 'Mentions'
+  | 'Rate'
+  | 'Slider'
+  | 'Switch'
+  | 'Transfer'
+  | 'TreeSelect'
+  | 'Upload'
+  | 'FormPassword'
+  | 'FormCaptcha'
+
+// 为不同的表单组件类型定义特定的 fieldProps 类型
+export type FieldPropsType<T extends Types> = 
+  T extends 'Button' ? ButtonProps :
+  T extends 'Checkbox' ? CheckboxProps :
+  T extends 'CheckboxGroup' ? GetProps<typeof Checkbox.Group> :
+  T extends 'Radio' ? RadioProps :
+  T extends 'RadioGroup' ? RadioGroupProps :
+  T extends 'Input' ? InputProps :
+  T extends 'Password' ? GetProps<typeof Input.Password> :
+  T extends 'TextArea' ? GetProps<typeof Input.TextArea> :
+  T extends 'Search' ? GetProps<typeof Input.Search> :
+  T extends 'OTP' ? GetProps<typeof Input.OTP> :
+  T extends 'Select' ? SelectProps :
+  T extends 'AutoComplete' ? AutoCompleteProps :
+  T extends 'Cascader' ? CascaderProps :
+  T extends 'ColorPicker' ? ColorPickerProps :
+  T extends 'DatePicker' ? DatePickerProps :
+  T extends 'TimePicker' ? TimePickerProps :
+  T extends 'InputNumber' ? InputNumberProps :
+  T extends 'Mentions' ? MentionsProps :
+  T extends 'Rate' ? RateProps :
+  T extends 'Slider' ? GetProps<typeof Slider> :
+  T extends 'Switch' ? SwitchProps :
+  T extends 'Transfer' ? TransferProps :
+  T extends 'TreeSelect' ? TreeSelectProps :
+  T extends 'Upload' ? UploadProps :
+  T extends 'FormPassword' ? GetProps<typeof Input.Password> :
+  T extends 'FormCaptcha' ? FormCaptchaType :
+  never
+
+export type FormItemType<T extends Types> = FormItemProps & {
+  type: T,
+  fieldProps: FieldPropsType<T>
+}
+
+export type FormItemsUnion =
+  | FormItemType<'Button'>
+  | FormItemType<'Checkbox'>
+  | FormItemType<'CheckboxGroup'>
+  | FormItemType<'Radio'>
+  | FormItemType<'RadioGroup'>
+  | FormItemType<'Input'>
+  | FormItemType<'Password'>
+  | FormItemType<'TextArea'>
+  | FormItemType<'Search'>
+  | FormItemType<'OTP'>
+  | FormItemType<'Select'>
+  | FormItemType<'AutoComplete'>
+  | FormItemType<'Cascader'>
+  | FormItemType<'ColorPicker'>
+  | FormItemType<'DatePicker'>
+  | FormItemType<'TimePicker'>
+  | FormItemType<'InputNumber'>
+  | FormItemType<'Mentions'>
+  | FormItemType<'Rate'>
+  | FormItemType<'Slider'>
+  | FormItemType<'Switch'>
+  | FormItemType<'Transfer'>
+  | FormItemType<'TreeSelect'>
+  | FormItemType<'Upload'>
+  | FormItemType<'FormPassword'>
+  | FormItemType<'FormCaptcha'>
+
+export type FormBlockProps = FormProps & {
+  items?: FormItemsUnion[]
+}
+```
+
+## 演示示例
+
+### 基本示例
+
+<Playground code={FormBlockDemoRaw} title='基本示例' description='展示 FormBlock 组件的基本用法。'>
+  <FormBlockDemo />
+</Playground>
+
+### 密码确认示例
+
+<Playground code={FormBlockPasswordRaw} title='密码确认示例' description='展示 FormBlock 组件的密码确认用法。'>
+  <FormBlockPassword />
+</Playground>
+
+### 登录示例
+
+<Playground code={FormBlockLoginRaw} title='登录示例' description='展示 FormBlock 组件的登录用法。'>
+  <FormBlockLogin />
+</Playground>

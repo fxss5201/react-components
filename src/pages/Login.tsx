@@ -177,27 +177,29 @@ function Login() {
                 allowClear={true}
               />
             </Form.Item>
-            <FormCaptcha
-              onGetCaptcha={async () => {
-                return new Promise((resolve, reject) => {
-                  const { mobile } = form.getFieldsValue()
-                  if (!mobile) {
-                    message.error(t('login.Please input mobile!', { defaultValue: '请输入手机号！' }))
-                    reject()
-                  } else {
-                    if (!/^1\d{10}$/.test(mobile)) {
-                      message.error(t('login.Mobile format error!', { defaultValue: '手机号格式错误！' }))
+            <Form.Item label={null}>
+              <FormCaptcha
+                onGetCaptcha={async () => {
+                  return new Promise((resolve, reject) => {
+                    const { mobile } = form.getFieldsValue()
+                    if (!mobile) {
+                      message.error(t('login.Please input mobile!', { defaultValue: '请输入手机号！' }))
                       reject()
                     } else {
-                      setTimeout(() => {
-                        message.success(t('login.Get captcha success!', { defaultValue: '获取验证码成功！' }))
-                        resolve()
-                      }, 2000)
+                      if (!/^1\d{10}$/.test(mobile)) {
+                        message.error(t('login.Mobile format error!', { defaultValue: '手机号格式错误！' }))
+                        reject()
+                      } else {
+                        setTimeout(() => {
+                          message.success(t('login.Get captcha success!', { defaultValue: '获取验证码成功！' }))
+                          resolve()
+                        }, 2000)
+                      }
                     }
-                  }
-                })
-              }}
-            />
+                  })
+                }}
+              />
+            </Form.Item>
           </>
         </Activity>
         <Form.Item label={null}>
