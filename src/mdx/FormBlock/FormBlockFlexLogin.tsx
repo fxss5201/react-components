@@ -3,7 +3,7 @@ import type { FormItemsUnion } from '@/components/FormBlock'
 import { Form } from 'antd'
 import { MobileOutlined } from '@ant-design/icons'
 
-function FormBlockLogin() {
+function FormBlockFlexLogin() {
   const [form] = Form.useForm()
   const items: FormItemsUnion[] = [
     {
@@ -28,13 +28,32 @@ function FormBlockLogin() {
       rules: [{ required: true, message: '请输入密码' }]
     },
     {
-      type: 'FormRemember',
+      type: 'Flex',
       fieldProps: {
-        children: '记住密码',
+        align: 'center',
+        justify: 'space-between'
       },
-      label: null,
-      name: 'rememberField',
-      valuePropName: 'checked',
+      childrenProps: [
+        {
+          type: 'Checkbox',
+          fieldProps: {
+            children: '记住密码',
+          },
+          label: null,
+          name: 'rememberField',
+          valuePropName: 'checked',
+        },
+        {
+          type: 'Button',
+          fieldProps: {
+            size: 'small',
+            type: 'link',
+            children: '忘记密码',
+            onClick: () => console.log('忘记密码')
+          },
+          label: null
+        }
+      ]
     },
     {
       type: 'Button',
@@ -49,7 +68,7 @@ function FormBlockLogin() {
   ]
   return (
     <FormBlock
-      name='formBlockLogin'
+      name='formBlockFlexLogin'
       autoComplete='off'
       form={form}
       items={items}
@@ -60,4 +79,4 @@ function FormBlockLogin() {
   )
 }
 
-export default FormBlockLogin
+export default FormBlockFlexLogin

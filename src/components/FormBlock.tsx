@@ -1,3 +1,4 @@
+import { useId, Fragment } from 'react'
 import {
   Form,
   Button,
@@ -18,6 +19,9 @@ import {
   Transfer,
   TreeSelect,
   Upload,
+  Row,
+  Col,
+  Flex,
 } from 'antd'
 import FormPassword from '@/components/FormPassword'
 import FormCaptcha from '@/components/FormCaptcha'
@@ -44,6 +48,9 @@ import type {
   TransferProps,
   TreeSelectProps,
   UploadProps,
+  RowProps,
+  ColProps,
+  FlexProps,
 } from 'antd'
 import type { GetProps } from 'antd'
 
@@ -75,6 +82,9 @@ export type Types =
   | 'FormPassword'
   | 'FormCaptcha'
   | 'FormRemember'
+  | 'Row'
+  | 'Col'
+  | 'Flex'
 
 // 为不同的表单组件类型定义特定的 fieldProps 类型
 export type FieldPropsType<T extends Types> = 
@@ -105,12 +115,21 @@ export type FieldPropsType<T extends Types> =
   T extends 'FormPassword' ? GetProps<typeof Input.Password> :
   T extends 'FormCaptcha' ? FormCaptchaType :
   T extends 'FormRemember' ? CheckboxProps :
+  T extends 'Row' ? RowProps :
+  T extends 'Col' ? ColProps :
+  T extends 'Flex' ? FlexProps :
   never
 
-export type FormItemType<T extends Types> = FormItemProps & {
-  type: T,
-  fieldProps: FieldPropsType<T>
-}
+export type FormItemType<T extends Types> = T extends 'Row' | 'Col' | 'Flex'
+  ? {
+      type: T,
+      fieldProps: T extends 'Row' ? RowProps : T extends 'Col' ? ColProps : FlexProps
+      childrenProps?: FormItemsUnion[]
+    }
+  : FormItemProps & {
+      type: T
+      fieldProps: FieldPropsType<T>
+    }
 
 export type FormItemsUnion =
   | FormItemType<'Button'>
@@ -140,6 +159,9 @@ export type FormItemsUnion =
   | FormItemType<'FormPassword'>
   | FormItemType<'FormCaptcha'>
   | FormItemType<'FormRemember'>
+  | FormItemType<'Row'>
+  | FormItemType<'Col'>
+  | FormItemType<'Flex'>
 
 export type FormBlockProps = FormProps & {
   items?: FormItemsUnion[]
@@ -173,24 +195,43 @@ const FormAll = {
   FormPassword,
   FormCaptcha,
   FormRemember,
+  Row,
+  Col,
+  Flex,
 }
 
 function FormBlock({ items = [], ...formProps }: FormBlockProps) {
   return (
     <Form {...formProps}>
-      {items.map((item, index) => {
-        const { fieldProps, type, ...formItemProps } = item
-        const Component = FormAll[type]
-        
-        return (
-          <Form.Item {...formItemProps} key={formItemProps.name?.toString() || index}>
-            {/* @ts-ignore */}
-            <Component {...fieldProps as any} />
-          </Form.Item>
-        )
+      {items.map((item) => {
+        return FormItemRender(item)
       })}
     </Form>
   )
+}
+
+function FormItemRender(item: FormItemsUnion) {
+  const { fieldProps, type, ...formItemProps } = item
+  const Component = FormAll[type]
+  const id = useId()
+
+  if (type === 'Row' || type === 'Col' || type === 'Flex') {
+    return (
+      <Fragment key={id}>
+        {/* @ts-ignore */}
+        <Component {...fieldProps as any}>
+          {item.childrenProps?.map((childItem) => FormItemRender(childItem))}
+        </Component>
+      </Fragment>
+    )
+  } else {
+    return (
+      <Form.Item {...formItemProps} key={id}>
+        {/* @ts-ignore */}
+        <Component {...fieldProps as any} />
+      </Form.Item>
+    )
+  }
 }
 
 export default FormBlock
