@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react'
-import { Table, Button, Modal, Form, Input, InputNumber, App } from 'antd'
+import { Button, Form, App } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import type { StudentType } from '@/types/studentType'
 import { useRequest } from 'ahooks'
 import { studentListHttp, addStudentHttp, putStudentHttp, delStudentHttp } from '@/service/student'
+import TablePage from '@/components/TablePage'
 
 function StudentsPage() {
 const { modal } = App.useApp()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const [form] = Form.useForm()
-  const [queryForm] = Form.useForm()
+  const [formModal] = Form.useForm()
+  const [formQuery] = Form.useForm()
   const [formData, setFormData] = useState<StudentType>()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState(0)
   useEffect(() => {
     if (isModalOpen) {
-      form.setFieldsValue(formData)
+      formModal.setFieldsValue(formData)
     } else {
-      form.resetFields()
+      formModal.resetFields()
     }
-  }, [isModalOpen, formData, form])
+  }, [isModalOpen, formData, formModal])
 
   const { data: tableData, error, loading, refresh, run: getStudentListRun } = useRequest(studentListHttp, {
     defaultParams: [
@@ -40,7 +41,7 @@ const { modal } = App.useApp()
         getStudentListRun({
           page: newPage,
           pageSize,
-          ...queryForm.getFieldsValue()
+          ...formQuery.getFieldsValue()
         })
       }
     }
@@ -82,7 +83,7 @@ const { modal } = App.useApp()
     },
     {
       title: '操作',
-      key: 'action',
+      dataIndex: 'action',
       render: (_, record) => (
         <>
           <Button color='primary' variant='text' size='small'
@@ -130,40 +131,17 @@ const { modal } = App.useApp()
 
   return (
     <div className='px-4'>
-      <div className='flex justify-between mb-4'>
-        <Form form={queryForm} layout='inline' onFinish={(values) => {
-          setPage(1)
-          getStudentListRun({
-            page: 1,
-            pageSize,
-            ...values
-          })
-        }}>
-          <Form.Item name='name'>
-            <Input prefix={<SearchOutlined />} allowClear placeholder='请输入姓名' />
-          </Form.Item>
-          <Form.Item>
-            <Button htmlType='submit' type='primary'>搜索</Button>
-          </Form.Item>
-        </Form>
-        <Button color='primary' onClick={() => {
-          setIsEdit(false)
-          setFormData({
-            name: '',
-            age: 0,
-          })
-          setIsModalOpen(true)
-        }}>添加学生</Button>
-      </div>
-      <Table<StudentType>
+      <TablePage<StudentType>
         rowKey='id'
         loading={loading}
         columns={columns}
         dataSource={tableData?.data?.data?.data || []}
         bordered
+        sticky={{
+          offsetHeader: 158,
+        }}
         scroll={{
-          scrollToFirstRowOnChange: true,
-          y: document.documentElement.clientHeight - 390
+          scrollToFirstRowOnChange: true
         }}
         pagination={{
           current: page,
@@ -181,30 +159,91 @@ const { modal } = App.useApp()
             pageSize: pagination.pageSize!,
           })
         }}
-      />
-
-      <Modal
-        title={isEdit ? '编辑学生' : '添加学生'}
-        open={isModalOpen}
-        onCancel={handleModalCancel}
-        okButtonProps={{ autoFocus: true, htmlType: 'submit' }}
-        confirmLoading={isEdit ? putLoading : addLoading}
-        modalRender={(dom) => (
-          <Form
-            form={form}
-            onFinish={(values) => handleModalOk(values)}
-          >
-            {dom}
-          </Form>
+        localKey='StudentsPage'
+        formBlockProps={{
+          form: formQuery,
+          layout: 'inline',
+          onFinish: (values) => {
+            setPage(1)
+            getStudentListRun({
+              page: 1,
+              pageSize,
+              ...values
+            })
+          },
+          items: [
+            {
+              type: 'Input',
+              name: 'name',
+              label: null,
+              fieldProps: {
+                prefix: <SearchOutlined />,
+                allowClear: true,
+                placeholder: '请输入姓名'
+              },
+            },
+            {
+              type: 'Button',
+              fieldProps: {
+                type: 'primary',
+                htmlType: 'submit',
+                children: '搜索'
+              },
+              label: null
+            },
+          ]
+        }}
+        actions={(
+          <Button color='primary' onClick={() => {
+            setIsEdit(false)
+            setFormData({
+              name: '',
+              age: 0,
+            })
+            setIsModalOpen(true)
+          }}>添加学生</Button>
         )}
-      >
-        <Form.Item name='name' label='姓名' rules={[{ required: true }]} className='pt-4'>
-          <Input placeholder='请输入姓名' />
-        </Form.Item>
-        <Form.Item name='age' label='年龄' rules={[{ required: true }]}>
-          <InputNumber min={1} placeholder='请输入年龄' className='w-full' />
-        </Form.Item>
-      </Modal>
+        formModalProps={{
+          title: isEdit ? '编辑学生' : '添加学生',
+          open: isModalOpen,
+          onCancel: handleModalCancel,
+          okButtonProps: { autoFocus: true, htmlType: 'submit' },
+          confirmLoading: isEdit ? putLoading : addLoading,
+          modalRender: (dom) => (
+            <Form
+              form={formModal}
+              onFinish={(values) => handleModalOk(values)}
+            >
+              {dom}
+            </Form>
+          ),
+          forceRender: true,
+          formBlockItems: [
+            {
+              type: 'Input',
+              name: 'name',
+              label: '姓名',
+              rules: [{ required: true }],
+              className: 'pt-4',
+              fieldProps: {
+                allowClear: true,
+                placeholder: '请输入姓名'
+              },
+            },
+            {
+              type: 'InputNumber',
+              name: 'age',
+              label: '年龄',
+              rules: [{ required: true }],
+              fieldProps: {
+                min: 1,
+                placeholder: '请输入年龄',
+                className: 'w-full',
+              },
+            },
+          ]
+        }}
+      />
     </div>
   )
 }

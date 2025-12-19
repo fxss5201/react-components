@@ -53,6 +53,11 @@ function App() {
           locale={locale === 'zh' ? zhCN : enUS}
           theme={{
             algorithm: theme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+            components: {
+              Popover: {
+                titleMinWidth: 20,
+              },
+            }
           }}
           tooltip={{ trigger: ['hover', 'focus'] }}
           popover={{ trigger: ['hover', 'focus'] }}

@@ -58,13 +58,23 @@ let studentList: StudentType[] = [
     name: '拾壹',
     age: 38
   },
+  {
+    id: 12,
+    name: '拾二',
+    age: 38
+  },
+  {
+    id: 13,
+    name: '拾三',
+    age: 40
+  },
 ]
 
 export default [
   {
     url: '/api/students',
     method: 'get',
-    timeout: 2000,
+    timeout: 1000,
     response: ({ query }: { query: { page: number, pageSize: number, name?: string } }) => {
       const { page, pageSize, name } = query
       const start = (page - 1) * pageSize
@@ -85,7 +95,7 @@ export default [
   {
     url: '/api/students/:id',
     method: 'get',
-    timeout: 2000,
+    timeout: 1000,
     response: ({ query }: { query: { id: number } }) => {
       return resultSuccess(studentList.find((x) => x.id === Number(query.id)))
     }
@@ -93,7 +103,7 @@ export default [
   {
     url: '/api/students',
     method: 'post',
-    timeout: 2000,
+    timeout: 1000,
     response: ({ body }: { body: StudentType }) => {
       let id = 1
       if (studentList.length > 0) {
@@ -109,7 +119,7 @@ export default [
   {
     url: '/api/students/:id',
     method: 'put',
-    timeout: 2000,
+    timeout: 1000,
     response: ({ body }: { body: StudentType }) => {
       const curIndex = studentList.findIndex((x) => x.id === body.id)
       studentList[curIndex] = {
@@ -122,7 +132,7 @@ export default [
   {
     url: '/api/students/:id',
     method: 'delete',
-    timeout: 2000,
+    timeout: 1000,
     response: ({ query }: { query: { id: number } }) => {
       studentList = studentList.filter((x) => x.id !== Number(query.id))
       return resultSuccess()

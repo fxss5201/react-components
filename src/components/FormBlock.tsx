@@ -163,7 +163,7 @@ export type FormItemsUnion =
   | FormItemType<'Col'>
   | FormItemType<'Flex'>
 
-export type FormBlockProps = FormProps & {
+export type FormBlockProps<T = any> = FormProps<T> & {
   items?: FormItemsUnion[]
 }
 
@@ -200,17 +200,17 @@ const FormAll = {
   Flex,
 }
 
-function FormBlock({ items = [], ...formProps }: FormBlockProps) {
+function FormBlock<T = any>({ items = [], ...formProps }: FormBlockProps<T>) {
   return (
-    <Form {...formProps}>
+    <Form<T> {...formProps}>
       {items.map((item) => {
-        return FormItemRender(item)
+        return FormBlockItem(item)
       })}
     </Form>
   )
 }
 
-function FormItemRender(item: FormItemsUnion) {
+export function FormBlockItem(item: FormItemsUnion) {
   const { fieldProps, type, ...formItemProps } = item
   const Component = FormAll[type]
   const id = useId()
@@ -220,7 +220,7 @@ function FormItemRender(item: FormItemsUnion) {
       <Fragment key={id}>
         {/* @ts-ignore */}
         <Component {...fieldProps as any}>
-          {item.childrenProps?.map((childItem) => FormItemRender(childItem))}
+          {item.childrenProps?.map((childItem) => FormBlockItem(childItem))}
         </Component>
       </Fragment>
     )
