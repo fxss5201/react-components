@@ -10,7 +10,14 @@ import cn from 'classnames'
 import { theme as antdTheme } from 'antd'
 
 export type EchartsPlaygroundProps = {
+  /**
+   * @description 图表块属性。|| Echarts block properties.
+   */
   children: EchartsBlockProps
+  /**
+   * @description 是否实时更新。|| Whether to update in real time.
+   * @default true
+   */
   live?: boolean
 }
 

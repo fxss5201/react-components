@@ -5,12 +5,35 @@ import { CopyOutlined, CheckOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
 export type CopyToClipboardProps = {
+  /**
+   * @description 要复制的文本。|| Text to copy.
+   */
   text?: string
+  /**
+   * @description 自定义获取文本函数。|| Custom function to get text.
+   */
   getText?: () => string
+  /**
+   * @description 自定义子组件。|| Custom child component.
+   */
   children?: ((props: { copied: boolean, copyToClipboard: () => void }) => React.ReactNode)
+  /**
+   * @description 是否禁用复制。|| Whether to disable copying.
+   * @default false
+   */
   disabled?: boolean
+  /**
+   * @description 复制成功后显示的超时时间（毫秒）。|| Timeout (in milliseconds) to show the success state after copying.
+   * @default 2000
+   */
   timeout?: number
+  /**
+   * @description 复制成功回调。|| Callback when copying is successful.
+   */
   onCopy?: (text: string) => void
+  /**
+   * @description 复制错误回调。|| Callback when copying encounters an error.
+   */
   onError?: (error: Error) => void
 }
 

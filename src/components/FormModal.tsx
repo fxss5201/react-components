@@ -4,6 +4,9 @@ import { FormBlockItem } from '@/components/FormBlock'
 import type { FormItemsUnion } from '@/components/FormBlock'
 
 export type FormModalProps = ModalProps & {
+  /**
+   * @description 表单块项。|| Form block items.
+   */
   formBlockItems?: FormItemsUnion[]
 }
 

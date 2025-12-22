@@ -122,12 +122,27 @@ export type FieldPropsType<T extends Types> =
 
 export type FormItemType<T extends Types> = T extends 'Row' | 'Col' | 'Flex'
   ? {
+      /**
+       * @description 表单子项属性。|| Child item properties.
+       */
       type: T,
+      /**
+       * @description type 为 Row、Col、Flex 时，fieldProps 为 RowProps、ColProps、FlexProps 类型。|| When the type is Row, Col, Flex, the fieldProps are RowProps, ColProps, FlexProps types.
+       */
       fieldProps: T extends 'Row' ? RowProps : T extends 'Col' ? ColProps : FlexProps
+      /**
+       * @description 嵌套子项属性。|| Nested child item properties.
+       */
       childrenProps?: FormItemsUnion[]
     }
   : FormItemProps & {
+      /**
+       * @description 表单子项属性。|| Child item properties.
+       */
       type: T
+      /**
+       * @description 表单子项属性。|| Child item properties.
+       */
       fieldProps: FieldPropsType<T>
     }
 
@@ -164,6 +179,9 @@ export type FormItemsUnion =
   | FormItemType<'Flex'>
 
 export type FormBlockProps<T = any> = FormProps<T> & {
+  /**
+   * @description 表单块项。|| Form block items.
+   */
   items?: FormItemsUnion[]
 }
 

@@ -60,5 +60,8 @@
     "Redo": "Redo",
     "Reset": "Reset",
     "Loading code editor": "Loading code editor"
+  },
+  "TablePage": {
+    "Request Again": "Request Again"
   }
 }

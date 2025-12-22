@@ -6,8 +6,20 @@ import { App } from 'antd'
 import { isCrossOrigin } from '@/utils'
 
 export type FilesDownloadDrawerProps = Omit<FilesDrawerProps, 'title' | 'doneFile' | 'list'> & {
+  /**
+   * @description 抽屉标题。|| Drawer title.
+   * @default '下载文件/文件夹'
+   */
   title?: string
+  /**
+   * @description 文件列表。|| File list.
+   * @default []
+   */
   list: FileDownloadItemType[]
+  /**
+   * @description 是否下载到选择的文件夹。|| Whether to download to the selected folder.
+   * @default true
+   */
   isSelectFolder?: boolean
 }
 

@@ -19,18 +19,61 @@ import useUndo from 'use-undo'
 import { useBgLayoutStyles } from '@/Hooks/useStyles'
 
 export type JsonEditorProps = {
+  /**
+   * @description 初始值。|| Initial value.
+   */
   children: object
+  /**
+   * @description 是否只读。|| Whether to read only.
+   * @default false
+   */
   viewOnly?: boolean
+  /**
+   * @description 是否启用复制。|| Whether to enable copy.
+   * @default true
+   */
   enableCopy?: boolean
+  /**
+   * @description 是否启用搜索。|| Whether to enable search.
+   * @default true
+   */
   enableSearch?: boolean
+  /**
+   * @description 自定义类名。|| Custom class name.
+   */
   className?: string
+  /**
+   * @description 搜索框自定义类名。|| Search box custom class name.
+   */
   searchClassName?: string
+  /**
+   * @description JSON 内容自定义类名。|| JSON content custom class name.
+   */
   jsonClassName?: string
+  /**
+   * @description 是否启用代码编辑器。|| Whether to enable code editor.
+   * @default false
+   */
   isCodeEditor?: boolean
+  /**
+   * @description 更新回调。|| Update callback.
+   */
   onUpdate?: UpdateFunction
+  /**
+   * @description 编辑回调。|| Edit callback.
+   */
   onEdit?: UpdateFunction
+  /**
+   * @description 删除回调。|| Delete callback.
+   */
   onDelete?: UpdateFunction
+  /**
+   * @description 添加回调。|| Add callback.
+   */
   onAdd?: UpdateFunction
+  /**
+   * @description 变化回调。|| Change callback.
+   */
   onChange?: OnChangeFunction
 }
 

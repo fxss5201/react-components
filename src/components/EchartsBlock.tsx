@@ -8,33 +8,93 @@ import { useTranslation } from 'react-i18next'
 
 export type EchartsType = 'line' | 'bar' | 'pie'
 export type EchartsDataLeafItem = {
+  /**
+   * @description 数据项名称。|| Data item name.
+   */
   name?: string
+  /**
+   * @description 数据项值。|| Data item value.
+   */
   value: number
 }
 export type EchartsDataItem = {
+  /**
+   * @description 数据项名称。|| Data item name.
+   */
   name?: string
+  /**
+   * @description 数据项值。|| Data item value.
+   */
   data: EchartsDataLeafItem[] | number[]
 }
 export type EchartsData = EchartsDataItem[]
 
 export type EchartsBlockProps = {
+  /**
+   * @description 自定义类名。|| Custom class name.
+   */
   className?: string
+  /**
+   * @description 图表宽度。|| Chart width.
+   */
   width?: string | number
+  /**
+   * @description 图表高度。|| Chart height.
+   */
   height?: string | number
+  /**
+   * @description 图表样式。|| Chart style.
+   */
   style?: React.CSSProperties
+  /**
+   * @description 图表初始化选项。|| Chart init options.
+   * @default { renderer: 'svg' }
+   */
   opts?: echarts.EChartsInitOpts
+  /**
+   * @description 图表选项。|| Chart option.
+   */
   option: echarts.EChartsOption
+  /**
+   * @description 加载状态。|| Loading state.
+   * @default false
+   */
   loading?: boolean
+  /**
+   * @description 图表主题。|| Chart theme.
+   * @default 'light'
+   */
   theme?: 'dark' | 'light'
+  /**
+   * @description 图表实例引用。|| Chart instance ref.
+   */
   ref?: React.Ref<{
+    /**
+     * @description 图表实例。|| Chart instance.
+     */
     echartsInstance: echarts.ECharts
   }>
-  // echartsType 和 echartsData 设置之后会覆盖 option 中的 series 数据，提供数据和option分离的设置方法
+  /**
+   * @description 图表类型, 当 echartsType 和 echartsData 设置之后会覆盖 option 中的 series 数据，提供数据和option分离的设置方法。|| Chart type, when echartsType and echartsData are set, they will override the series data in option, providing a method to set data and option separately.
+   */
   echartsType?: EchartsType
-  // echartsXAxisData 设置之后会覆盖 option 中的 xAxis 数据，echartsType 为 line 或 bar 时生效
+  /**
+   * @description 图表 X 轴数据, 当 echartsXAxisData 设置之后会覆盖 option 中的 xAxis 数据，echartsType 为 line 或 bar 时生效。|| Chart X axis data, when echartsXAxisData is set, it will override the xAxis data in option, which is effective when echartsType is line or bar.
+   */
   echartsXAxisData?: string[]
+  /**
+   * @description 图表数据。|| Chart data.
+   */
   echartsData?: EchartsData
+  /**
+   * @description 自动播放。|| Auto play.
+   * @default false
+   */
   autoPlay?: boolean | {
+    /**
+     * @description 自动播放间隔。|| Auto play interval.
+     * @default 2000
+     */
     interval?: number
   }
 }

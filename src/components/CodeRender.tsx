@@ -6,9 +6,23 @@ import type { ClassAttributes, HTMLAttributes } from 'react'
 import type { ExtraProps } from 'react-markdown'
 
 type CodeRenderProps = ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps & {
+  /**
+   * @description 代码块主题，'dark' | 'light'。|| Code block theme, 'dark' | 'light'.
+   * @default 'light'
+   */
   theme?: 'dark' | 'light',
+  /**
+   * @description 代码块容器类名。|| Code block container class name.
+   */
   codeBoxClassName?: string,
+  /**
+   * @description 代码类名。|| Code class name.
+   */
   codeClassName?: string,
+  /**
+   * @description 是否启用复制按钮。|| Whether to enable the copy button.
+   * @default true
+   */
   enableCopy?: boolean,
 }
 function CodeRender({ children, className, theme = 'light', codeBoxClassName, codeClassName, enableCopy = true, ...rest }: CodeRenderProps) {

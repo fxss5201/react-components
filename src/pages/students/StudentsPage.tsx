@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Button, Form, App } from 'antd'
+import { Button, Form, App, Result } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import type { StudentType } from '@/types/studentType'
 import { useRequest } from 'ahooks'
 import { studentListHttp, addStudentHttp, putStudentHttp, delStudentHttp } from '@/service/student'
 import TablePage from '@/components/TablePage'
+import { useTranslation } from 'react-i18next'
 
 function StudentsPage() {
-const { modal } = App.useApp()
+  const { t } = useTranslation()
+  const { modal } = App.useApp()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [formModal] = Form.useForm()
@@ -112,7 +114,15 @@ const { modal } = App.useApp()
   ]
 
   if (error) {
-    return <div>错误: {error.message}</div>
+    return (
+      <Result
+        status='error'
+        title={error.message}
+        extra={[
+          <Button key='Request Again' onClick={refresh} loading={loading}>{t('components.TablePage.Request Again', { defaultValue: '重新请求' })}</Button>,
+        ]}
+      />
+    )
   }
 
   const handleModalOk = (values: StudentType) => {

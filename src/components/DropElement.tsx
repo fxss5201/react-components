@@ -6,11 +6,32 @@ import { useTranslation } from 'react-i18next'
 import { theme as antdTheme } from 'antd'
 
 export type DropElementProps = {
+  /**
+   * @description 自定义类名。|| Custom class name.
+   */
   className?: string
-  targetType?: TargetType // 执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表
-  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  /**
+   * @description 目标类型，执行 onSelect 时，参数的类型， tree 时为文件树，list 时为文件列表。|| Target type, when onSelect is called, the type of the parameter, tree for file tree, list for file list.
+   * @default 'tree'
+   */
+  targetType?: TargetType
+  /**
+   * @description 是否忽略文件夹，当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹。|| Whether to ignore folders, when targetType is 'list', whether to ignore folders, for example, when uploading files, you only need to upload files, not folders.
+   * @default false
+   */
+  isIgnoreFolder?: boolean
+  /**
+   * @description 是否上传模式。|| Whether to upload in upload mode.
+   * @default false
+   */
   isUpload?: boolean
+  /**
+   * @description 选择回调。|| Select callback.
+   */
   onSelect: (fileTrees: FileTreeItem[]) => void
+  /**
+   * @description 自定义子组件。|| Custom child component.
+   */
   children?: React.ReactNode
 }
 

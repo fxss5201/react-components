@@ -4,13 +4,24 @@ import cn from 'classnames'
 
 const BASE_URL = import.meta.env.BASE_URL
 
+export type ALinkProps = {
+  /**
+   * @description 链接地址。|| Link address.
+   */
+  href: string
+  /**
+   * @description 链接文本。|| Link text.
+   */
+  children: React.ReactNode
+  /**
+   * @description 自定义类名。|| Custom class name.
+   */
+  className?: string
+}
+
 function ALink({
   href, children, className,
-}: {
-  href: string
-  children: React.ReactNode
-  className?: string
-}) {
+}: ALinkProps) {
   const navigate = useNavigate()
   
   const isExternal = /^https?:\/\//.test(href)

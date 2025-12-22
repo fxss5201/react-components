@@ -8,8 +8,17 @@ import { githubLight, githubDark } from '@uiw/codemirror-theme-github'
 import { useTheme } from '@/storeHooks/useTheme'
 
 export type CodeEditorProps = Omit<TextEditorProps, 'onKeyDown'> & {
+  /**
+   * @description 自定义样式。|| Custom style.
+   */
   style?: React.CSSProperties
+  /**
+   * @description 自定义类名。|| Custom class name.
+   */
   className?: string
+  /**
+   * @description 自定义键盘事件。|| Custom keyboard event.
+   */
   onKeyDown?: TextEditorProps['onKeyDown']
 }
 function CodeEditor({ value, onChange, onKeyDown, className, style }: CodeEditorProps) {

@@ -7,11 +7,32 @@ import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 export type FilesSelectProps = {
+  /**
+   * @description 目标类型 'tree' | 'list'。|| Target type, 'tree' | 'list'.
+   * @default 'tree'
+   */
   targetType?: TargetType,
+  /**
+   * @description 文件选择回调。|| File select callback.
+   */
   onSelect: (fileTrees: FileTreeItem[]) => void
-  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  /**
+   * @description 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹。|| When targetType is 'list', whether to ignore folders, for example, when uploading files, you only need to upload files, not folders.
+   * @default false
+   */
+  isIgnoreFolder?: boolean
+  /**
+   * @description 是否上传文件模式。|| Whether to upload files in upload mode.
+   * @default false
+   */
   isUpload?: boolean
+  /**
+   * @description 自定义类名。|| Custom class name.
+   */
   className?: string
+  /**
+   * @description 子项。|| Child items.
+   */
   children?: React.ReactNode
 }
 

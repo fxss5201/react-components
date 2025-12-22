@@ -6,10 +6,26 @@ import { useTranslation } from 'react-i18next'
 import { theme as antdTheme } from 'antd'
 
 export type PlaygroundProps = {
+  /**
+   * @description 初始值。|| Initial value.
+   */
   code: string
+  /**
+   * @description 代码类型。|| Code type.
+   * @default 'tsx'
+   */
   type?: string
+  /**
+   * @description 标题。|| Title.
+   */
   title?: string
+  /**
+   * @description 描述。|| Description.
+   */
   description?: string
+  /**
+   * @description 子元素。|| Child elements.
+   */
   children: React.ReactNode
 }
 

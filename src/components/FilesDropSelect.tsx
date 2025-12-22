@@ -5,16 +5,49 @@ import cn from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 export type FilesDropSelectProps = {
+  /**
+   * @description 目标类型 'tree' | 'list'。|| Target type, 'tree' | 'list'.
+   * @default 'tree'
+   */
   targetType?: TargetType,
+  /**
+   * @description 文件选择回调。|| File select callback.
+   */
   onSelect: (fileTrees: FileTreeItem[]) => void
+  /**
+   * @description 是否上传文件。|| Whether to upload files.
+   * @default false
+   */
   isUpload?: boolean
-  isIgnoreFolder?: boolean // 当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹
+  /**
+   * @description 是否忽略文件夹，当 targetType 为 'list' 时，是否忽略文件夹，比如说上传文件的时候，只需要上传文件，不需要上传文件夹。|| Whether to ignore folders, when targetType is 'list', whether to ignore folders, for example, when uploading files, you only need to upload files, not folders.
+   * @default false
+   */
+  isIgnoreFolder?: boolean
+  /**
+   * @description 自定义类名。|| Custom class names.
+   */
   classNames?: {
+    /**
+     * @description 自定义上传元素类名。|| Custom upload element class name.
+     */
     dropElement?: string
+    /**
+     * @description 自定义文件选择元素类名。|| Custom files select element class name.
+     */
     filesSelect?: string
   }
+  /**
+   * @description 自定义子元素。|| Custom children elements.
+   */
   childrens?: {
+    /**
+     * @description 自定义上传元素子元素。|| Custom upload element children.
+     */
     dropElement?: React.ReactNode
+    /**
+     * @description 自定义文件选择元素子元素。|| Custom files select element children.
+     */
     filesSelect?: React.ReactNode
   }
 }

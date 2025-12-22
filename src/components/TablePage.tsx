@@ -10,29 +10,100 @@ import type { FormModalProps } from '@/components/FormModal'
 import cn from 'classnames'
 
 interface TablePageProps<T = any, F = any> extends GetProps<typeof Table<T>> {
+  /**
+   * @description 本地存储键名，用于保存表格列设置。|| Local storage key name for saving table column settings.
+   */
   localKey?: string
+  /**
+   * @description 搜索表单块属性。|| Search form block properties.
+   */
   formBlockProps?: FormBlockProps<F>
-  actions?: React.ReactNode
-  formModalProps?: FormModalProps
+  /**
+   * @description 搜索表单块是否占满宽度。|| Whether the search form block occupies the full width.
+   * @default false
+   */
   formBlockFull?: boolean
+  /**
+   * @description 操作按钮。|| Action buttons.
+   */
+  actions?: React.ReactNode | (() => React.ReactNode)
+  /**
+   * @description 模态框属性。|| Modal properties.
+   */
+  formModalProps?: FormModalProps
+  /**
+   * @description 是否显示表格列设置。|| Whether to display table column settings.
+   * @default true
+   */
   tableSetting?: boolean
+  /**
+   * @description 样式设置。|| Style settings.
+   */
   tablePage?: {
+    /**
+     * @description 根元素类名。|| Root element class name.
+     */
     className?: string
+    /**
+     * @description 表单块类名。|| Form block class name.
+     */
     classNames?: {
+      /**
+       * @description 表格根元素类名。|| Table root element class name.
+       */
       root?: string
+      /**
+       * @description 表单块类名。|| Form block class name.
+       */
       formBlock?: string
+      /**
+       * @description 表格类名。|| Table class name.
+       */
       table?: string
+      /**
+       * @description 表格头类名。|| Table header class name.
+       */
       header?: string
+      /**
+       * @description 操作按钮类名。|| Action buttons class name.
+       */
       actions?: string
+      /**
+       * @description 表格列设置类名。|| Table column settings class name.
+       */
       tableSetting?: string
     }
+    /**
+     * @description 表格样式。|| Table styles.
+     */
     style?: React.CSSProperties
+    /**
+     * @description 表格样式。|| Table styles.
+     */
     styles?: {
+      /**
+       * @description 表格根元素样式。|| Table root element styles.
+       */
       root?: React.CSSProperties
+      /**
+       * @description 表单块样式。|| Form block styles.
+       */
       formBlock?: React.CSSProperties
+      /**
+       * @description 表格样式。|| Table styles.
+       */
       table?: React.CSSProperties
+      /**
+       * @description 表格头样式。|| Table header styles.
+       */
       header?: React.CSSProperties
+      /**
+       * @description 操作按钮样式。|| Action buttons styles.
+       */
       actions?: React.CSSProperties
+      /**
+       * @description 表格列设置样式。|| Table column settings styles.
+       */
       tableSetting?: React.CSSProperties
     }
   }
@@ -119,7 +190,7 @@ function TablePage<T = any, F = any>(props: TablePageProps<T, F>) {
               <div
                 className={cn('table-page__actions', 'flex-shrink-0 flex align-center', classNames?.actions || '')}
                 style={styles?.actions || {}}>
-                  {actions}
+                  {typeof actions === 'function' ? actions() : actions}
                   {tableSetting && (
                     <Popover
                       title='表格列设置'
@@ -168,7 +239,7 @@ function TablePage<T = any, F = any>(props: TablePageProps<T, F>) {
                       style={styles?.tableSetting || {}} />
                   </Popover>
                 )}
-                {actions}
+                {typeof actions === 'function' ? actions() : actions}
               </div>
             </div>
           )

@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next'
 import type { GetProps } from 'antd'
 
 export type FormCaptchaType = GetProps<typeof Input> & {
+  /**
+   * @description 获取验证码回调。|| Get captcha callback.
+   */
   onGetCaptcha?: () => Promise<void>
 }
 

@@ -9,22 +9,61 @@ import { useTranslation } from 'react-i18next'
 import { theme as antdTheme } from 'antd'
 
 export type DrawerFileItemType = FileItemType & {
+  /**
+   * @description 文件图标。|| File icon.
+   */
   icon?: React.ReactNode,
+  /**
+   * @description 上传进度。|| Upload progress.
+   * @default 0
+   */
   percent?: number,
+  /**
+   * @description 上传进度状态。|| Upload progress status.
+   * @default 'normal'
+   */
   percentStatus?: ProgressProps['status'],
 }
 
 export type DrawerResultFileTreeItemType = DrawerFileItemType & {
+  /**
+   * @description 子项。|| Child items.
+   */
   children?: DrawerResultFileTreeItemType[]
 }
 
 export type FilesDrawerProps = {
+  /**
+   * @description 目标类型 'tree' | 'list'。|| Target type, 'tree' | 'list'.
+   * @default 'list'
+   */
   targetType?: TargetType,
+  /**
+   * @description 抽屉标题。|| Drawer title.
+   * @default ''
+   */
   title: string,
+  /**
+   * @description 抽屉是否打开。|| Drawer is open.
+   * @default false
+   */
   open: boolean,
+  /**
+   * @description 抽屉关闭回调。|| Drawer close callback.
+   */
   setOpen: (open: boolean) => void,
+  /**
+   * @description 文件列表。|| File list.
+   * @default []
+   */
   list: FileItemType[],
+  /**
+   * @description 文件上传回调。|| File upload callback.
+   */
   doneFile: (fileItem: DrawerFileItemType) => Promise<void>,
+  /**
+   * @description 上传完成回调。|| Upload complete callback.
+   */
   onSuccess?: (fileTrees: DrawerResultFileTreeItemType[]) => void,
 }
 

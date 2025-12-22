@@ -64,5 +64,8 @@
   "Playground": {
     "Show Code": "显示代码",
     "Collapse Code": "收起代码"
+  },
+  "TablePage": {
+    "Request Again": "重新请求"
   }
 }
