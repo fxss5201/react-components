@@ -9,7 +9,12 @@ import FormModal from '@/components/FormModal'
 import type { FormModalProps } from '@/components/FormModal'
 import cn from 'classnames'
 
-interface TablePageProps<T = any, F = any> extends GetProps<typeof Table<T>> {
+/**
+ * @description 表格分页组件。|| Table pagination component.
+ * @param T 表格数据类型。|| Table data type.
+ * @param F 搜索表单数据类型。|| Search form data type.
+ */
+export interface TablePageProps<T = any, F = any> extends GetProps<typeof Table<T>> {
   /**
    * @description 本地存储键名，用于保存表格列设置。|| Local storage key name for saving table column settings.
    */

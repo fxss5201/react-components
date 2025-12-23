@@ -113,11 +113,12 @@ export default [
       if (studentList.length > 0) {
         id = Number(studentList[studentList.length - 1]?.id ?? 0) + 1
       }
-      studentList.push({
+      const newItem = {
         ...body,
         id
-      })
-      return resultSuccess()
+      }
+      studentList.push(newItem)
+      return resultSuccess(newItem)
     }
   },
   {
@@ -126,11 +127,12 @@ export default [
     timeout: 1000,
     response: ({ body }: { body: StudentType }) => {
       const curIndex = studentList.findIndex((x) => x.id === body.id)
-      studentList[curIndex] = {
+      const newItem = {
         ...studentList[curIndex],
         ...body
       }
-      return resultSuccess()
+      studentList[curIndex] = newItem
+      return resultSuccess(newItem)
     }
   },
   {

@@ -10,33 +10,31 @@ import type { AxiosResponse } from 'axios'
  * 3. 这样就可以在项目中同时使用 mock 接口和真实接口，开发完成之后将 mock 接口的 url 前缀替换为真实接口的 url 前缀即可
  */
 
-interface StudentListHttpResponse extends HttpResponseType {
-  data: {
-    data: StudentType[],
-    total: number,
-  }
-}
+type StudentListHttpResponse = HttpResponseType<{
+  data: StudentType[],
+  total: number,
+}>
 export function studentListHttp(params: { page: number, pageSize: number, name?: string }): Promise<AxiosResponse<StudentListHttpResponse>> {
   return get('/mock/students', {
     params
   })
 }
 
-export function addStudentHttp(data: StudentType): Promise<AxiosResponse<HttpResponseType>> {
+export function addStudentHttp(data: StudentType): Promise<AxiosResponse<HttpResponseType<{ data: StudentType }>>> {
   return post('/mock/students', data)
 }
 
-export function putStudentHttp(data: StudentType): Promise<AxiosResponse<HttpResponseType>> {
+export function putStudentHttp(data: StudentType): Promise<AxiosResponse<HttpResponseType<{ data: StudentType }>>> {
   return put(`/mock/students/${data.id}`, data)
 }
 
-interface StudentByIdHttpResponse extends HttpResponseType {
+type StudentByIdHttpResponse = HttpResponseType<{
   data: StudentType
-}
+}>
 export function getStudentByIdHttp(id: number): Promise<AxiosResponse<StudentByIdHttpResponse>> {
   return get(`/mock/students/${id}`)
 }
 
-export function delStudentHttp(id: number): Promise<AxiosResponse<HttpResponseType>> {
+export function delStudentHttp(id: number): Promise<AxiosResponse<HttpResponseType<{ data: any }>>> {
   return del(`/mock/students/${id}`)
 }

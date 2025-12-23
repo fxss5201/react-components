@@ -49,6 +49,7 @@ const JsonEditorPage = lazy(() => import('@/pages/json/JsonEditorPage'))
 const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
 const UserInfoPage = lazy(() => import('@/pages/UserInfoPage'))
 const StudentsPage = lazy(() => import('@/pages/students/StudentsPage'))
+const StudentsBoxPage = lazy(() => import('@/pages/students/StudentsBoxPage'))
 const FormBlockPage = lazy(() => import('@/pages/formBlock/FormBlockPage'))
 const TablePage = lazy(() => import('@/pages/tablePage/TablePage'))
 
@@ -262,6 +263,14 @@ export const routers = [
     element: <StudentsPage />,
     meta: {
       label: '学生管理',
+      icon: <UserOutlined />,
+    }
+  },
+  {
+    path: 'students-box',
+    element: <StudentsBoxPage />,
+    meta: {
+      label: '学生管理（再封装）',
       icon: <UserOutlined />,
     }
   },

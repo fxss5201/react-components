@@ -178,6 +178,10 @@ export type FormItemsUnion =
   | FormItemType<'Col'>
   | FormItemType<'Flex'>
 
+/**
+ * @description 表单块组件。|| Form block component.
+ * @param T 表单数据类型。|| Form data type.
+ */
 export type FormBlockProps<T = any> = FormProps<T> & {
   /**
    * @description 表单块项。|| Form block items.
