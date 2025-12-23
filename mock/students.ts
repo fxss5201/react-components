@@ -2,6 +2,10 @@ import { type MockMethod } from 'vite-plugin-mock'
 import { type StudentType } from '../src/types/studentType'
 import { resultSuccess } from './http'
 
+/**
+ * mock 接口的 url前缀 必须为 /mock
+ */
+
 let studentList: StudentType[] = [
   {
     id: 1,
@@ -72,7 +76,7 @@ let studentList: StudentType[] = [
 
 export default [
   {
-    url: '/api/students',
+    url: '/mock/students',
     method: 'get',
     timeout: 1000,
     response: ({ query }: { query: { page: number, pageSize: number, name?: string } }) => {
@@ -93,7 +97,7 @@ export default [
     }
   },
   {
-    url: '/api/students/:id',
+    url: '/mock/students/:id',
     method: 'get',
     timeout: 1000,
     response: ({ query }: { query: { id: number } }) => {
@@ -101,7 +105,7 @@ export default [
     }
   },
   {
-    url: '/api/students',
+    url: '/mock/students',
     method: 'post',
     timeout: 1000,
     response: ({ body }: { body: StudentType }) => {
@@ -117,7 +121,7 @@ export default [
     }
   },
   {
-    url: '/api/students/:id',
+    url: '/mock/students/:id',
     method: 'put',
     timeout: 1000,
     response: ({ body }: { body: StudentType }) => {
@@ -130,7 +134,7 @@ export default [
     }
   },
   {
-    url: '/api/students/:id',
+    url: '/mock/students/:id',
     method: 'delete',
     timeout: 1000,
     response: ({ query }: { query: { id: number } }) => {
