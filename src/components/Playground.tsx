@@ -42,7 +42,7 @@ function Playground({ code, type = 'tsx', title, description, children }: Playgr
   }
 
   return (
-    <div className='w-full border rounded-md'
+    <div className='playground-box w-full border rounded-md'
       style={{ borderColor: token.colorBorder }}>
       <div className='px-4 pt-4'>
         {children}

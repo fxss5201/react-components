@@ -1,6 +1,6 @@
-@layer theme, base, antd, components, utilities;
+@layer theme, base, markdown-default, antd, components, utilities;
 
-@import "tailwindcss";
+@import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @import './github-markdown.css';

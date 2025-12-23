@@ -11,6 +11,7 @@ import {
   PieChartOutlined,
   UserOutlined,
   FormOutlined,
+  TableOutlined,
 } from '@ant-design/icons'
 import App from '@/App'
 import PageLayout from '@/pages/PageLayout'
@@ -49,6 +50,7 @@ const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
 const UserInfoPage = lazy(() => import('@/pages/UserInfoPage'))
 const StudentsPage = lazy(() => import('@/pages/students/StudentsPage'))
 const FormBlockPage = lazy(() => import('@/pages/formBlock/FormBlockPage'))
+const TablePage = lazy(() => import('@/pages/tablePage/TablePage'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -184,6 +186,14 @@ export const routers = [
     meta: {
       label: '表单块',
       icon: <FormOutlined />,
+    }
+  },
+  {
+    path: 'table-page',
+    element: <TablePage />,
+    meta: {
+      label: '表格页',
+      icon: <TableOutlined />,
     }
   },
   {
