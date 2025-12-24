@@ -38,6 +38,7 @@
     "json-edit-react": "^1.29.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.2",
+    "mockjs": "^1.1.0",
     "react": "^19.2.0",
     "react-contexify": "^6.0.0",
     "react-dom": "^19.2.0",

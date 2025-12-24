@@ -6,6 +6,9 @@ import { RouterProvider } from 'react-router/dom'
 import router from './router'
 import store from './store/index'
 import { Provider } from 'react-redux'
+import { setupProdMockServer } from './mockProdServer'
+
+if (import.meta.env.PROD) setupProdMockServer()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
