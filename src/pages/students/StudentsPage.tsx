@@ -95,11 +95,12 @@ function StudentsPage() {
                 ...record
               })
               setIsModalOpen(true)
-            }}>编辑</Button>
+            }}
+          >编辑</Button>
           <Button color='danger' variant='text' size='small'
             onClick={() => {
               modal.confirm({
-                title: '确认删除吗？',
+                title: '删除提示',
                 content: `确认删除学生 ${record.name} 吗？`,
                 closable: true,
                 onOk() {

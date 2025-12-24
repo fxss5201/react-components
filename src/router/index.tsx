@@ -50,6 +50,7 @@ const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
 const UserInfoPage = lazy(() => import('@/pages/UserInfoPage'))
 const StudentsPage = lazy(() => import('@/pages/students/StudentsPage'))
 const StudentsBoxPage = lazy(() => import('@/pages/students/StudentsBoxPage'))
+const StudentsBoxOperationPage = lazy(() => import('@/pages/students/StudentsBoxOperationPage'))
 const FormBlockPage = lazy(() => import('@/pages/formBlock/FormBlockPage'))
 const TablePage = lazy(() => import('@/pages/tablePage/TablePage'))
 
@@ -260,19 +261,33 @@ export const routers = [
   },
   {
     path: 'students',
-    element: <StudentsPage />,
     meta: {
       label: '学生管理',
       icon: <UserOutlined />,
-    }
-  },
-  {
-    path: 'students-box',
-    element: <StudentsBoxPage />,
-    meta: {
-      label: '学生管理（再封装）',
-      icon: <UserOutlined />,
-    }
+    },
+    children: [
+      {
+        path: 'tablePage',
+        element: <StudentsPage />,
+        meta: {
+          label: 'TablePage渲染',
+        }
+      },
+      {
+        path: 'tablePageBox',
+        element: <StudentsBoxPage />,
+        meta: {
+          label: 'TablePageBox渲染',
+        }
+      },
+      {
+        path: 'tablePageBoxOperation',
+        element: <StudentsBoxOperationPage />,
+        meta: {
+          label: 'TablePageBox自定义操作列',
+        }
+      },
+    ]
   },
   {
     path: 'error-page',

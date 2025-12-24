@@ -2,10 +2,16 @@ import React from 'react'
 import Playground from '@/components/Playground'
 import TablePageDemo from './TablePageDemo'
 import TablePageDemoRaw from './TablePageDemo.tsx?raw'
+import StudentsPage from '@/pages/students/StudentsPage'
+import StudentsPageRaw from '@/pages/students/StudentsPage.tsx?raw'
+import StudentsBoxPage from '@/pages/students/StudentsBoxPage'
+import StudentsBoxPageRaw from '@/pages/students/StudentsBoxPage.tsx?raw'
+import StudentsBoxOperationPage from '@/pages/students/StudentsBoxOperationPage'
+import StudentsBoxOperationPageRaw from '@/pages/students/StudentsBoxOperationPage.tsx?raw'
 
 # TablePage
 
-TablePage 组件用于渲染表格页，支持配置表格、表格搜索、表格弹窗等操作。
+`TablePage` 组件用于渲染表格页，支持配置表格、表格搜索、表格弹窗等操作。
 
 ## 目录
 
@@ -25,4 +31,26 @@ TablePage 组件用于渲染表格页，支持配置表格、表格搜索、表�
 
 ### 学生管理
 
-更详细的例子可以查看 [学生管理](/students) 页面（需要在本地运行项目，因为 学生管理 页面会访问 mock 接口）。
+**注意：需要在本地运行项目，因为 学生管理 会访问 mock 接口**
+
+#### TablePage 展示
+
+<Playground code={StudentsPageRaw} title='学生管理' description='展示 TablePage 组件在学生管理场景下的用法。'>
+  <StudentsPage />
+</Playground>
+
+#### TablePageBox 展示
+
+`TablePageBox` 组件是在 `TablePage` 组件的基础上添加了增删改查的接口封装能力。
+
+[TablePageBox 参数](https://github.com/fxss5201/react-components/blob/main/src/components/TablePageBox.tsx)
+
+<Playground code={StudentsBoxPageRaw} title='学生管理' description='展示 TablePageBox 组件在学生管理场景下的用法。'>
+  <StudentsBoxPage />
+</Playground>
+
+#### TablePageBox 自定义操作列
+
+<Playground code={StudentsBoxOperationPageRaw} title='学生管理' description='展示 TablePageBox 组件 自定义操作列 在学生管理场景下的用法。'>
+  <StudentsBoxOperationPage />
+</Playground>

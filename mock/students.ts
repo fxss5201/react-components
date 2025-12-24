@@ -78,7 +78,7 @@ export default [
   {
     url: '/mock/students',
     method: 'get',
-    timeout: 1000,
+    timeout: 300,
     response: ({ query }: { query: { page: number, pageSize: number, name?: string } }) => {
       const { page, pageSize, name } = query
       const start = (page - 1) * pageSize
@@ -99,7 +99,7 @@ export default [
   {
     url: '/mock/students/:id',
     method: 'get',
-    timeout: 1000,
+    timeout: 300,
     response: ({ query }: { query: { id: number } }) => {
       return resultSuccess(studentList.find((x) => x.id === Number(query.id)))
     }
@@ -107,7 +107,7 @@ export default [
   {
     url: '/mock/students',
     method: 'post',
-    timeout: 1000,
+    timeout: 300,
     response: ({ body }: { body: StudentType }) => {
       let id = 1
       if (studentList.length > 0) {
@@ -124,7 +124,7 @@ export default [
   {
     url: '/mock/students/:id',
     method: 'put',
-    timeout: 1000,
+    timeout: 300,
     response: ({ body }: { body: StudentType }) => {
       const curIndex = studentList.findIndex((x) => x.id === body.id)
       const newItem = {
@@ -138,7 +138,7 @@ export default [
   {
     url: '/mock/students/:id',
     method: 'delete',
-    timeout: 1000,
+    timeout: 300,
     response: ({ query }: { query: { id: number } }) => {
       studentList = studentList.filter((x) => x.id !== Number(query.id))
       return resultSuccess()

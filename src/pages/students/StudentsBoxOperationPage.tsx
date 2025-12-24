@@ -1,12 +1,12 @@
 import { useRef } from 'react'
 import { Button } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
 import type { StudentType } from '@/types/studentType'
 import { studentListHttp, addStudentHttp, putStudentHttp, delStudentHttp } from '@/service/student'
 import TablePageBox from '@/components/TablePageBox'
 
-function StudentsBoxPage() {
+function StudentsBoxOperationPage() {
   const tablePageBoxRef: Parameters<typeof TablePageBox<StudentType>>[0]['ref'] = useRef(null)
 
   const columns: TableProps<StudentType>['columns'] = [
@@ -22,17 +22,38 @@ function StudentsBoxPage() {
       title: '年龄',
       dataIndex: 'age',
     },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      render: (_, record) => (
+        <>
+          <Button color='primary' variant='text' size='small'
+            icon={<EditOutlined />}
+            onClick={() => {
+              tablePageBoxRef.current?.modalEditFn(record)
+            }}
+          ></Button>
+          <Button color='danger' variant='text' size='small'
+            icon={<DeleteOutlined />}
+            onClick={() => {
+              tablePageBoxRef.current?.modalDeleteFn(record)
+            }}
+          ></Button>
+        </>
+      ),
+    },
   ]
 
   return (
     <div className='px-4'>
       <TablePageBox<StudentType>
+        isCustomOperation={true}
         ref={tablePageBoxRef}
         modalTitle='学生'
         tablePageProps={{
           rowKey: 'id',
           columns,
-          localKey: 'StudentsBoxPage',
+          localKey: 'StudentsBoxOperationPage',
           formBlockProps: {
             items: [
               {
@@ -100,4 +121,4 @@ function StudentsBoxPage() {
   )
 }
 
-export default StudentsBoxPage
+export default StudentsBoxOperationPage
