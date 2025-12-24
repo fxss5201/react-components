@@ -96,6 +96,10 @@ export interface TablePageBoxProps<T = any, F = any> {
      * @description 弹窗删除函数，一般用于删除数据。|| Modal delete function, generally used to delete data.
      */
     modalDeleteFn: (record: T) => void
+    /**
+     * @description 获取表格数据的函数，当 getOptions.manual 为 true 时，需要手动调用该函数获取数据。|| Function to get table data, when getOptions.manual is true, you need to manually call this function to get the data.
+     */
+    getRun: (params: { page: number, pageSize: number, [key: string]: any }) => void
   }>
   /**
    * @description 弹窗标题。|| Modal title.
@@ -110,6 +114,19 @@ export interface TablePageBoxProps<T = any, F = any> {
       total: number
     }
   }>>
+  /**
+   * @description 获取表格数据的参数配置。|| Configuration for parameters to get table data.
+   */
+  getOptions?: {
+    /**
+     * @description 是否手动触发获取表格数据，默认为 false ，如果设置为 true ，则需要使用 ref 手动调用 getRun 函数获取数据。|| Whether to manually trigger the function to get table data, default is false, if set to true, you need to manually call the getRun function through ref to get the data.
+     */
+    manual?: boolean,
+    /**
+     * @description 默认获取表格数据的参数，当手动触发获取表格数据时，会合并默认参数和手动传入的参数。|| Default parameters to get table data, when manually trigger the function to get table data, the default parameters and manually passed parameters will be merged.
+     */
+    defaultParams?: any,
+  } 
   /**
    * @description 添加表格数据的函数。|| Function to add table data.
    */
@@ -152,6 +169,9 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
     ref,
     modalTitle,
     getFn,
+    getOptions = {
+      manual: false,
+    },
     addFn,
     putFn,
     delFn,
@@ -177,9 +197,12 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
     }
   }, [isModalOpen, formData, formModal])
 
-  const { data: tableData, error, loading, refresh, run: getStudentListRun } = useRequest(getFn, {
+  const { data: tableData, error, loading, refresh, run: getRun } = useRequest(getFn, {
+    ...getOptions,
+    retryCount: 3,
     defaultParams: [
       {
+        ...(getOptions.defaultParams || {}),
         page,
         pageSize,
       }
@@ -190,7 +213,7 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
       if (data.total > 0 && page > 1 && data.data.length === 0) {
         const newPage = Math.ceil(data.total / pageSize)
         setPage(newPage)
-        getStudentListRun({
+        getRun({
           page: newPage,
           pageSize,
           ...formQuery.getFieldsValue()
@@ -198,25 +221,28 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
       }
     }
   })
-  const { run: addStudentRun, loading: addLoading } = useRequest(addFn, {
+  const { run: addRun, loading: addLoading } = useRequest(addFn, {
     manual: true,
+    retryCount: 3,
     onSuccess: () => {
       refresh()
       setIsModalOpen(false)
     }
   })
-  const { run: putStudentRun, loading: putLoading } = useRequest(putFn, {
+  const { run: putRun, loading: putLoading } = useRequest(putFn, {
     manual: true,
+    retryCount: 3,
     onSuccess: () => {
       refresh()
       setIsModalOpen(false)
     }
   })
-  const { runAsync: deleteStudentRun } = useRequest(delFn, {
-    manual: true
+  const { runAsync: deleteRunAsync } = useRequest(delFn, {
+    manual: true,
+    retryCount: 3,
   })
   const handleDeleteOk = async (id: number) => {
-    await deleteStudentRun(id)
+    await deleteRunAsync(id)
     refresh()
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -248,9 +274,10 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
       formQuery,
       modalAddFn,
       modalEditFn,
-      modalDeleteFn
+      modalDeleteFn,
+      getRun,
     }
-  }, [formQuery, modalEditFn, modalDeleteFn])
+  }, [formQuery, modalEditFn, modalDeleteFn, getRun])
 
   const operationButtonIcon = ['icon', 'icon-text'].includes(operationButtonDisplay)
   const operationButtonText = ['text', 'icon-text'].includes(operationButtonDisplay)
@@ -269,12 +296,12 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
 
   const handleModalOk = (values: T) => {
     if (isEdit) {
-      putStudentRun({
+      putRun({
         ...formData,
         ...values
       })
     } else {
-      addStudentRun(values)
+      addRun(values)
     }
   }
   const handleModalCancel = () => {
@@ -331,7 +358,7 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
       onChange={(pagination) => {
         setPage(pagination.current!)
         setPageSize(pagination.pageSize!)
-        getStudentListRun({
+        getRun({
           page: pagination.current!,
           pageSize: pagination.pageSize!,
         })
@@ -342,7 +369,7 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
             layout: 'inline',
             onFinish: (values) => {
               setPage(1)
-              getStudentListRun({
+              getRun({
                 page: 1,
                 pageSize,
                 ...values
