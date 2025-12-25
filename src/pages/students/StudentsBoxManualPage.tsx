@@ -1,13 +1,33 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Button } from 'antd'
-import { SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import type { TableProps } from 'antd'
-import type { StudentType } from '@/types/studentType'
-import { studentListHttp, addStudentHttp, putStudentHttp, delStudentHttp } from '@/service/student'
+import type { StudentType, StudentGroupType } from '@/types/studentType'
+import { studentGroupsHttp, studentListHttp, addStudentHttp, putStudentHttp, getStudentByIdHttp, delStudentHttp } from '@/service/student'
 import TablePageBox from '@/components/TablePageBox'
+import { useRequest } from 'ahooks'
 
-function StudentsBoxOperationPage() {
+function StudentsBoxManualPage() {
   const tablePageBoxRef: Parameters<typeof TablePageBox<StudentType>>[0]['ref'] = useRef(null)
+  const [groups, setGroups] = useState<StudentGroupType[]>([])
+  const [, setGroupId] = useState<number>()
+  const { loading } = useRequest(studentGroupsHttp, {
+    retryCount: 3,
+    onSuccess: (res) => {
+      const data = res?.data?.data || []
+      const groupId = data[0]?.id
+      setGroups(data)
+      setGroupId(groupId)
+      tablePageBoxRef.current?.formQuery.setFieldsValue({
+        groupId,
+      })
+      tablePageBoxRef.current?.getRun({
+        page: 1,
+        pageSize: 10,
+        groupId,
+      })
+    }
+  })
 
   const columns: TableProps<StudentType>['columns'] = [
     {
@@ -22,40 +42,36 @@ function StudentsBoxOperationPage() {
       title: '年龄',
       dataIndex: 'age',
     },
-    {
-      title: '操作',
-      dataIndex: 'action',
-      render: (_, record) => (
-        <>
-          <Button color='primary' variant='text' size='small'
-            icon={<EditOutlined />}
-            onClick={() => {
-              tablePageBoxRef.current?.modalEditFn(record)
-            }}
-          ></Button>
-          <Button color='danger' variant='text' size='small'
-            icon={<DeleteOutlined />}
-            onClick={() => {
-              tablePageBoxRef.current?.modalDeleteFn(record)
-            }}
-          ></Button>
-        </>
-      ),
-    },
   ]
 
   return (
     <div className='px-4'>
       <TablePageBox<StudentType>
-        isCustomOperation={true}
         ref={tablePageBoxRef}
         modalTitle='学生'
         tablePageProps={{
           rowKey: 'id',
           columns,
-          localKey: 'StudentsBoxOperationPage',
+          localKey: 'StudentsBoxManualPage',
           formBlockProps: {
             items: [
+              {
+                type: 'Select',
+                name: 'groupId',
+                label: null,
+                fieldProps: {
+                  loading,
+                  allowClear: true,
+                  placeholder: '请选择组',
+                  options: groups.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  })),
+                  style: {
+                    width: '218px',
+                  },
+                },
+              },
               {
                 type: 'Input',
                 name: 'name',
@@ -89,11 +105,26 @@ function StudentsBoxOperationPage() {
           formModalProps: {
             formBlockItems: [
               {
+                type: 'Select',
+                name: 'groupId',
+                label: '分组',
+                rules: [{ required: true }],
+                className: 'pt-4',
+                fieldProps: {
+                  loading,
+                  allowClear: true,
+                  placeholder: '请选择组',
+                  options: groups.map((item) => ({
+                    label: item.name,
+                    value: item.id,
+                  })),
+                },
+              },
+              {
                 type: 'Input',
                 name: 'name',
                 label: '姓名',
                 rules: [{ required: true }],
-                className: 'pt-4',
                 fieldProps: {
                   allowClear: true,
                   placeholder: '请输入姓名'
@@ -114,6 +145,10 @@ function StudentsBoxOperationPage() {
           }
         }}
         getFn={studentListHttp}
+        getOptions={{
+          manual: true,
+        }}
+        getItemFn={getStudentByIdHttp}
         addFn={addStudentHttp}
         putFn={putStudentHttp}
         delFn={delStudentHttp}
@@ -122,4 +157,4 @@ function StudentsBoxOperationPage() {
   )
 }
 
-export default StudentsBoxOperationPage
+export default StudentsBoxManualPage

@@ -61,6 +61,7 @@ function StudentsBoxPage() {
               tablePageBoxRef.current?.modalAddFn({
                 name: '',
                 age: 0,
+                groupId: undefined,
               })
             }}>添加学生</Button>
           ),

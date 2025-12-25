@@ -50,6 +50,7 @@ const EchartsPage = lazy(() => import('@/pages/echarts/EchartsPage'))
 const UserInfoPage = lazy(() => import('@/pages/UserInfoPage'))
 const StudentsPage = lazy(() => import('@/pages/students/StudentsPage'))
 const StudentsBoxPage = lazy(() => import('@/pages/students/StudentsBoxPage'))
+const StudentsBoxManualPage = lazy(() => import('@/pages/students/StudentsBoxManualPage'))
 const StudentsBoxOperationPage = lazy(() => import('@/pages/students/StudentsBoxOperationPage'))
 const FormBlockPage = lazy(() => import('@/pages/formBlock/FormBlockPage'))
 const TablePage = lazy(() => import('@/pages/tablePage/TablePage'))
@@ -278,6 +279,13 @@ export const routers = [
         element: <StudentsBoxPage />,
         meta: {
           label: 'TablePageBox渲染',
+        }
+      },
+      {
+        path: 'tablePageBoxManual',
+        element: <StudentsBoxManualPage />,
+        meta: {
+          label: 'TablePageBox手动请求',
         }
       },
       {

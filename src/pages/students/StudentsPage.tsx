@@ -210,6 +210,7 @@ function StudentsPage() {
             setFormData({
               name: '',
               age: 0,
+              groupId: undefined,
             })
             setIsModalOpen(true)
           }}>添加学生</Button>

@@ -73,6 +73,14 @@ export interface TablePageBoxProps<T = any, F = any> {
    */
   operationButtonDisplay?: OperationButtonDisplayType
   /**
+   * @description 操作列按钮前置内容，支持函数返回 ReactNode。|| Operation column button before content, supports function to return ReactNode.
+   */
+  operationButtonBefore?: React.ReactNode | ((record: T) => React.ReactNode)
+  /**
+   * @description 操作列按钮后置内容，支持函数返回 ReactNode。|| Operation column button after content, supports function to return ReactNode.
+   */
+  operationButtonAfter?: React.ReactNode | ((record: T) => React.ReactNode)
+  /**
    * @description TablePageBox ref
    */
   ref: React.Ref<{
@@ -126,7 +134,20 @@ export interface TablePageBoxProps<T = any, F = any> {
      * @description 默认获取表格数据的参数，当手动触发获取表格数据时，会合并默认参数和手动传入的参数。|| Default parameters to get table data, when manually trigger the function to get table data, the default parameters and manually passed parameters will be merged.
      */
     defaultParams?: any,
-  } 
+  }
+  /**
+   * @description 表格单行数据的 ID 键名。|| Table single row data ID key name.
+   * @default 'id'
+   */
+  ItemKey?: keyof T
+  /**
+   * @description 获取表格单行数据的函数。|| Function to get table single row data.
+   */
+  getItemFn?: (id: number) => Promise<AxiosResponse<{
+    data: {
+      data: T
+    }
+  }>>
   /**
    * @description 添加表格数据的函数。|| Function to add table data.
    */
@@ -154,11 +175,6 @@ export interface TablePageBoxProps<T = any, F = any> {
    * @default 'name'
    */
   delteModalContentKey?: keyof T
-  /**
-   * @description 删除确认弹窗 ID 键名。|| Delete confirmation modal ID key name.
-   * @default 'id'
-   */
-  delteModalIdKey?: keyof T
 }
 
 function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
@@ -166,17 +182,20 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
     tablePageProps,
     isCustomOperation = false,
     operationButtonDisplay = 'icon-text',
+    operationButtonBefore,
+    operationButtonAfter,
     ref,
     modalTitle,
     getFn,
     getOptions = {
       manual: false,
     },
+    getItemFn,
     addFn,
     putFn,
     delFn,
     delteModalContentKey = 'name' as keyof T,
-    delteModalIdKey = 'id' as keyof T } = props
+    ItemKey = 'id' as keyof T } = props
   const tableRef: Parameters<typeof Table>[0]['ref'] = useRef(null)
 
   const { t } = useTranslation()
@@ -246,9 +265,18 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
     refresh()
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const modalEditFn = (record: T) => {
+  const modalEditFn = async (record: T) => {
     setIsEdit(true)
-    setFormData(record)
+    if (getItemFn) {
+      const res = await getItemFn(record[ItemKey]! as number)
+      console.log(res)
+      setFormData({
+        ...record,
+        ...res?.data?.data,
+      })
+    } else {
+      setFormData(record)
+    }
     setIsModalOpen(true)
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -258,7 +286,7 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
       content: `确认删除 ${record[delteModalContentKey]} 吗？`,
       closable: true,
       onOk() {
-        return handleDeleteOk(record[delteModalIdKey]! as number)
+        return handleDeleteOk(record[ItemKey]! as number)
       }
     })
   }
@@ -278,9 +306,6 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
       getRun,
     }
   }, [formQuery, modalEditFn, modalDeleteFn, getRun])
-
-  const operationButtonIcon = ['icon', 'icon-text'].includes(operationButtonDisplay)
-  const operationButtonText = ['text', 'icon-text'].includes(operationButtonDisplay)
 
   if (error) {
     return (
@@ -308,6 +333,9 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
     setIsModalOpen(false)
   }
 
+  const operationButtonIcon = ['icon', 'icon-text'].includes(operationButtonDisplay)
+  const operationButtonText = ['text', 'icon-text'].includes(operationButtonDisplay)
+
   return (
     <TablePage<T>
       sticky={{
@@ -325,6 +353,11 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
               dataIndex: 'operation',
               render: (_: any, record: T) => (
                 <>
+                  {operationButtonBefore && (
+                    typeof operationButtonBefore === 'function'
+                      ? operationButtonBefore(record)
+                      : operationButtonBefore
+                  )}
                   <Button color='primary' variant='text' size='small'
                     icon={operationButtonIcon && <EditOutlined />}
                     onClick={() => {
@@ -337,6 +370,11 @@ function TablePageBox<T = any, F = any>(props: TablePageBoxProps<T, F>) {
                       modalDeleteFn(record)
                     }}
                   >{operationButtonText && '删除'}</Button>
+                  {operationButtonAfter && (
+                    typeof operationButtonAfter === 'function'
+                      ? operationButtonAfter(record)
+                      : operationButtonAfter
+                  )}
                 </>
               ),
             }]

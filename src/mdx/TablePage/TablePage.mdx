@@ -6,6 +6,8 @@ import StudentsPage from '@/pages/students/StudentsPage'
 import StudentsPageRaw from '@/pages/students/StudentsPage.tsx?raw'
 import StudentsBoxPage from '@/pages/students/StudentsBoxPage'
 import StudentsBoxPageRaw from '@/pages/students/StudentsBoxPage.tsx?raw'
+import StudentsBoxManualPage from '@/pages/students/StudentsBoxManualPage'
+import StudentsBoxManualPageRaw from '@/pages/students/StudentsBoxManualPage.tsx?raw'
 import StudentsBoxOperationPage from '@/pages/students/StudentsBoxOperationPage'
 import StudentsBoxOperationPageRaw from '@/pages/students/StudentsBoxOperationPage.tsx?raw'
 
@@ -47,6 +49,12 @@ import StudentsBoxOperationPageRaw from '@/pages/students/StudentsBoxOperationPa
 
 <Playground code={StudentsBoxPageRaw} title='学生管理' description='展示 TablePageBox 组件在学生管理场景下的用法。'>
   <StudentsBoxPage />
+</Playground>
+
+#### TablePageBox 手动请求数据
+
+<Playground code={StudentsBoxManualPageRaw} title='学生管理' description='展示 TablePageBox 组件 手动请求数据，且单行数据使用 `getItemFn` 函数获取 在学生管理场景下的用法。'>
+  <StudentsBoxManualPage />
 </Playground>
 
 #### TablePageBox 自定义操作列
