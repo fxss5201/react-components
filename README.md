@@ -12,6 +12,7 @@ It can be configured as both a display website and a backend management system.
 
 1. Theme Switching
 2. Multi-language Support
+   1. Supports exporting (excel/json/md) and importing (excel/json/md) multi-language files through the command line
 3. Route Middleware
 4. Configurable Route Objects (caching, permissions, watermark, and layout adjustments):
    1. Hide route in menu
