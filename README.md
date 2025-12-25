@@ -1,69 +1,42 @@
-# React + TypeScript + Vite
+# react-components
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[中文文档](https://github.com/fxss5201/react-components/blob/main/README-zh.md)
 
-Currently, two official plugins are available:
+[Demo](https://fxss5201.github.io/react-components/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+`react ^19.2.0` + `react-router ^7.9.6` + `react-redux ^9.2.0` + `antd ^6.1.0` + `typescript ~5.8.3`
 
-## Expanding the ESLint configuration
+It can be configured as both a display website and a backend management system.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Core Functionality
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Theme Switching
+2. Multi-language Support
+3. Route Middleware
+4. Configurable Route Objects (caching, permissions, watermark, and layout adjustments):
+   1. Hide route in menu
+   2. Hide route in tabs
+   3. Hide header when entering the route
+   4. Hide menu when entering the route
+   5. Collapse menu when entering the route
+   6. Hide footer when entering the route
+   7. Hide breadcrumb navigation when entering the route
+   8. Hide tabs when entering the route
+5. MOCK APIs
+6. Multiple Encapsulated Components:
+   1. Copy to Clipboard
+   2. File-related:
+      1. File Selection (supports selecting files, folders (including root directory), folders (excluding root directory))
+      2. File Drag-and-Drop Selection
+      3. File Drawer (supports uploading files/folders, downloading files/folders)
+      4. File Hash
+   3. Markdown Rendering/Editing
+   4. JSON Rendering/Editing
+   5. Code Editor
+   6. MDX Rendering
+   7. Echarts Wrapper
+   8. Form Block, supports generating forms through configuration
+   9. Table Page, supports generating tables, table search, table pagination, and table operation modals through configuration
+   10. Enhanced Table Page, encapsulates common operations (query, add, delete, modify, pagination logic) together
+   11. Login Page
+   12. Reset Password Page
