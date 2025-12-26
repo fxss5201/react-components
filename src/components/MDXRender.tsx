@@ -3,7 +3,7 @@ import cn from 'classnames'
 import CodeRender from './CodeRender'
 import ALink from './ALink'
 import { useTheme } from '@/storeHooks/useTheme'
-import { useMarkdownBodyStyles } from '@/Hooks/useStyles'
+import { useInnerAClassStyles } from '@/Hooks/useStyles'
 
 export type MDXRenderProps = {
   /**
@@ -27,10 +27,10 @@ export type MDXRenderProps = {
 
 function MDXRender({ children, className, enableCopy = true }: MDXRenderProps) {
   const { theme } = useTheme()
-  const { styles } = useMarkdownBodyStyles()
+  const { styles } = useInnerAClassStyles()
 
   return (
-    <div className={cn('markdown-body', className, styles.markdownBody)}>
+    <div className={cn('markdown-body', className, styles.innerAClass)}>
       <MDXProvider components={{
         a(props) {
           const { href, children } = props

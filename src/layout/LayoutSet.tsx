@@ -65,7 +65,7 @@ function LayoutSet({ className, style }: { className?: string, style?: React.CSS
               presets={[
                 {
                   label: t('system.Preset Colors', { defaultValue: '预设颜色' }),
-                  colors: ['#1677ff', '#ff0000', '#ffb800', '#16baaa', '#a233c6']
+                  colors: ['#1677ff', '#5470c6', '#91cc75', '#fac858', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc', '#ff0000', '#ffb800', '#16baaa', '#a233c6']
                 }
               ]}
               disabledAlpha

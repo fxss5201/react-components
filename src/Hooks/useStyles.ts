@@ -1,7 +1,7 @@
 import { createStyles } from 'antd-style'
 
-export const useMarkdownBodyStyles = createStyles(({ token, css }) => ({
-  markdownBody: css`
+export const useInnerAClassStyles = createStyles(({ token, css }) => ({
+  innerAClass: css`
     a {
       color: ${token.colorPrimary};
     }

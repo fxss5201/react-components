@@ -1,15 +1,17 @@
 import type { RoutersType } from '@/router/types'
 import { useTranslation } from 'react-i18next'
+import { useInnerAClassStyles } from '@/Hooks/useStyles'
 
 const BASE_URL = import.meta.env.BASE_URL
 
 function HomeMenuList({ items, linkClick }: { items: RoutersType[]; linkClick: (item: RoutersType) => void }) {
   const { t } = useTranslation()
+  const { styles } = useInnerAClassStyles()
 
   return (
     <ul className='my-2!'>
       {items.map((item) => (
-        <li key={item.path!}>
+        <li key={item.path!} className={styles.innerAClass}>
           <a
             href={`${BASE_URL}${item.path!.startsWith('/') ? item.path!.slice(1) : item.path!}`}
             className='inline-flex items-center'
