@@ -1,5 +1,13 @@
 import { createStyles } from 'antd-style'
 
+export const useMarkdownBodyStyles = createStyles(({ token, css }) => ({
+  markdownBody: css`
+    a {
+      color: ${token.colorPrimary};
+    }
+  `,
+}))
+
 export const useAClassStyles = createStyles(({ token, css }) => ({
   aClass: css`
     color: ${token.colorText};

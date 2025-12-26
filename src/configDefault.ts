@@ -4,7 +4,7 @@ import { Watermark } from 'antd'
 
 export type WatermarkProps = GetProps<typeof Watermark>
 
-export const configDefault = {
+export const configDefault: ConfigDefaultType = {
   isNeedLogin: false,
 
   loginLocalStorageKey: 'react-components-login',
@@ -72,8 +72,12 @@ export const configDefault = {
     }
   },
   watermarkLayout: 'layout',
-  activitysMax: 10
-} as ConfigDefaultType
+  activitysMax: 10,
+
+  systemSet: {
+    localStorageKey: 'react-components-system-set'
+  }
+}
 
 /**
  * @description 默认配置，可以用自定义配置覆盖（仅浅层覆盖）。|| Default configuration, can be overwritten by custom configuration (shallow overwrite only).
@@ -205,5 +209,19 @@ export type ConfigDefaultType = {
    * @default 10
    */
   activitysMax: number
+  /**
+   * @description 系统配置。|| System configuration.
+   */
+  systemSet: {
+    /**
+     * @description 系统设置保存在 localStorage 中的 key，防止被其他覆盖。|| System set localStorage key, to prevent being overwritten by other.
+     * @default 'react-components-system-set'
+     */
+    localStorageKey: string
+    /**
+     * @description 系统主题颜色。|| System theme color.
+     */
+    colorPrimary?: string
+  }
 }
 export type ConfigType = Partial<ConfigDefaultType>

@@ -2,8 +2,8 @@ import type { ConfigType } from './configDefault'
 import { configDefault } from './configDefault'
 
 // 自定义配置
-const config = {
-} as ConfigType
+const config: ConfigType = {
+}
 
 export const themeList = ['system', 'light', 'dark'] as const
 export type ThemeType = (typeof themeList)[number]

@@ -7,6 +7,7 @@ import { useTheme } from '@/storeHooks/useTheme'
 import ALink from './ALink'
 import cn from 'classnames'
 import CodeRender from './CodeRender'
+import { useMarkdownBodyStyles } from '@/Hooks/useStyles'
 
 export type MdRenderProps = {
   /**
@@ -33,9 +34,10 @@ export type MdRenderProps = {
 }
 function MdRender({children, className, style, codeClassName, enableCopy = true}: MdRenderProps) {
   const { theme } = useTheme()
+  const { styles } = useMarkdownBodyStyles()
 
   return (
-    <div className={cn('markdown-body', className)} style={style}>
+    <div className={cn('markdown-body', className, styles.markdownBody)} style={style}>
       <Markdown
         remarkPlugins={[remarkFrontmatter, remarkGfm, [remarkToc, { heading: 'TOC|目录' }]]}
         rehypePlugins={[rehypeSlug]}

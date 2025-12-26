@@ -29,5 +29,10 @@
   "footer": {
     "blog": "Author Blog",
     "author": "Author Github"
-  }
+  },
+  "System Setting": "System Setting",
+  "Theme Color": "Theme Color",
+  "Confirm": "Confirm",
+  "Cancel": "Cancel",
+  "Preset Colors": "Preset Colors"
 }

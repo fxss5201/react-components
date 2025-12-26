@@ -6,6 +6,7 @@ import config from '@/config'
 import LayoutTheme from './LayoutTheme'
 import LayoutLocale from './LayoutLocale'
 import LayoutUser from './LayoutUser'
+import LayoutSet from './LayoutSet'
 import { useAClassStyles } from '@/Hooks/useStyles'
 
 function LayoutHead({ className }: { className?: string }) {
@@ -28,6 +29,7 @@ function LayoutHead({ className }: { className?: string }) {
           </a>
         )}
         {config.isNeedLogin && <LayoutUser className='ml-8' />}
+        <LayoutSet className='ml-8' />
       </div>
     </Flex>
   )

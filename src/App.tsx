@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { routersList } from './router'
 import config from './config'
 import { useWatermark } from './storeHooks/useWatermark'
+import { useSystemSet } from './storeHooks/useSystemSet'
 
 function App() {
   const { theme } = useTheme()
@@ -26,6 +27,7 @@ function App() {
   const { isRouteLoading, changeRouteLoading } = useRouteLoading()
   const { t } = useTranslation()
   const { watermarkEnabled, watermarkProps } = useWatermark()
+  const { systemSet } = useSystemSet()
 
   useEffect(() => {
     changeRouteLoading(false)
@@ -53,6 +55,9 @@ function App() {
           locale={locale === 'zh' ? zhCN : enUS}
           theme={{
             algorithm: theme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+            token: {
+              ...(systemSet.colorPrimary ? { colorPrimary: systemSet.colorPrimary } : {}),
+            },
             components: {
               Popover: {
                 titleMinWidth: 20,

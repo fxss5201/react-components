@@ -6,6 +6,7 @@ import activitysReducer from './activitysSlice'
 import layoutTabsReducer from './layoutTabsSlice'
 import userReducer from './userSlice'
 import watermarkReducer from './watermarkSlice'
+import systemSetReducer from './systemSetSlice'
 
 const store =  configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store =  configureStore({
     activitys: activitysReducer,
     layoutTabs: layoutTabsReducer,
     user: userReducer,
-    watermark: watermarkReducer
+    watermark: watermarkReducer,
+    systemSet: systemSetReducer,
   }
 })
 
