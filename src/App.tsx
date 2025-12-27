@@ -62,6 +62,11 @@ function App() {
               Popover: {
                 titleMinWidth: 20,
               },
+              Button: {
+                colorLink: systemSet.colorPrimary,
+                colorLinkActive: systemSet.colorPrimary,
+                colorLinkHover: systemSet.colorPrimary,
+              }
             }
           }}
           tooltip={{ trigger: ['hover', 'focus'] }}
