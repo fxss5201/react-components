@@ -26,5 +26,6 @@
   "login": "Login",
   "reset-password": "Reset Password",
   "userInfo": "User Info",
-  "files-drop-select": "Files Drop Select"
+  "files-drop-select": "Files Drop Select",
+  "files-zip-writer": "Files Zip Writer"
 }

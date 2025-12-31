@@ -227,7 +227,7 @@ function FilesDrawer({
   const doCloseFn = useCallback(() => {
     modal.confirm({
       title: t('components.FilesDrawer.closePrompt', { defaultValue: '关闭提示' }),
-      content: t('components.FilesDrawer.closePromptContent', { defaultValue: '关闭后将停止继续上传文件，是否确认关闭吗？' }),
+      content: t('components.FilesDrawer.closePromptContent', { defaultValue: '关闭后将停止，是否确认关闭吗？' }),
       okType: 'danger',
       closable: true,
       onOk: () => {

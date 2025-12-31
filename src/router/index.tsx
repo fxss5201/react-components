@@ -54,6 +54,7 @@ const StudentsBoxManualPage = lazy(() => import('@/pages/students/StudentsBoxMan
 const StudentsBoxOperationPage = lazy(() => import('@/pages/students/StudentsBoxOperationPage'))
 const FormBlockPage = lazy(() => import('@/pages/formBlock/FormBlockPage'))
 const TablePage = lazy(() => import('@/pages/tablePage/TablePage'))
+const FilesZipWriter = lazy(() => import('@/pages/file-related/FilesZipWriter'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -116,6 +117,13 @@ export const routers = [
         element: <FileHash />,
         meta: {
           label: '文件哈希',
+        }
+      },
+      {
+        path: 'files-zip-writer',
+        element: <FilesZipWriter />,
+        meta: {
+          label: '文件压缩',
         }
       }
     ]

@@ -37,3 +37,15 @@ export function isCrossOrigin(url: string): boolean {
   return !(isSameProtocol && isSameHost && isSamePort)
 }
 
+/**
+ * @description 下载Blob对象为文件。|| Download the Blob object as a file.
+ * @param {Blob} blob Blob对象。|| The Blob object.
+ * @param {string} fileName 文件名（默认：'download'）。|| The file name (default: 'download').
+ */
+export function aDownloadBlob(blob: Blob | MediaSource, fileName: string = 'download'): void {
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = fileName
+  a.click()
+  URL.revokeObjectURL(a.href)
+}
