@@ -146,12 +146,15 @@ function Login() {
                 noStyle>
                 <Checkbox>{t('login.Remember password', { defaultValue: '记住密码' })}</Checkbox>
               </Form.Item>
-              <a onClick={(e) => {
-                e.preventDefault()
-                navigate('/reset-password')
-              }}>
+              <Button
+                size='small'
+                type='link'
+                onClick={() => {
+                  navigate('/reset-password')
+                }}
+              >
                 {t('login.Forgot password', { defaultValue: '忘记密码' })}
-              </a>
+              </Button>
             </div>
           </>
         </Activity>

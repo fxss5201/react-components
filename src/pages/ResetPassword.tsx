@@ -165,12 +165,14 @@ function ResetPassword() {
         </Form.Item>
         <div className='flex items-center justify-between mb-6'>
           <div></div>
-          <a onClick={(e) => {
-            e.preventDefault()
-            navigate('/login')
-          }}>
+          <Button
+            size='small'
+            type='link'
+            onClick={() => {
+              navigate('/login')
+            }}>
             {t('resetPassword.Go to login', { defaultValue: '返回登录' })}
-          </a>
+          </Button>
         </div>
         <Form.Item>
           <Button type='primary' htmlType='submit' block size='large' loading={loading}>
