@@ -1,7 +1,7 @@
-import { useEffect, useRef, useImperativeHandle } from 'react'
+import { useEffect, useRef, useImperativeHandle, useCallback } from 'react'
 import * as echarts from 'echarts'
 import cn from 'classnames'
-import { useSize } from 'ahooks'
+import { useSize, useDocumentVisibility, useUpdateEffect, useInViewport } from 'ahooks'
 import { useTheme } from '@/storeHooks/useTheme'
 import merge from 'lodash/merge'
 import { useTranslation } from 'react-i18next'
@@ -137,33 +137,17 @@ function EchartsBlock({
     heightStyle = height ? { height } : {}
   }
 
-  function echartsInit () {
-    if (echartsInstance.current) {
-      echartsDispose()
-    }
-    echartsInstance.current = echarts.init(echartsRef.current!, currentTheme === 'dark' ? 'dark' : 'light', opts)
-    echartsLoading(loading)
-    if (echartsType) {
-      echartsSetData(echartsType, echartsXAxisData, echartsData)
-    } else {
-      echartsSetOption(option)
-    }
-    if (autoPlay) {
-      echartsPlay()
-      echartsAddEvents()
-    }
-  }
-  function echartsSetOption (option: echarts.EChartsOption) {
+  const echartsSetOption = useCallback((option: echarts.EChartsOption) => {
     echartsInstance.current?.setOption(option)
-  }
-  function echartsDispose () {
+  }, [echartsInstance])
+  const echartsDispose = useCallback(() => {
     echartsInstance.current?.dispose()
     echartsInstance.current = null
-  }
-  function echartsResize () {
+  }, [echartsInstance])
+  const echartsResize = useCallback(() => {
     echartsInstance.current?.resize()
-  }
-  function echartsLoading (loading: boolean) {
+  }, [echartsInstance])
+  const echartsLoading = useCallback((loading: boolean) => {
     if (loading) {
       echartsInstance.current?.showLoading('default', {
         text: t('components.EchartsBlock.loading', { defaultValue: '加载中...' }),
@@ -172,8 +156,8 @@ function EchartsBlock({
     } else {
       echartsInstance.current?.hideLoading()
     }
-  }
-  function echartsSetData (echartsType: EchartsType, echartsXAxisData?: string[], echartsData?: EchartsData) {
+  }, [echartsInstance, t])
+  const echartsSetData = useCallback((echartsType: EchartsType, echartsXAxisData?: string[], echartsData?: EchartsData) => {
     if (!echartsInstance.current) {
       return
     }
@@ -205,8 +189,8 @@ function EchartsBlock({
       type: echartsType,
     }))
     echartsSetOption(merge(option, optionData))
-  }
-  function echartsPlay () {
+  }, [echartsSetOption, option])
+  const echartsPlay = useCallback(() => {
     if (playIntervalRef.current) {
       return
     }
@@ -240,14 +224,14 @@ function EchartsBlock({
         dataIndex: playIndex.current
       })
     }, typeof autoPlay === 'object' ? autoPlay.interval || defaultAutoPlayInterval : defaultAutoPlayInterval)
-  }
-  function echartsPause () {
+  }, [autoPlay])
+  const echartsPause = useCallback(() => {
     if (playIntervalRef.current) {
       window.clearInterval(playIntervalRef.current)
       playIntervalRef.current = null
     }
-  }
-  function echartsAddEvents () {
+  }, [])
+  const echartsAddEvents = useCallback(() => {
     echartsInstance.current?.on('mouseover', 'series', (event: any) => {
       playIndex.current = event.dataIndex
     })
@@ -257,12 +241,29 @@ function EchartsBlock({
     echartsInstance.current?.getZr().on('mouseout', () => {
       echartsPlay()
     })
-  }
-  function echartsRemoveEvents () {
+  }, [echartsInstance, echartsPause, echartsPlay])
+  const echartsRemoveEvents = useCallback(() => {
     echartsInstance.current?.off('mouseover')
     echartsInstance.current?.getZr().off('mousemove')
     echartsInstance.current?.getZr().off('mouseout')
-  }
+  }, [echartsInstance])
+  const echartsInit = useCallback(() => {
+    if (echartsInstance.current) {
+      echartsDispose()
+    }
+    echartsInstance.current = echarts.init(echartsRef.current!, currentTheme === 'dark' ? 'dark' : 'light', opts)
+    echartsLoading(loading)
+    if (echartsType) {
+      echartsSetData(echartsType, echartsXAxisData, echartsData)
+    } else {
+      echartsSetOption(option)
+    }
+    if (autoPlay) {
+      echartsPlay()
+      echartsAddEvents()
+    }
+  }, [currentTheme, echartsRef, opts, loading, echartsType, echartsXAxisData, echartsData, option, autoPlay,
+    echartsDispose, echartsLoading, echartsSetData, echartsSetOption, echartsPlay, echartsAddEvents])
 
   useEffect(() => {
     echartsInit()
@@ -273,31 +274,43 @@ function EchartsBlock({
         echartsRemoveEvents()
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPlay])
+  }, [autoPlay, echartsInit, echartsDispose, echartsPause, echartsRemoveEvents])
   useEffect(() => {
     echartsInit()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [opts])
+  }, [opts, echartsInit])
   useEffect(() => {
     if (echartsType) {
       echartsSetData(echartsType, echartsXAxisData, echartsData)
     } else {
       echartsSetOption(option)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [option])
+  }, [option, echartsType, echartsXAxisData, echartsData, echartsSetData, echartsSetOption])
   useEffect(() => {
     echartsLoading(loading)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading])
+  }, [loading, echartsLoading])
   const size = useSize(echartsRef)
   useEffect(() => {
     echartsResize()
-  }, [size])
+  }, [size, echartsResize])
   useImperativeHandle(ref, () => ({
     echartsInstance: echartsInstance.current!,
   }))
+  const documentVisibility = useDocumentVisibility()
+  useUpdateEffect(() => {
+    if (documentVisibility === 'visible') {
+      if (autoPlay) echartsPlay()
+    } else {
+      if (autoPlay) echartsPause()
+    }
+  }, [documentVisibility, autoPlay, echartsPlay, echartsPause])
+  const [inViewport] = useInViewport(echartsRef)
+  useUpdateEffect(() => {
+    if (inViewport) {
+      if (autoPlay) echartsPlay()
+    } else {
+      if (autoPlay) echartsPause()
+    }
+  }, [inViewport, autoPlay, echartsPlay, echartsPause])
 
   return (
     <div ref={echartsRef} className={cn('echarts-block w-full h-full', className)} style={{ ...style, ...widthStyle, ...heightStyle }} />
