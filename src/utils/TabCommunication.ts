@@ -19,7 +19,7 @@ export class TabCommunication {
    * @param {string} channelName - 通信频道名称（区分不同通信链路）
    */
   constructor(channelName: string) {
-    this.isSupported = typeof window.BroadcastChannel === 'undefined'
+    this.isSupported = typeof window.BroadcastChannel !== 'undefined'
     this.messageCallback = null // 消息回调函数
     this.storageKey = `${pkg.name}_${channelName}` // localStorage 唯一标识（避免冲突）
     this.bc = null
