@@ -7,28 +7,28 @@ import router from './router'
 import store from './store/index'
 import { Provider } from 'react-redux'
 import { setupProdMockServer } from './mockProdServer'
-import { themeComn } from './store/themeSlice'
+import TabCommunication from '@/utils/TabCommunication'
 import { onlyChangeTheme } from './store/themeSlice'
 import { type ThemeType, themeList, type LocaleType, localeList } from './config'
-import { localesComn } from './Hooks/useChangeLocale'
 import { changeHtmlLang } from '@/utils/changeHtmlLang'
 
 if (import.meta.env.PROD) setupProdMockServer()
 
-themeComn.onMessage((data) => {
-  if (themeList.includes(data)) {
-    store.dispatch(onlyChangeTheme(data as ThemeType))
-  }
-})
-localesComn.onMessage((data) => {
-  if (localeList.includes(data)) {
-    i18n.changeLanguage(data as LocaleType)
-    changeHtmlLang(data as LocaleType)
+TabCommunication.onMessage((data) => {
+  console.log('TabCommunication', data)
+  if (data.type === 'theme_channel') {
+    if (themeList.includes(data.data)) {
+      store.dispatch(onlyChangeTheme(data.data as ThemeType))
+    }
+  } else if (data.type === 'locales_channel') {
+    if (localeList.includes(data.data)) {
+      i18n.changeLanguage(data.data as LocaleType)
+      changeHtmlLang(data.data as LocaleType)
+    }
   }
 })
 window.addEventListener('unload', () => {
-  themeComn.close()
-  localesComn.close()
+  TabCommunication.close()
 })
 
 createRoot(document.getElementById('root')!).render(

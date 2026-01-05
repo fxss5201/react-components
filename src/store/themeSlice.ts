@@ -1,8 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import config, { type ThemeType } from '@/config'
-import { CrossTabCommunication } from '@/utils/CrossTabCommunication'
-
-const themeComn = new CrossTabCommunication('theme_channel')
+import TabCommunication from '@/utils/TabCommunication'
 
 interface ThemeState {
   value: ThemeType
@@ -27,7 +25,10 @@ export const themeSlice = createSlice({
     changeTheme: (state, action: PayloadAction<ThemeType>) => {
       state.value = action.payload
       localStorage.setItem(config.themeLocalStorageKey, state.value)
-      themeComn.postMessage(state.value)
+      TabCommunication.postMessage({
+        type: 'theme_channel',
+        data: state.value
+      })
     },
     onlyChangeTheme: (state, action: PayloadAction<ThemeType>) => {
       state.value = action.payload
@@ -38,5 +39,3 @@ export const themeSlice = createSlice({
 export const { changeTheme, onlyChangeTheme } = themeSlice.actions
 
 export default themeSlice.reducer
-
-export { themeComn }

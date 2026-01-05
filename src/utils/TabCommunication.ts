@@ -1,10 +1,15 @@
-export interface CrossTabMessageCallback {
-  (data: any): void;
+import pkg from '../../package.json'
+
+export interface TabMessageCallback {
+  (data: {
+    type: 'theme_channel' | 'locales_channel'
+    data: any
+  }): void;
 }
 
-export class CrossTabCommunication {
+export class TabCommunication {
   private isSupported: boolean
-  private messageCallback: CrossTabMessageCallback | null
+  private messageCallback: TabMessageCallback | null
   private storageKey: string
   private bc: BroadcastChannel | null
   private tabId: string
@@ -14,9 +19,9 @@ export class CrossTabCommunication {
    * @param {string} channelName - 通信频道名称（区分不同通信链路）
    */
   constructor(channelName: string) {
-    this.isSupported = typeof window.BroadcastChannel !== 'undefined'
+    this.isSupported = typeof window.BroadcastChannel === 'undefined'
     this.messageCallback = null // 消息回调函数
-    this.storageKey = `cross_tab_${channelName}` // localStorage 唯一标识（避免冲突）
+    this.storageKey = `${pkg.name}_${channelName}` // localStorage 唯一标识（避免冲突）
     this.bc = null
     this.tabId = this.generateUUIDTabId()
 
@@ -66,9 +71,9 @@ export class CrossTabCommunication {
 
   /**
    * 注册消息接收回调
-   * @param {CrossTabMessageCallback} callback - 接收到消息后的回调函数（参数为消息内容）
+   * @param {TabMessageCallback} callback - 接收到消息后的回调函数（参数为消息内容）
    */
-  onMessage(callback: CrossTabMessageCallback): void {
+  onMessage(callback: TabMessageCallback): void {
     if (typeof callback === 'function') {
       this.messageCallback = callback
     } else {
@@ -78,9 +83,12 @@ export class CrossTabCommunication {
 
   /**
    * 发送消息
-   * @param {any} data - 要发送的消息（支持任意可序列化类型：对象、数组、字符串等）
+   * @param data - 要发送的消息（支持任意可序列化类型：对象、数组、字符串等）
    */
-  postMessage(data: any): void {
+  postMessage(data: {
+    type: string
+    data: any
+  }): void {
     if (this.isSupported && this.bc) {
       // 方案1：BroadcastChannel 直接发送
       this.bc.postMessage({
@@ -117,3 +125,5 @@ export class CrossTabCommunication {
     this.messageCallback = null
   }
 }
+
+export default new TabCommunication(`tab_channel`)
