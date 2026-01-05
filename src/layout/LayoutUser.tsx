@@ -3,13 +3,13 @@ import cn from 'classnames'
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { useUser } from '@/storeHooks/useUser'
 import { useNavigate } from 'react-router'
-import config from '@/config'
 import { useTheme } from '@/storeHooks/useTheme'
 import { useTranslation } from 'react-i18next'
 import { useAClassStyles, usePopoverItemStyles } from '@/Hooks/useStyles'
+import { logoutFn } from '@/store/index'
 
 function LayoutUser({ className }: { className?: string }) {
-  const { name, img, badge, changeUserInfo } = useUser()
+  const { name, img, badge } = useUser()
   const { theme } = useTheme()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -22,12 +22,6 @@ function LayoutUser({ className }: { className?: string }) {
     } else if (type === 'userInfo') {
       navigate('/userInfo')
     }
-  }
-
-  const logoutFn = () => {
-    localStorage.removeItem(config.loginLocalStorageKey)
-    changeUserInfo({ id: '', name: '', img: undefined, badge: 0, permissionList: [] })
-    navigate('/login')
   }
 
   return (

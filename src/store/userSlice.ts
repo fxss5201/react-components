@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import config from '@/config'
+import TabCommunication from '@/utils/TabCommunication'
 
 export type UserState = {
   value: {
@@ -33,6 +34,13 @@ export const userSlice = createSlice({
     changeUserInfo: (state, action: PayloadAction<UserState['value']>) => {
       state.value = action.payload
       localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(state.value))
+      TabCommunication.postMessage({
+        type: 'user_channel',
+        data: state.value
+      })
+    },
+    onlyChangeUserInfo: (state, action: PayloadAction<UserState['value']>) => {
+      state.value = action.payload
     },
     changeBadge: (state, action: PayloadAction<number>) => {
       state.value.badge = action.payload
@@ -45,6 +53,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const { changeUserInfo, changeBadge, changePermissionList } = userSlice.actions
+export const { changeUserInfo, onlyChangeUserInfo, changeBadge, changePermissionList } = userSlice.actions
 
 export default userSlice.reducer

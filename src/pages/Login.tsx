@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router'
 import LayoutTheme from '@/layout/LayoutTheme'
 import LayoutLocale from '@/layout/LayoutLocale'
 import config from '@/config'
-import { useUser } from '@/storeHooks/useUser'
 import { useTranslation } from 'react-i18next'
 import FormPassword from '@/components/FormPassword'
 import FormCaptcha from '@/components/FormCaptcha'
+import { loginFn } from '@/store/index'
 
 type LoginType = 'phone' | 'account'
 interface LoginFormValues {
@@ -33,7 +33,6 @@ function Login() {
   const { message } = App.useApp()
   const { token } = antdTheme.useToken()
   const [ loginType, setLoginType ] = useState<LoginType>('account')
-  const { changeUserInfo } = useUser()
   const [ form ] = Form.useForm()
   const rememberLogin = localStorage.getItem('rememberLogin')
   const formValues: LoginFormValues = {
@@ -80,11 +79,9 @@ function Login() {
             badge: 10,
             permissionList: values.username === 'admin' ? ['01', '02', '03', '09'] : ['01', '02'],
           }
-          changeUserInfo(userInfo)
-          localStorage.setItem(config.loginLocalStorageKey, JSON.stringify(userInfo))
           await waitTime(2000)
           message.success(t('login.Login success', { defaultValue: '登录成功' }))
-          navigate('/')
+          loginFn(userInfo)
         }}
         size='large'
         style={{

@@ -1,10 +1,13 @@
 import pkg from '../../package.json'
 
+export type TabMessageType = 'theme_channel' | 'locales_channel' | 'system_set_channel' | 'user_channel'
+export type TabMessageData = {
+  type: TabMessageType
+  data: any
+}
+
 export interface TabMessageCallback {
-  (data: {
-    type: 'theme_channel' | 'locales_channel'
-    data: any
-  }): void;
+  (data: TabMessageData): void;
 }
 
 export class TabCommunication {
@@ -85,10 +88,7 @@ export class TabCommunication {
    * 发送消息
    * @param data - 要发送的消息（支持任意可序列化类型：对象、数组、字符串等）
    */
-  postMessage(data: {
-    type: string
-    data: any
-  }): void {
+  postMessage(data: TabMessageData): void {
     if (this.isSupported && this.bc) {
       // 方案1：BroadcastChannel 直接发送
       this.bc.postMessage({
