@@ -49,3 +49,28 @@ export function aDownloadBlob(blob: Blob | MediaSource, fileName: string = 'down
   a.click()
   URL.revokeObjectURL(a.href)
 }
+
+/**
+ * @description 根据输入的字节大小转换为可读的文件大小（需要从TB、GB、MB、KB转换，保留2位小数）。|| Convert the input byte size to a readable file size.
+ * @param {number} byteSize 字节大小。|| The byte size.
+ * @returns {string} 可读的文件大小。|| The readable file size.
+ */
+export function convertByteToReadableSize(byteSize: number): string {
+  if (byteSize < 1024) {
+    return `${byteSize.toFixed(2)} B`
+  }
+  const kbSize = byteSize / 1024
+  if (kbSize < 1024) {
+    return `${kbSize.toFixed(2)} KB`
+  }
+  const mbSize = kbSize / 1024
+  if (mbSize < 1024) {
+    return `${mbSize.toFixed(2)} MB`
+  }
+  const gbSize = mbSize / 1024
+  if (gbSize < 1024) {
+    return `${gbSize.toFixed(2)} GB`
+  }
+  const tbSize = gbSize / 1024
+  return `${tbSize.toFixed(2)} TB`
+}

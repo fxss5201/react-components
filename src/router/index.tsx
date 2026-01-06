@@ -55,6 +55,7 @@ const StudentsBoxOperationPage = lazy(() => import('@/pages/students/StudentsBox
 const FormBlockPage = lazy(() => import('@/pages/formBlock/FormBlockPage'))
 const TablePage = lazy(() => import('@/pages/tablePage/TablePage'))
 const FilesZipWriter = lazy(() => import('@/pages/file-related/FilesZipWriter'))
+const FilesZipReader = lazy(() => import('@/pages/file-related/FilesZipReader'))
 
 // 路由组件配置全部采用 element ，不使用 Component
 export const routers = [
@@ -124,6 +125,13 @@ export const routers = [
         element: <FilesZipWriter />,
         meta: {
           label: '文件压缩',
+        }
+      },
+      {
+        path: 'files-zip-reader',
+        element: <FilesZipReader />,
+        meta: {
+          label: '文件解压',
         }
       }
     ]

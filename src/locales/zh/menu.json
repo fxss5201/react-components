@@ -27,5 +27,6 @@
   "reset-password": "重置密码",
   "userInfo": "用户信息",
   "files-drop-select": "文件拖拽选择",
-  "files-zip-writer": "文件压缩"
+  "files-zip-writer": "文件压缩",
+  "files-zip-reader": "文件解压"
 }
