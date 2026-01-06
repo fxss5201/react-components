@@ -54,8 +54,9 @@ function FilesZipReader() {
       oldFileName.current = fileNames.join('.')
       const zipReader = new ZipReader(new BlobReader(file))
       const entries = await zipReader.getEntries({
-        onprogress: (progress, total) => {
+        onprogress: async(progress, total, entry) => {
           setProgress((progress / total) * 100)
+          console.log(entry)
         }
       })
       setEntries(entries)
