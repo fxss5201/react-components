@@ -74,3 +74,36 @@ export function convertByteToReadableSize(byteSize: number): string {
   const tbSize = gbSize / 1024
   return `${tbSize.toFixed(2)} TB`
 }
+
+/**
+ * 兼容型提取Blob文本内容（优先Blob.text()，降级FileReader）
+ * @param {Blob} blob - 待提取文本的Blob对象
+ * @param {string} [encoding='UTF-8'] - 文本编码（如UTF-8、GBK、GB2312等）
+ * @returns {Promise<string>} 提取的文本内容（Promise形式）
+ */
+export async function getTextFromBlob(blob: Blob, encoding = 'UTF-8'): Promise<string> {
+  try {
+    if ('text' in Blob.prototype) {
+      if (encoding.toUpperCase() === 'UTF-8') {
+        return await blob.text()
+      } else {
+        const arrayBuffer = await blob.arrayBuffer()
+        const decoder = new TextDecoder(encoding)
+        return decoder.decode(arrayBuffer)
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          resolve(e.target?.result as string)
+        }
+        reader.onerror = function (error) {
+          reject(new Error(`FileReader读取失败：${error}`))
+        }
+        reader.readAsText(blob, encoding)
+      })
+    }
+  } catch (error: any) {
+    throw new Error(error.message)
+  }
+}

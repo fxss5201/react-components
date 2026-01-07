@@ -8,6 +8,8 @@ import FileIcon from '@/components/FileIcon'
 import FilesDownloadDrawer from '@/components/FilesDownloadDrawer'
 import type { FileDownloadItemType } from '@/types/files'
 import { type DrawerFileItemType } from '@/components/FilesDrawer'
+import { imgTypes, textTypes } from '@/FileTypes'
+import PreviewFile from '@/components/PreviewFile'
 
 export type FileTreeItem = {
   type: 'folder' | 'file'
@@ -40,6 +42,8 @@ function FilesZipReader() {
   const [form] = Form.useForm()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileDownloadItemType[]>([])
+  const [previewFileBlob, setPreviewFileBlob] = useState<Blob>()
+  const [previewFileName, setPreviewFileName] = useState('')
 
   async function openFileFn(e: React.ChangeEvent<HTMLInputElement>) {
     setPassword('')
@@ -168,6 +172,37 @@ function FilesZipReader() {
     })
     setLoading(false)
     aDownloadBlob(blobData, item.name)
+  }
+  function isCanShowPreview(item: FileTreeItem) {
+    const fileType = item.name.split('.').pop() || ''
+    return item.type === 'file' && (imgTypes.includes(fileType) || textTypes.includes(fileType))
+  }
+  async function previewFile(item: FileTreeItem) {
+    if (item.type === 'folder') {
+      return
+    }
+    const filePath = item.filePath
+    const fileEntry: FileEntry = entries.find(x => x.filename === filePath) as FileEntry
+    if (!fileEntry) {
+      return
+    }
+    setLoading(true)
+    const blobData = await fileEntry.getData(new BlobWriter(), {
+      password,
+    })
+    setLoading(false)
+    setPreviewFileName(item.name)
+    setPreviewFileBlob(blobData)
+  }
+  function doRowFileClick(item: FileTreeItem) {
+    if (item.type === 'folder') {
+      return
+    }
+    if (isCanShowPreview(item)) {
+      previewFile(item)
+    } else {
+      downloadFile(item)
+    }
   }
 
   function doFolderClick(item: FileTreeItem) {
@@ -336,10 +371,16 @@ function FilesZipReader() {
                 title: '操作',
                 dataIndex: 'action',
                 render: (_, record) => record.type === 'file'
-                  ? <Button type='text' size='small' onClick={(e) => {
-                      e.stopPropagation()
-                      downloadFile(record)
-                    }}>下载</Button>
+                  ? <>
+                      <Button type='text' size='small' onClick={(e) => {
+                        e.stopPropagation()
+                        downloadFile(record)
+                      }}>下载</Button>
+                      {isCanShowPreview(record) && <Button type='text' size='small' onClick={(e) => {
+                        e.stopPropagation()
+                        previewFile(record)
+                      }}>查看</Button>}
+                    </>
                   : null,
               }
             ]}
@@ -348,7 +389,7 @@ function FilesZipReader() {
               return {
                 onClick: () => {
                   if (record.type === 'file') {
-                    downloadFile(record)
+                    doRowFileClick(record)
                   } else if (record.type === 'folder') {
                     doFolderClick(record)
                   }
@@ -367,6 +408,10 @@ function FilesZipReader() {
           />
         </div>
       )}
+      {previewFileBlob && <PreviewFile
+        blob={previewFileBlob}
+        name={previewFileName}
+        onClose={() => setPreviewFileBlob(undefined)} />}
     </Spin>
   )
 }
