@@ -216,16 +216,14 @@ function FilesZipReader() {
         type: 'file',
         filePath:  [oldFileName.current, ...parts.slice(0)].join('/'),
         folderPath: [oldFileName.current, ...parts.slice(0, -1)].join('/'),
-        url: URL.createObjectURL(blobData),
+        url: blobData,
       })
     }
     setLoading(false)
     setFileList(allFileList)
   }
   function onSuccessFn(list: DrawerFileItemType[]) {
-    list.forEach(item => {
-      if (item.url) URL.revokeObjectURL(item.url)
-    })
+    console.log('onSuccessFn', list)
   }
   async function downloadCurrentFolder() {
     setDrawerOpen(true)
@@ -336,7 +334,7 @@ function FilesZipReader() {
             pagination={false} />
           <FilesDownloadDrawer
             targetType='list'
-            title='下载文件/文件夹'
+            title='解压文件/文件夹'
             open={drawerOpen}
             list={fileList}
             setOpen={setDrawerOpen}

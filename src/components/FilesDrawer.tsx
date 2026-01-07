@@ -82,6 +82,7 @@ function FilesDrawer({
   const fileListRef = useRef<HTMLUListElement>(null)
   const [fileList, updateFileList] = useImmer<DrawerFileItemType[]>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [drawerLoading, setDrawerLoading] = useState<boolean>(false)
 
   const doneFileFn = useCallback(async (item: DrawerFileItemType) => {
     setLoading(true)
@@ -169,6 +170,12 @@ function FilesDrawer({
   useEffect(() => {
     if (!open) return
     if (loading) return
+    if (open && fileList.length === 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDrawerLoading(true)
+    } else {
+      setDrawerLoading(false)
+    }
     
     if (fileList.length > 0 && fileList.every((item) => item.percentStatus === 'success')) {
       setOpen(false)
@@ -244,6 +251,7 @@ function FilesDrawer({
       title={title}
       open={open}
       size='large'
+      loading={drawerLoading}
       onClose={doCloseFn}
       maskClosable={false}
       classNames={{

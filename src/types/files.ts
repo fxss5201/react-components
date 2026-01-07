@@ -32,9 +32,9 @@ export type FileItemType = {
    */
   folderPath: string
   /**
-   * @description 文件 URL。|| File URL.
+   * @description 文件 URL 或者Blob对象。|| File URL or Blob object.
    */
-  url?: string
+  url?: string | Blob
 }
 
 export type FileTreeItem = FileItemType & {
@@ -51,7 +51,7 @@ export type TargetType = 'tree' | 'list'
 
 export type FileDownloadItemType = Omit<FileItemType, 'file' | 'url'> & {
   /**
-   * @description 文件 URL。|| File URL.
+   * @description 文件 URL 或者Blob对象。|| File URL or Blob object.
    */
-  url: string
+  url: string | Blob
 }
