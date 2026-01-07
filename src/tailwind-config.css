@@ -1,0 +1,4 @@
+@theme inline {
+  --color-primary: var(--ant-color-primary);
+  --color-text: var(--ant-color-text);
+}
