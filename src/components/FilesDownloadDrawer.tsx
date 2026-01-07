@@ -101,6 +101,14 @@ function FilesDownloadDrawer({
         return
       }
       try {
+        if (item.type === 'folder') {
+          const folderPath = item.filePath.split('/').filter(x => x !== '')
+          let currentDirHandle = directoryHandle.current
+          for (const folder of folderPath) {
+            currentDirHandle = await currentDirHandle.getDirectoryHandle(folder, { create: true })
+          }
+          return
+        }
         let fileBlob: Blob
         if (item.url instanceof Blob) {
           fileBlob = item.url
@@ -129,6 +137,9 @@ function FilesDownloadDrawer({
     }
 
     const downloadFile = async (item: DrawerFileItemType) => {
+      if (item.type === 'folder') {
+        return
+      }
       console.log('downloadFile', item)
       const isCross = item.url instanceof Blob ? false : isCrossOrigin(item.url!)
       let url: string = ''
@@ -149,7 +160,7 @@ function FilesDownloadDrawer({
       document.body.removeChild(a)
       if (item.url instanceof Blob || isCross) URL.revokeObjectURL(url)
     }
-    if (item.url) {
+    if ((item.type === 'file' && item.url) || item.type === 'folder') {
       if (canSelectFolder) {
         await writeFile(item)
       } else {

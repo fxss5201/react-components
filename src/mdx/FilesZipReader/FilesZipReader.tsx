@@ -36,7 +36,7 @@ function FilesZipReader() {
   const allFileTree = useRef<FileTreeItem[]>([])
   const [fileTree, setFileTree] = useState<FileTreeItem[]>([])
   const [breadcrumbItems, setBreadcrumbItems] = useState<BreadcrumbItemsType[]>([])
-  const { modal } = App.useApp()
+  const { modal, message } = App.useApp()
   const [form] = Form.useForm()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [fileList, setFileList] = useState<FileDownloadItemType[]>([])
@@ -205,19 +205,28 @@ function FilesZipReader() {
     const allFileList: FileDownloadItemType[] = []
     setLoading(true)
     for (const entry of entries) {
-      if (entry.directory) continue
-      const blobData = await entry.getData(new BlobWriter(), {
-        password,
-      })
       const parts = entry.filename.split('/')
       const name = parts[parts.length - 1]
-      allFileList.push({
-        name,
-        type: 'file',
-        filePath:  [oldFileName.current, ...parts.slice(0)].join('/'),
-        folderPath: [oldFileName.current, ...parts.slice(0, -1)].join('/'),
-        url: blobData,
-      })
+      if (entry.directory) {
+        allFileList.push({
+          name: parts[parts.length - 2],
+          type: 'folder',
+          filePath:  [oldFileName.current, ...parts.slice(0)].join('/'),
+          folderPath: [oldFileName.current, ...parts.slice(0, -1)].join('/'),
+          url: '',
+        })
+      } else {
+        const blobData = await entry.getData(new BlobWriter(), {
+          password,
+        })
+        allFileList.push({
+          name,
+          type: 'file',
+          filePath:  [oldFileName.current, ...parts.slice(0)].join('/'),
+          folderPath: [oldFileName.current, ...parts.slice(0, -1)].join('/'),
+          url: blobData,
+        })
+      }
     }
     setLoading(false)
     setFileList(allFileList)
@@ -226,6 +235,10 @@ function FilesZipReader() {
     console.log('onSuccessFn', list)
   }
   async function downloadCurrentFolder() {
+    if (fileTree.length === 0) {
+      message.info('当前目录下无内容')
+      return
+    }
     setDrawerOpen(true)
     setFileList([])
     const fileList: FileDownloadItemType[] = []
@@ -253,8 +266,19 @@ function FilesZipReader() {
           folderPath: [oldFileName.current, ...parts.slice(0, -1)].join('/'),
           url: URL.createObjectURL(blobData),
         })
-      } else if (item.children) {
-        await getCurrentFolderFileList(item.children, fileList)
+      } else if (item.type === 'folder') {
+        if (item.children && item.children.length > 0) {
+          await getCurrentFolderFileList(item.children, fileList)
+        } else {
+          const parts = item.filePath.split('/')
+          fileList.push({
+            name: item.name,
+            type: 'folder',
+            filePath:  [oldFileName.current, ...parts.slice(0)].join('/'),
+            folderPath: [oldFileName.current, ...parts.slice(0, -1)].join('/'),
+            url: '',
+          })
+        }
       }
     }
   }

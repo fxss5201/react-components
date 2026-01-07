@@ -25,7 +25,7 @@ function FilesZipWriter() {
       password
     })
     for (const item of listData) {
-      await zipWriter.add(item.filePath, new BlobReader(item.file as Blob))
+      await zipWriter.add(item.filePath, new BlobReader(item.type === 'file' ? (item.file as Blob) : new Blob([])), { directory: item.type === 'folder' })
     }
     const zipBlob = await zipWriter.close()
     aDownloadBlob(zipBlob, fileNameWithExt)
@@ -34,7 +34,7 @@ function FilesZipWriter() {
 
   return (
     <>
-      <FilesDropSelect targetType='list' isIgnoreFolder={true} onSelect={onSelect} classNames={{ dropElement: 'h-30!' }}></FilesDropSelect>
+      <FilesDropSelect targetType='list' onSelect={onSelect} classNames={{ dropElement: 'h-30!' }}></FilesDropSelect>
       <JsonView className='mt-3!' jsonClassName='max-h-50 overflow-auto'>{listData}</JsonView>
       <div className='mt-3'>
         <Form form={form} name='zip-writer-form' layout='inline' initialValues={{ fileName: 'zipFiles' }} onFinish={onZip}>
