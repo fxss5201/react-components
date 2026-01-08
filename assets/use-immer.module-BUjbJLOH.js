@@ -1,0 +1,1 @@
+import{bY as o,bZ as i}from"./index-CwDalt6B.js";import{b as n}from"./@uiw/react-codemirror-dimZJgSu.js";function f(r){var e=n.useState(function(){return o(typeof r=="function"?r():r,!0)}),u=e[1];return[e[0],n.useCallback(function(t){u(typeof t=="function"?i(t):o(t))},[])]}export{f as i};
