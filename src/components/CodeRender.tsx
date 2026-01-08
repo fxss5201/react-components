@@ -27,18 +27,19 @@ type CodeRenderProps = ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement
 }
 function CodeRender({ children, className, theme = 'light', codeBoxClassName, codeClassName, enableCopy = true, ...rest }: CodeRenderProps) {
   const match = /language-(\w+)/.exec(className || '')
+  const content = children === undefined ? '' : String(children).replace(/\n$/, '')
   return match ? (
     <div className={cn('relative', codeBoxClassName)}>
       <div className='absolute top-[-24px] left-[0] leading-6 z-10 text-gray-400 dark:text-gray-500'>{match[1]}</div>
       {enableCopy && (
         <div className='absolute top-[-24px] right-[-16px] z-10'>
-          <CopyToClipboard text={String(children).replace(/\n$/, '')}></CopyToClipboard>
+          <CopyToClipboard text={content}></CopyToClipboard>
         </div>
       )}
       <SyntaxHighlighter
         PreTag='div'
         className={cn('code-block', codeClassName)}
-        children={String(children).replace(/\n$/, '')}
+        children={content}
         language={match[1]}
         showLineNumbers={true}
         style={theme === 'dark' ? dark : undefined}
@@ -46,7 +47,7 @@ function CodeRender({ children, className, theme = 'light', codeBoxClassName, co
     </div>
   ) : (
     <code {...rest} className={cn(className, codeBoxClassName)}>
-      {children}
+      {content}
     </code>
   )
 }

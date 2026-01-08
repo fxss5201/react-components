@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Image, Modal } from 'antd'
+import { Modal } from 'antd'
 import { getTextFromBlob } from '@/utils'
 import MdRender from '@/components/MdRender'
 import { imgTypes, textTypes } from '@/FileTypes'
+import PreviewImg from './PreviewImg'
 
 export type PreviewFileProps = {
   blob: Blob
@@ -12,7 +13,6 @@ export type PreviewFileProps = {
 
 function PreviewFile({ blob, name, onClose }: PreviewFileProps) {
   const [previewFileSrc, setPreviewFileSrc] = useState('')
-  const [imageOpen, setImageOpen] = useState(false)
   const [modalInfo, setModalInfo] = useState<{
     open: boolean
     title: string
@@ -22,14 +22,16 @@ function PreviewFile({ blob, name, onClose }: PreviewFileProps) {
     title: '',
     content: null,
   })
+
   const fileType = name.split('.').pop()?.toLowerCase() || ''
+  const isImg = imgTypes.includes(fileType)
+  const isText = textTypes.includes(fileType)
 
   useEffect(() => {
     async function initFn() {
-      if (imgTypes.includes(fileType)) {
+      if (isImg) {
         setPreviewFileSrc(URL.createObjectURL(blob))
-        setImageOpen(true)
-      } else if (textTypes.includes(fileType)) {
+      } else if (isText) {
         const fileContent = await getTextFromBlob(blob)
         setModalInfo({
           open: true,
@@ -47,44 +49,34 @@ function PreviewFile({ blob, name, onClose }: PreviewFileProps) {
         content: null,
       })
     }
-  }, [fileType, name, blob])
+  }, [isImg, isText, fileType, name, blob])
 
   return (
     <>
-      {previewFileSrc && (
-        <Image
-          width={200}
-          style={{ display: 'none' }}
-          alt='img'
-          src={previewFileSrc}
-          preview={{
-            open: imageOpen,
-            src: previewFileSrc,
-            onOpenChange: (value) => {
-              setImageOpen(value)
-              URL.revokeObjectURL(previewFileSrc)
-              onClose()
-            },
-          }}
-        />)}
-      {modalInfo?.open && <Modal
-          open={modalInfo?.open}
-          title={modalInfo?.title}
-          width='68vw'
-          closable={true}
-          footer={null}
-          onCancel={() => {
-            setModalInfo({
-              open: false,
-              title: '',
-              content: null,
-            })
-            onClose()
-          }}
-        >
-          {modalInfo?.content}
-        </Modal>
-      }
+      {isImg && previewFileSrc && (
+        <PreviewImg url={previewFileSrc} onClose={() => {
+          URL.revokeObjectURL(previewFileSrc)
+          setPreviewFileSrc('')
+          onClose()
+        }} />
+      )}
+      <Modal
+        open={modalInfo?.open}
+        title={modalInfo?.title}
+        width='68vw'
+        closable={true}
+        footer={null}
+        onCancel={() => {
+          setModalInfo({
+            open: false,
+            title: '',
+            content: null,
+          })
+          onClose()
+        }}
+      >
+        {modalInfo?.content}
+      </Modal>
     </>
   )
 }
