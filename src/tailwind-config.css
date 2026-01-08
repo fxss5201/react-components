@@ -3,15 +3,28 @@
   --color-text-color: var(--ant-color-text);
 }
 
-@layer components {
-  /* 此处的 .a-primary 与 'text-text-color hover:text-primary' 等价，两个 .a-primary 类名的作用相同 || The .a-primary here is equivalent to 'text-text-color hover:text-primary', and the two .a-primary class names serve the same function */
+/* 下面的 .a-primary 都可以，并与 'text-text-color hover:text-primary' 等价 */
+/* 这里的区别是优先级问题，layer 内样式 < layer 外普通样式，所以定义的普通样式可以覆盖 layer 内样式 */
+/* @layer 后定义多个的时候，后面的会覆盖前面的，@layer theme, base, antd, components, utilities; */
+.a-primary {
+  color: var(--ant-color-text);
+  &:hover {
+    color: var(--ant-color-primary);
+  }
+}
+
+/* .a-primary {
+  @apply text-text-color hover:text-primary;
+} */
+
+/* @layer components {
   .a-primary {
     @apply text-text-color hover:text-primary;
   }
-  /* .a-primary {
+  .a-primary {
     color: var(--ant-color-text);
     @variant hover {
       color: var(--ant-color-primary);
     }
-  } */
-}
+  }
+} */
