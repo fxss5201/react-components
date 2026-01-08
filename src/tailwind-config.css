@@ -1,4 +1,17 @@
 @theme inline {
   --color-primary: var(--ant-color-primary);
-  --color-text: var(--ant-color-text);
+  --color-text-color: var(--ant-color-text);
+}
+
+@layer components {
+  /* 此处的 .a-primary 与 'text-text-color hover:text-primary' 等价，两个 .a-primary 类名的作用相同 || The .a-primary here is equivalent to 'text-text-color hover:text-primary', and the two .a-primary class names serve the same function */
+  .a-primary {
+    @apply text-text-color hover:text-primary;
+  }
+  /* .a-primary {
+    color: var(--ant-color-text);
+    @variant hover {
+      color: var(--ant-color-primary);
+    }
+  } */
 }
